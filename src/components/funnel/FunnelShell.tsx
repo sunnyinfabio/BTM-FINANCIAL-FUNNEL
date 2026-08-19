@@ -4,6 +4,8 @@ import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FunnelState, ChallengeOption, Capability, CaseStudy } from '@/data/types';
 import { calculateRecommendations } from '@/data/recommendations';
+import { BTM_CHALLENGES } from '@/data/challenges';
+import { BTM_INDUSTRIES } from '@/data/industries';
 import { Header } from '@/components/ui/Header';
 import { Stage1Discover } from '@/components/funnel/Stage1Discover';
 import { Stage2Challenge } from '@/components/funnel/Stage2Challenge';
@@ -16,6 +18,7 @@ import { CaseStudyModal } from '@/components/modals/CaseStudyModal';
 import { CapabilityDetailModal } from '@/components/modals/CapabilityDetailModal';
 import { AllCapabilitiesModal } from '@/components/modals/AllCapabilitiesModal';
 import { BTM_CASE_STUDIES } from '@/data/caseStudies';
+import { Layers, ArrowRight, Sparkles, Check } from 'lucide-react';
 
 export function FunnelShell() {
   // Funnel State
@@ -171,6 +174,17 @@ export function FunnelShell() {
     scrollToStage(4);
   };
 
+  // Selected summaries for persistent floating bar
+  const firstChallengeTitle =
+    funnelState.selectedChallenges.length > 0
+      ? BTM_CHALLENGES.find((c) => c.id === funnelState.selectedChallenges[0])?.title.split(' ')[0]
+      : null;
+
+  const industryName =
+    funnelState.selectedIndustry
+      ? BTM_INDUSTRIES.find((i) => i.id === funnelState.selectedIndustry)?.name
+      : null;
+
   return (
     <div className="min-h-screen bg-[#f8fafc] text-[#171314] flex flex-col justify-between selection:bg-[#009345] selection:text-white">
       {/* Top Header with Progress & Navigation */}
@@ -182,6 +196,50 @@ export function FunnelShell() {
         onOpenAllCapabilities={() => setIsAllCapabilitiesOpen(true)}
         onNavigateToStage={(stage) => scrollToStage(stage)}
       />
+
+      {/* Persistent Discovery Lab Profile Sticky Sub-bar (Active across Stages 2–5) */}
+      {funnelState.currentStage >= 2 && (firstChallengeTitle || industryName) && (
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="sticky top-18 z-30 w-full bg-[#062039]/95 text-white backdrop-blur-md border-b border-emerald-500/20 py-2 px-4 shadow-sm"
+        >
+          <div className="mx-auto max-w-7xl flex items-center justify-between gap-3 text-xs font-mono">
+            <div className="flex items-center gap-2 overflow-x-auto no-scrollbar">
+              <span className="text-[10px] uppercase font-bold text-emerald-400 tracking-wider shrink-0 flex items-center gap-1">
+                <Sparkles className="h-3 w-3" />
+                YOUR PROFILE:
+              </span>
+
+              {firstChallengeTitle && (
+                <span className="bg-[#031120] border border-slate-700 px-2.5 py-0.5 rounded-[3px] text-slate-200 shrink-0">
+                  Focus: <strong className="text-white">{firstChallengeTitle}</strong>
+                </span>
+              )}
+
+              {industryName && (
+                <span className="bg-[#031120] border border-slate-700 px-2.5 py-0.5 rounded-[3px] text-slate-200 shrink-0">
+                  Org: <strong className="text-white">{industryName}</strong>
+                </span>
+              )}
+
+              {funnelState.selectedPriorities.length > 0 && (
+                <span className="bg-[#031120] border border-slate-700 px-2.5 py-0.5 rounded-[3px] text-emerald-300 shrink-0">
+                  {funnelState.selectedPriorities.length} {funnelState.selectedPriorities.length === 1 ? 'Priority' : 'Priorities'}
+                </span>
+              )}
+            </div>
+
+            <div className="hidden sm:flex items-center gap-2 text-[11px] text-slate-400">
+              <span>Path Status:</span>
+              <span className="text-emerald-400 font-bold flex items-center gap-1">
+                <Check className="h-3 w-3 stroke-[3]" />
+                {funnelState.currentStage >= 4 ? 'Tailored' : 'Constructing'}
+              </span>
+            </div>
+          </div>
+        </motion.div>
+      )}
 
       {/* Main Continuous Funnel Flow Container */}
       <main className="flex-1 w-full relative">
