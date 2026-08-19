@@ -50,11 +50,8 @@ export function Stage4Solution({
       <div className="max-w-2xl mx-auto">
         <div className="flex items-center justify-center gap-2 mb-2">
           <Badge variant="emerald" size="sm">
-            Stage 04 • Calibrated
+            Stage 04 • Personalized Solution
           </Badge>
-          <span className="text-xs font-mono font-medium text-slate-500 uppercase tracking-wider">
-            Optimal Fit
-          </span>
         </div>
 
         <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-[#062039]">
@@ -65,7 +62,7 @@ export function Stage4Solution({
         <div className="btm-separator btm-separator-center" />
 
         <p className="text-base sm:text-lg text-slate-600 font-normal">
-          Based on your selections, these 3 capabilities represent your tailored solution path.
+          Based on your selections, these capabilities may be most relevant to your requirements.
         </p>
       </div>
 
@@ -158,7 +155,7 @@ export function Stage4Solution({
       <div className="sticky bottom-6 mt-12 z-30 flex items-center justify-between rounded-[6px] border border-slate-200 bg-white/98 backdrop-blur-sm p-4 shadow-lg max-w-2xl mx-auto">
         <div className="flex flex-col text-left pl-1">
           <span className="text-xs font-bold text-[#062039]">Ready to discuss this solution path?</span>
-          <span className="text-[11px] text-slate-500">Connect with BTM's advisory & engineering leadership</span>
+          <span className="text-[11px] text-slate-500">Connect with the BTM Financial team</span>
         </div>
 
         <Button

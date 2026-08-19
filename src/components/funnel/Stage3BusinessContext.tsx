@@ -130,7 +130,7 @@ export function Stage3BusinessContext({
               </h2>
               <div className="btm-separator btm-separator-center" />
               <p className="text-base sm:text-lg text-slate-600 max-w-xl mx-auto font-normal">
-                Select your institution type to calibrate domain models and regulatory guidelines.
+                Select the option that best describes your organization so we can tailor the recommendations.
               </p>
             </div>
 

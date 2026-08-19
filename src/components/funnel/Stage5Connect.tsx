@@ -114,8 +114,8 @@ export function Stage5Connect({
 
           <p className="mt-2 text-sm text-slate-600 max-w-md mx-auto">
             {submissionData.submissionType === 'meeting'
-              ? 'Our advisory and engineering leadership has received your solution profile. A senior partner will reach out shortly to schedule an initial consultation.'
-              : 'Our technical team has logged your diagnostic profile. We will review your requirements and reach out via email within 1 business day.'}
+              ? 'The BTM Financial team has received your solution profile. A representative will reach out shortly to schedule an initial discussion.'
+              : 'The BTM Financial team has logged your solution profile. We will review your requirements and reach out via email within 1 business day.'}
           </p>
 
           {/* Diagnostic Summary */}
