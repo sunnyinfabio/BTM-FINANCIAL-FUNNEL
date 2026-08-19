@@ -16,7 +16,7 @@ import {
   CheckCircle2,
   Layers,
   Building2,
-  Code
+  Check
 } from 'lucide-react';
 
 interface Stage4SolutionProps {
@@ -39,29 +39,33 @@ export function Stage4Solution({
   const { recommendedCapabilities, relevantCaseStudies, matchedInsights } =
     recommendation;
 
-  // Single Featured Case Study (Visual Spotlight)
   const featuredCaseStudy = relevantCaseStudies[0];
   const featuredImage = featuredCaseStudy ? getImage(featuredCaseStudy.imageKey) : null;
 
   return (
-    <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-      {/* Header Section */}
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, ease: 'easeOut' }}
+      className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12"
+    >
+      {/* Header Section (The WOW Reveal) */}
       <motion.div
-        initial={{ opacity: 0, y: 15 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.35 }}
+        initial={{ opacity: 0, scale: 0.96 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.4 }}
         className="text-center max-w-3xl mx-auto mb-8 sm:mb-10"
       >
         <div className="flex items-center justify-center gap-2 mb-2">
           <Badge variant="emerald" size="sm">
-            Stage 04
+            Stage 04 • Calibrated
           </Badge>
           <span className="text-xs font-mono font-medium text-slate-500 uppercase tracking-wider">
-            Tailored Solution Path
+            Diagnostic Fit
           </span>
         </div>
 
-        <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#062039]">
+        <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-[#062039]">
           Your BTM solution path
         </h2>
 
@@ -72,19 +76,19 @@ export function Stage4Solution({
           Based on your selections, these capabilities appear relevant to your requirements.
         </p>
 
-        {/* Framing / Disclaimer Pill */}
+        {/* Disclaimer / Guidance Pill */}
         <div className="mt-3 inline-flex items-center gap-1.5 text-xs text-slate-600 bg-slate-100/90 border border-slate-200 px-3 py-1 rounded-[3px]">
           <Info className="h-3.5 w-3.5 text-[#009345] shrink-0" />
           <span>Potentially relevant capabilities • Explore how BTM could help deliver these solutions</span>
         </div>
       </motion.div>
 
-      {/* Synthesis Insight Banner */}
+      {/* Synthesis Insight Correlation Ribbon */}
       {matchedInsights.length > 0 && (
         <motion.div
-          initial={{ opacity: 0, y: 10 }}
+          initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.35, delay: 0.05 }}
+          transition={{ duration: 0.4, delay: 0.1 }}
           className="mb-8 rounded-[8px] border border-slate-200 bg-white p-5 shadow-2xs"
         >
           <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[1.5px] text-[#009345] mb-3">
@@ -102,9 +106,7 @@ export function Stage4Solution({
         </motion.div>
       )}
 
-      {/* ============================================================ */}
-      {/* TOP 2-3 RECOMMENDATIONS GRID                                 */}
-      {/* ============================================================ */}
+      {/* Top 2-3 Recommendations Grid */}
       <div className="space-y-4">
         <div className="flex items-center justify-between pb-1.5 border-b border-slate-200">
           <h3 className="text-lg font-bold tracking-tight text-[#062039] flex items-center gap-2">
@@ -120,7 +122,12 @@ export function Stage4Solution({
           </button>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.45, delay: 0.15 }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"
+        >
           {recommendedCapabilities.map((capability, idx) => (
             <CapabilityCard
               key={capability.id}
@@ -130,17 +137,15 @@ export function Stage4Solution({
               onViewRelatedWork={onViewRelatedWork}
             />
           ))}
-        </div>
+        </motion.div>
       </div>
 
-      {/* ============================================================ */}
-      {/* ONE FEATURED RELEVANT CASE STUDY (Visual Spotlight)         */}
-      {/* ============================================================ */}
+      {/* One Featured Relevant Case Study Spotlight */}
       {featuredCaseStudy && featuredImage && (
         <motion.div
-          initial={{ opacity: 0, y: 15 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, delay: 0.15 }}
+          transition={{ duration: 0.5, delay: 0.25 }}
           className="mt-12 space-y-4"
         >
           <div className="flex items-center justify-between pb-1.5 border-b border-slate-200">
@@ -172,9 +177,9 @@ export function Stage4Solution({
                 <div className="absolute inset-0 bg-gradient-to-t lg:bg-gradient-to-r from-[#062039] via-[#062039]/40 to-transparent" />
 
                 <div className="absolute top-4 left-4">
-                  <Badge variant="emerald" size="sm">
-                    Featured Case Study
-                  </Badge>
+                  <span className="bg-black/50 backdrop-blur-sm border border-white/20 text-white text-[10px] font-mono uppercase px-2 py-0.5 rounded-[2px]">
+                    Representative Illustrative Precedent
+                  </span>
                 </div>
 
                 <div className="absolute bottom-4 left-4 right-4">
@@ -266,6 +271,6 @@ export function Stage4Solution({
           Discuss Solution Path
         </Button>
       </div>
-    </div>
+    </motion.div>
   );
 }
