@@ -24,7 +24,8 @@ import {
   RefreshCw,
   Sparkles,
   Layers,
-  ArrowRight
+  ArrowRight,
+  ArrowDown
 } from 'lucide-react';
 
 const leadFormSchema = z.object({
@@ -125,7 +126,7 @@ export function Stage5Connect({
             Inquiry Received
           </span>
 
-          <h2 className="mt-1 text-2xl sm:text-3xl font-extrabold tracking-tight text-[#062039]">
+          <h2 className="mt-1 text-2xl sm:text-3xl font-black tracking-tight text-[#062039] uppercase">
             Thank you, {submissionData.fullName}.
           </h2>
 
@@ -138,8 +139,8 @@ export function Stage5Connect({
           </p>
 
           {/* Diagnostic Summary */}
-          <div className="mt-6 rounded-lg bg-slate-50 border border-slate-200 p-5 text-left space-y-3 text-xs">
-            <div className="text-[10px] font-mono font-bold uppercase tracking-[1.5px] text-[#737373]">
+          <div className="mt-6 rounded-lg bg-slate-50 border border-slate-200 p-5 text-left space-y-3 text-xs font-mono">
+            <div className="text-[10px] font-bold uppercase tracking-[1.5px] text-[#737373]">
               Diagnostic Summary
             </div>
             <div>
@@ -152,7 +153,7 @@ export function Stage5Connect({
             </div>
             <div className="pt-2 border-t border-slate-200">
               <span className="text-slate-500 block mb-1">Selected Focus:</span>
-              <div className="flex flex-wrap gap-1.5">
+              <div className="flex flex-wrap gap-1.5 font-sans">
                 {recommendation.recommendedCapabilities.map((cap) => (
                   <span
                     key={cap.id}
@@ -191,19 +192,19 @@ export function Stage5Connect({
         initial={{ opacity: 0, y: 14 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
-        className="text-center max-w-2xl mx-auto mb-10 sm:mb-12"
+        className="text-center max-w-3xl mx-auto mb-10 sm:mb-14"
       >
         <div className="flex items-center justify-center gap-2 mb-2">
-          <Badge variant="emerald" size="sm">
-            Stage 05 • Connect
+          <Badge variant="emerald" size="sm" className="font-mono">
+            05 / 05 • Connect
           </Badge>
-          <span className="text-xs font-mono font-medium text-slate-500 uppercase tracking-wider">
+          <span className="text-xs font-mono font-bold text-slate-500 uppercase tracking-wider">
             Final Step
           </span>
         </div>
 
-        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-[#062039]">
-          Let's Build What's Next.
+        <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-[#062039] uppercase">
+          Let's Turn Your Idea Into Something Real.
         </h2>
 
         {/* Signature BTM Bar Separator */}
@@ -216,7 +217,7 @@ export function Stage5Connect({
 
       {/* 2-Column Composition (Left: Journey Summary | Right: Progressive Lead Form) */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start max-w-5xl mx-auto">
-        {/* Left Column (5 Cols): Your Focus Journey Summary */}
+        {/* Left Column (5 Cols): Your Journey Flow Summary */}
         <motion.div
           initial={{ opacity: 0, x: -16 }}
           animate={{ opacity: 1, x: 0 }}
@@ -227,37 +228,47 @@ export function Stage5Connect({
             {/* Ambient Glow */}
             <div className="absolute top-0 right-0 h-40 w-40 bg-[#009345]/15 rounded-full blur-3xl pointer-events-none" />
 
-            <div className="flex items-center gap-2 text-[10px] font-mono font-bold uppercase tracking-[2px] text-[#009345] pb-3 border-b border-slate-700/80">
-              <CheckCircle2 className="h-3.5 w-3.5 text-[#009345]" />
-              Your Focus Journey
+            <div className="flex items-center gap-2 text-[10px] font-mono font-bold uppercase tracking-[2.5px] text-[#009345] pb-3.5 border-b border-slate-700/80">
+              <CheckCircle2 className="h-4 w-4 text-[#009345]" />
+              Your Journey Summary
             </div>
 
-            {/* Structured Journey Summary Pill Stack */}
-            <div className="mt-5 space-y-3.5">
-              {/* Selected Challenge */}
-              <div className="rounded-lg bg-[#031120]/80 border border-slate-700/80 p-3.5">
+            {/* Vertical Flow Diagram */}
+            <div className="mt-5 space-y-2.5">
+              {/* Step 1: Challenge */}
+              <div className="rounded-lg bg-[#031120]/80 border border-slate-700/80 p-3.5 text-left">
                 <span className="text-[10px] font-mono uppercase text-slate-400 block tracking-wider">
-                  Challenge Area
+                  01 • Challenge Identified
                 </span>
                 <span className="text-sm font-bold text-white mt-0.5 block">
-                  {selectedChallengeNames || 'Data & Technology'}
+                  {selectedChallengeNames || 'Data & Analytics Solutions'}
                 </span>
               </div>
 
-              {/* Organization Type */}
-              <div className="rounded-lg bg-[#031120]/80 border border-slate-700/80 p-3.5">
+              {/* Connecting Down Arrow */}
+              <div className="flex justify-center">
+                <ArrowDown className="h-4 w-4 text-[#009345]" />
+              </div>
+
+              {/* Step 2: Industry */}
+              <div className="rounded-lg bg-[#031120]/80 border border-slate-700/80 p-3.5 text-left">
                 <span className="text-[10px] font-mono uppercase text-slate-400 block tracking-wider">
-                  Organization Fit
+                  02 • Organization Context
                 </span>
                 <span className="text-sm font-bold text-white mt-0.5 block">
                   {selectedIndustryName}
                 </span>
               </div>
 
-              {/* Recommended Core Capability */}
-              <div className="rounded-lg bg-emerald-950/40 border border-emerald-500/30 p-3.5">
+              {/* Connecting Down Arrow */}
+              <div className="flex justify-center">
+                <ArrowDown className="h-4 w-4 text-[#009345]" />
+              </div>
+
+              {/* Step 3: Recommended Solution */}
+              <div className="rounded-lg bg-emerald-950/50 border border-emerald-500/40 p-3.5 text-left">
                 <span className="text-[10px] font-mono uppercase text-emerald-400 block tracking-wider">
-                  Solution Recommendation
+                  03 • Recommended Solution Path
                 </span>
                 <span className="text-sm font-bold text-white mt-0.5 block">
                   {primaryCapabilityName}
@@ -267,7 +278,7 @@ export function Stage5Connect({
 
             {/* Reassurance Note */}
             <div className="mt-5 pt-4 border-t border-slate-700/80 text-xs text-slate-300 leading-relaxed font-normal">
-              Your selections and diagnostic profile are automatically attached to your inquiry for our technical partners.
+              Your diagnostic profile is automatically attached to your inquiry for our technical partners.
             </div>
           </div>
 
@@ -282,19 +293,19 @@ export function Stage5Connect({
           initial={{ opacity: 0, x: 16 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.45 }}
-          className="lg:col-span-7 rounded-xl border border-slate-200 bg-white p-6 sm:p-8 shadow-sm"
+          className="lg:col-span-7 rounded-xl border border-slate-200 bg-white p-6 sm:p-8 shadow-md"
         >
-          <div className="mb-4 text-left">
-            <h3 className="text-base font-extrabold text-[#062039]">
+          <div className="mb-5 text-left">
+            <h3 className="text-lg font-black text-[#062039] uppercase">
               Tell us where to reach you.
             </h3>
             <p className="text-xs text-slate-500 mt-0.5">
-              Enter your work email to begin our collaborative discussion.
+              Enter your work email to initiate discussion with the BTM Financial team.
             </p>
           </div>
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 text-left">
-            {/* 1. Work Email (Always Visible & Prominent) */}
+            {/* 1. Work Email */}
             <div>
               <label className="block text-[11px] font-mono font-bold uppercase tracking-[1.5px] text-[#062039] mb-1">
                 Work Email <span className="text-rose-500">*</span>
@@ -387,11 +398,11 @@ export function Stage5Connect({
                   {/* Project / Challenge (Optional) */}
                   <div>
                     <label className="block text-[11px] font-mono font-bold uppercase tracking-[1.5px] text-[#062039] mb-1">
-                      Project / Challenge Context <span className="text-slate-400 font-normal lowercase tracking-normal font-sans">(optional)</span>
+                      Project Context / Goals <span className="text-slate-400 font-normal lowercase tracking-normal font-sans">(optional)</span>
                     </label>
                     <textarea
                       rows={2}
-                      placeholder="Brief context on timeline, systems, or immediate objectives..."
+                      placeholder="Brief context on timeline, data formats, or goals..."
                       {...register('projectDetails')}
                       className="w-full rounded-[6px] border border-slate-300 bg-white p-2.5 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition-all focus:ring-2 focus:ring-[#009345]"
                     />
@@ -412,9 +423,9 @@ export function Stage5Connect({
                   setValue('submissionType', 'conversation');
                 }}
                 rightIcon={<Send className="h-4 w-4" />}
-                className="w-full justify-center shadow-sm font-bold text-sm sm:text-base py-3"
+                className="w-full justify-center shadow-md font-bold text-sm sm:text-base py-3.5"
               >
-                Start a Conversation →
+                START A CONVERSATION →
               </Button>
 
               <Button
@@ -427,9 +438,9 @@ export function Stage5Connect({
                   setValue('submissionType', 'meeting');
                 }}
                 leftIcon={<Calendar className="h-4 w-4 text-[#009345]" />}
-                className="w-full justify-center text-xs font-bold uppercase tracking-wider text-slate-700 hover:text-[#062039]"
+                className="w-full justify-center text-xs font-mono font-bold uppercase tracking-wider text-slate-700 hover:text-[#062039]"
               >
-                Book a Meeting
+                BOOK A MEETING
               </Button>
             </div>
 

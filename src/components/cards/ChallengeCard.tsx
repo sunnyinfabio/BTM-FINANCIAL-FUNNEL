@@ -83,31 +83,32 @@ export function ChallengeCard({
       onMouseLeave={onHoverEnd}
       className={cn(
         'group relative flex flex-col justify-between overflow-hidden rounded-xl border text-left transition-all duration-350 cursor-pointer outline-none select-none focus-visible:ring-2 focus-visible:ring-[#009345] focus-visible:ring-offset-2',
-        isLarge ? 'p-6 sm:p-8 min-h-[230px]' : 'p-5 sm:p-6 min-h-[195px]',
+        isLarge ? 'p-6 sm:p-8 min-h-[250px]' : 'p-5 sm:p-6 min-h-[205px]',
         isSelected
-          ? 'border-[#009345] ring-2 ring-[#009345] bg-gradient-to-b from-white via-white to-emerald-50/50 shadow-2xl shadow-emerald-950/10 scale-[1.015]'
+          ? 'border-[#009345] ring-2 ring-[#009345] bg-gradient-to-b from-white via-white to-emerald-50/60 shadow-2xl shadow-emerald-950/15 scale-[1.02] z-20'
           : isHoveredByOther
-          ? 'border-slate-200 bg-white/70 opacity-70 scale-[0.99]'
-          : 'border-slate-200/90 bg-white hover:border-[#009345] hover:shadow-2xl hover:-translate-y-1',
+          ? 'border-slate-200 bg-white/60 opacity-40 scale-[0.98]'
+          : 'border-slate-200/90 bg-white hover:border-[#009345] hover:shadow-2xl hover:-translate-y-1.5',
         className
       )}
     >
-      {/* Background Cinematic Visual with Dark Overlay */}
-      <div className="absolute inset-0 pointer-events-none opacity-[0.07] group-hover:opacity-[0.16] transition-opacity duration-500 overflow-hidden">
+      {/* Background Visual (40–60% Area) with Dark Editorial Vignette & Slow Zoom */}
+      <div className="absolute inset-0 pointer-events-none opacity-[0.09] group-hover:opacity-[0.22] transition-opacity duration-500 overflow-hidden">
         <Image
           src={bgImage.src}
           alt=""
           fill
-          className="object-cover filter grayscale contrast-125 scale-100 group-hover:scale-108 transition-transform duration-700 ease-out"
+          className="object-cover filter grayscale contrast-130 scale-100 group-hover:scale-108 transition-transform duration-700 ease-out"
           sizes="600px"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-white via-white/80 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-white via-white/80 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-white/90 via-white/40 to-transparent" />
       </div>
 
-      {/* Top Emerald Accent Strip that Expands on Hover */}
+      {/* Top Animated Emerald Accent Strip */}
       <div
         className={cn(
-          'absolute top-0 left-0 right-0 h-[3px] transition-all duration-300',
+          'absolute top-0 left-0 right-0 h-[3.5px] transition-all duration-300',
           isSelected
             ? 'bg-[#009345]'
             : 'bg-transparent group-hover:bg-[#009345]'
@@ -115,10 +116,10 @@ export function ChallengeCard({
       />
 
       <div className="relative z-10">
-        {/* Card Header: Index + Icon + Visual Checkmark */}
+        {/* Header: Index + Icon + Visual Checkmark */}
         <div className="flex items-start justify-between gap-3">
           <div className="flex items-center gap-3">
-            <span className="font-mono text-xs font-bold text-slate-400 group-hover:text-[#009345] transition-colors">
+            <span className="font-mono text-sm font-bold text-slate-400 group-hover:text-[#009345] transition-colors">
               0{index + 1}
             </span>
             <div
@@ -152,7 +153,7 @@ export function ChallengeCard({
         <div className="mt-4">
           <h3
             className={cn(
-              'font-extrabold tracking-tight uppercase transition-all duration-300',
+              'font-black tracking-tight uppercase transition-all duration-300',
               isLarge ? 'text-lg sm:text-xl lg:text-2xl' : 'text-base sm:text-lg',
               isSelected ? 'text-[#062039]' : 'text-[#062039] group-hover:text-[#009345] group-hover:-translate-y-0.5'
             )}
@@ -173,7 +174,7 @@ export function ChallengeCard({
             e.stopPropagation();
             onExploreDetails(challenge);
           }}
-          className="inline-flex items-center gap-1.5 text-xs font-bold text-[#009345] hover:text-[#007a38] group-hover:translate-x-1 transition-all p-1 rounded-[2px]"
+          className="inline-flex items-center gap-1.5 text-xs font-mono font-bold uppercase tracking-wider text-[#009345] hover:text-[#007a38] group-hover:translate-x-1.5 transition-all p-1 rounded-[2px]"
           aria-label={`Explore details for ${challenge.title}`}
         >
           <span>EXPLORE</span>

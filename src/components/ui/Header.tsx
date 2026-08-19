@@ -17,8 +17,8 @@ interface HeaderProps {
 
 const STAGE_NAMES: Record<number, string> = {
   1: 'DISCOVER',
-  2: 'EXPLORE',
-  3: 'UNDERSTAND',
+  2: 'CHALLENGE',
+  3: 'CONTEXT',
   4: 'SOLUTION',
   5: 'CONNECT'
 };

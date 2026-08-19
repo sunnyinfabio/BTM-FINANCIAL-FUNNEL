@@ -34,6 +34,10 @@ export function Stage2Challenge({
   const advisoryChallenge = BTM_CHALLENGES.find((c) => c.id === 'advisory-valuation') || BTM_CHALLENGES[5];
   const bespokeChallenge = BTM_CHALLENGES.find((c) => c.id === 'something-else') || BTM_CHALLENGES[6];
 
+  const handleSelectWithAutoTransition = (id: string) => {
+    onToggleChallenge(id);
+  };
+
   return (
     <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 pt-8 sm:pt-14 pb-28 sm:pb-16 scroll-mt-24">
       {/* Header Section */}
@@ -44,28 +48,28 @@ export function Stage2Challenge({
         className="text-center max-w-2xl mx-auto mb-8 sm:mb-12"
       >
         <div className="flex items-center justify-center gap-2 mb-2">
-          <Badge variant="emerald" size="sm">
-            Stage 02
+          <Badge variant="emerald" size="sm" className="font-mono">
+            02 / 05
           </Badge>
-          <span className="text-xs font-mono font-medium text-slate-500 uppercase tracking-wider">
+          <span className="text-xs font-mono font-bold text-slate-500 uppercase tracking-wider">
             Challenge Discovery
           </span>
         </div>
 
-        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-[#062039]">
-          What do you want to solve?
+        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-[#062039] uppercase">
+          What are you looking to improve?
         </h2>
 
         {/* Signature BTM Bar Separator */}
         <div className="btm-separator btm-separator-center" />
 
         <p className="text-sm sm:text-base text-slate-600 font-normal">
-          Select one or more challenge areas. Click <span className="font-semibold text-[#009345]">"Explore →"</span> on any card to preview typical business problems and example outcomes.
+          Select one or more challenge areas. Click <span className="font-semibold text-[#009345]">"EXPLORE →"</span> on any card to preview typical business problems and example outcomes.
         </p>
 
         {/* Multi-select count pill */}
         <div className="mt-3 flex items-center justify-center gap-2 text-xs font-medium text-slate-500">
-          <span className="rounded-[3px] bg-slate-100 px-2.5 py-0.5 text-slate-800 font-bold text-xs">
+          <span className="rounded-[3px] bg-slate-100 px-2.5 py-0.5 text-slate-800 font-bold text-xs font-mono">
             {selectedChallenges.length} selected
           </span>
           <span className="text-[11px]">(Multiple selections supported)</span>
@@ -79,7 +83,7 @@ export function Stage2Challenge({
         transition={{ duration: 0.4, delay: 0.1 }}
         className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6"
       >
-        {/* ROW 1: Large Feature Data & Analytics (7 cols) + Medium AI & Automation (5 cols) */}
+        {/* ROW 1: Large Featured Data & Analytics (7 cols) + Medium AI & Automation (5 cols) */}
         <div className="lg:col-span-7 flex">
           <ChallengeCard
             challenge={dataChallenge}
@@ -88,7 +92,7 @@ export function Stage2Challenge({
             isHoveredByOther={!!hoveredId && hoveredId !== dataChallenge.id}
             onHoverStart={() => setHoveredId(dataChallenge.id)}
             onHoverEnd={() => setHoveredId(null)}
-            onToggle={onToggleChallenge}
+            onToggle={handleSelectWithAutoTransition}
             onExploreDetails={onExploreDetails}
             isLarge={true}
             className="w-full"
@@ -103,7 +107,7 @@ export function Stage2Challenge({
             isHoveredByOther={!!hoveredId && hoveredId !== aiChallenge.id}
             onHoverStart={() => setHoveredId(aiChallenge.id)}
             onHoverEnd={() => setHoveredId(null)}
-            onToggle={onToggleChallenge}
+            onToggle={handleSelectWithAutoTransition}
             onExploreDetails={onExploreDetails}
             isLarge={false}
             className="w-full"
@@ -119,7 +123,7 @@ export function Stage2Challenge({
             isHoveredByOther={!!hoveredId && hoveredId !== techChallenge.id}
             onHoverStart={() => setHoveredId(techChallenge.id)}
             onHoverEnd={() => setHoveredId(null)}
-            onToggle={onToggleChallenge}
+            onToggle={handleSelectWithAutoTransition}
             onExploreDetails={onExploreDetails}
             isLarge={false}
             className="w-full"
@@ -134,7 +138,7 @@ export function Stage2Challenge({
             isHoveredByOther={!!hoveredId && hoveredId !== finChallenge.id}
             onHoverStart={() => setHoveredId(finChallenge.id)}
             onHoverEnd={() => setHoveredId(null)}
-            onToggle={onToggleChallenge}
+            onToggle={handleSelectWithAutoTransition}
             onExploreDetails={onExploreDetails}
             isLarge={true}
             className="w-full"
@@ -150,7 +154,7 @@ export function Stage2Challenge({
             isHoveredByOther={!!hoveredId && hoveredId !== cloudChallenge.id}
             onHoverStart={() => setHoveredId(cloudChallenge.id)}
             onHoverEnd={() => setHoveredId(null)}
-            onToggle={onToggleChallenge}
+            onToggle={handleSelectWithAutoTransition}
             onExploreDetails={onExploreDetails}
             isLarge={false}
             className="w-full"
@@ -165,39 +169,39 @@ export function Stage2Challenge({
             isHoveredByOther={!!hoveredId && hoveredId !== advisoryChallenge.id}
             onHoverStart={() => setHoveredId(advisoryChallenge.id)}
             onHoverEnd={() => setHoveredId(null)}
-            onToggle={onToggleChallenge}
+            onToggle={handleSelectWithAutoTransition}
             onExploreDetails={onExploreDetails}
             isLarge={false}
             className="w-full"
           />
         </div>
 
-        {/* ROW 4: Custom Advisory / Hybrid Challenge (12 cols) */}
+        {/* ROW 4: Custom Advisory / Hybrid Special Outline Panel (12 cols) */}
         {bespokeChallenge && (
           <div className="lg:col-span-12">
             <div
               tabIndex={0}
               role="checkbox"
               aria-checked={selectedChallenges.includes(bespokeChallenge.id)}
-              onClick={() => onToggleChallenge(bespokeChallenge.id)}
+              onClick={() => handleSelectWithAutoTransition(bespokeChallenge.id)}
               onMouseEnter={() => setHoveredId(bespokeChallenge.id)}
               onMouseLeave={() => setHoveredId(null)}
               onKeyDown={(e) => {
                 if (e.key === ' ' || e.key === 'Enter') {
                   e.preventDefault();
-                  onToggleChallenge(bespokeChallenge.id);
+                  handleSelectWithAutoTransition(bespokeChallenge.id);
                 }
               }}
-              className={`group relative flex flex-col sm:flex-row items-start sm:items-center justify-between rounded-xl border p-5 sm:p-6 cursor-pointer transition-all duration-300 outline-none select-none focus-visible:ring-2 focus-visible:ring-[#009345] focus-visible:ring-offset-2 ${
+              className={`group relative flex flex-col sm:flex-row items-start sm:items-center justify-between rounded-xl border p-5 sm:p-6 cursor-pointer transition-all duration-350 outline-none select-none focus-visible:ring-2 focus-visible:ring-[#009345] focus-visible:ring-offset-2 ${
                 selectedChallenges.includes(bespokeChallenge.id)
-                  ? 'border-[#009345] ring-2 ring-[#009345] bg-gradient-to-r from-white to-emerald-50/30 shadow-md'
+                  ? 'border-[#009345] ring-2 ring-[#009345] bg-gradient-to-r from-white to-emerald-50/40 shadow-xl scale-[1.01]'
                   : hoveredId && hoveredId !== bespokeChallenge.id
-                  ? 'border-slate-200 bg-white/70 opacity-80'
-                  : 'border-slate-200/90 bg-white hover:border-[#009345] hover:shadow-xl hover:-translate-y-0.5'
+                  ? 'border-slate-200 bg-white/60 opacity-40 scale-[0.98]'
+                  : 'border-slate-200/90 bg-white hover:border-[#009345] hover:shadow-2xl hover:-translate-y-1'
               }`}
             >
               <div className="flex items-center gap-3.5">
-                <span className="font-mono text-xs font-bold text-slate-400 group-hover:text-[#009345] transition-colors">
+                <span className="font-mono text-sm font-bold text-slate-400 group-hover:text-[#009345] transition-colors">
                   07
                 </span>
                 <div
@@ -211,7 +215,7 @@ export function Stage2Challenge({
                 </div>
 
                 <div>
-                  <h3 className="text-base sm:text-lg font-bold text-[#062039] uppercase group-hover:text-[#009345] transition-colors">
+                  <h3 className="text-base sm:text-lg font-black text-[#062039] uppercase group-hover:text-[#009345] transition-colors">
                     {bespokeChallenge.title}
                   </h3>
                   <p className="text-xs sm:text-sm text-slate-600 font-normal mt-0.5">
@@ -227,9 +231,9 @@ export function Stage2Challenge({
                     e.stopPropagation();
                     onExploreDetails(bespokeChallenge);
                   }}
-                  className="inline-flex items-center gap-1 text-xs font-bold text-[#009345] hover:text-[#007a38] group-hover:translate-x-1 transition-all p-1"
+                  className="inline-flex items-center gap-1.5 text-xs font-mono font-bold uppercase tracking-wider text-[#009345] hover:text-[#007a38] group-hover:translate-x-1.5 transition-all p-1"
                 >
-                  <span>Explore</span>
+                  <span>EXPLORE</span>
                   <ArrowRight className="h-3.5 w-3.5" />
                 </button>
               </div>
@@ -246,11 +250,11 @@ export function Stage2Challenge({
               <div className="flex items-center gap-1.5 font-semibold text-slate-900 truncate">
                 <CheckCircle2 className="h-4 w-4 text-[#009345] shrink-0" />
                 <span className="truncate">
-                  <strong className="text-[#009345]">{selectedChallenges.length}</strong> focus {selectedChallenges.length === 1 ? 'area' : 'areas'}
+                  <strong className="text-[#009345] font-mono">{selectedChallenges.length}</strong> focus {selectedChallenges.length === 1 ? 'area' : 'areas'} selected
                 </span>
               </div>
             ) : (
-              <span className="text-slate-500 text-[11px] sm:text-xs truncate">
+              <span className="text-slate-500 text-[11px] sm:text-xs truncate font-mono">
                 Select a challenge to proceed
               </span>
             )}
