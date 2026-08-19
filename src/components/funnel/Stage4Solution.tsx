@@ -233,6 +233,31 @@ export function Stage4Solution({
                   withVignette={true}
                   className="h-full w-full rounded-none border-0"
                 />
+
+                {/* Animated Lending Flow Diagram Overlay */}
+                <div className="absolute inset-0 pointer-events-none z-10 flex items-center justify-center p-4">
+                  <svg className="w-full h-full" viewBox="0 0 280 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <line x1="20" y1="80" x2="260" y2="80" stroke="rgba(255,255,255,0.25)" strokeWidth="1.5" strokeDasharray="3 3" />
+                    
+                    {/* Node 1: Borrower */}
+                    <circle cx="35" cy="80" r="14" fill="#062039" stroke="rgba(255,255,255,0.4)" strokeWidth="1.5" />
+                    <text x="35" y="83" fill="#cbd5e1" fontSize="6.5" fontFamily="monospace" textAnchor="middle">BORROW</text>
+
+                    {/* Node 2: Platform */}
+                    <circle cx="95" cy="80" r="14" fill="#062039" stroke="rgba(255,255,255,0.4)" strokeWidth="1.5" />
+                    <text x="95" y="83" fill="#cbd5e1" fontSize="6.5" fontFamily="monospace" textAnchor="middle">PLATFORM</text>
+
+                    {/* Node 3: AI / Smart Model */}
+                    <circle cx="160" cy="80" r="16" fill="#009345" stroke="#30ad6b" strokeWidth="2" />
+                    <text x="160" y="83" fill="#fff" fontSize="7" fontFamily="monospace" fontWeight="bold" textAnchor="middle">AI / DATA</text>
+
+                    {/* Node 4: Stakeholders */}
+                    <circle cx="235" cy="80" r="14" fill="#062039" stroke="#38bdf8" strokeWidth="1.5" />
+                    <text x="235" y="83" fill="#38bdf8" fontSize="6.5" fontFamily="monospace" textAnchor="middle">STAKEHOLD</text>
+
+                    <text x="20" y="25" fill="#38bdf8" fontSize="8" fontFamily="monospace" fontWeight="bold">TRUST-LESS LENDING FLOW</text>
+                  </svg>
+                </div>
               </div>
 
               {/* Right Side: Structured Content (7 Cols) */}

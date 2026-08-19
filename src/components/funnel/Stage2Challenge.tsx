@@ -8,6 +8,7 @@ import { ChallengeOption } from '@/data/types';
 import { getImage } from '@/data/images';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
+import { CapabilityVisualOverlay } from '@/components/animations/CapabilityVisualOverlay';
 import { cn } from '@/lib/utils';
 import {
   ArrowLeft,
@@ -257,6 +258,9 @@ export function Stage2Challenge({
                       backgroundSize: '16px 16px'
                     }}
                   />
+
+                  {/* Bespoke Interactive Visual Overlay System */}
+                  <CapabilityVisualOverlay id={current.id} isHovered={true} />
 
                   {/* Floating Monospace Tag */}
                   <div className="absolute top-4 right-4 z-20">
