@@ -166,7 +166,7 @@ export function Stage5Connect({
   // 2-COLUMN CONVERSION SCREEN
   // ============================================================
   return (
-    <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-10 sm:py-16">
+    <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-10 sm:py-16 scroll-mt-24">
       {/* Header Section */}
       <motion.div
         initial={{ opacity: 0, y: 12 }}
@@ -240,8 +240,8 @@ export function Stage5Connect({
           </div>
 
           <div className="rounded-[6px] border border-slate-200 bg-white p-4 text-xs text-slate-600 flex items-center gap-2.5 shadow-2xs">
-            <ShieldCheck className="h-4 w-4 text-[#009345] shrink-0" />
-            <span>Institutional-grade confidentiality. NDA available prior to technical discovery.</span>
+            <Lock className="h-4 w-4 text-[#009345] shrink-0" />
+            <span>Your information helps us understand your request and connect you with the right team.</span>
           </div>
         </motion.div>
 
@@ -375,7 +375,7 @@ export function Stage5Connect({
             {/* Privacy Reassurance */}
             <div className="pt-2 flex items-center justify-center gap-1.5 text-[11px] text-slate-500 text-center">
               <Lock className="h-3 w-3 text-[#009345] shrink-0" />
-              <span>Enterprise confidentiality assured. BTM Financial does not share your data.</span>
+              <span>Your information helps us understand your request and connect you with the right team.</span>
             </div>
           </form>
         </motion.div>

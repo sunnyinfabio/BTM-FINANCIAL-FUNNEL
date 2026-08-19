@@ -34,13 +34,13 @@ export function Stage2Challenge({
   const bespokeChallenge = BTM_CHALLENGES.find((c) => c.id === 'something-else') || BTM_CHALLENGES[6];
 
   return (
-    <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+    <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 pt-8 sm:pt-14 pb-28 sm:pb-16 scroll-mt-24">
       {/* Header Section */}
       <motion.div
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.35 }}
-        className="text-center max-w-2xl mx-auto mb-8 sm:mb-10"
+        className="text-center max-w-2xl mx-auto mb-6 sm:mb-10"
       >
         <div className="flex items-center justify-center gap-2 mb-2">
           <Badge variant="emerald" size="sm">
@@ -51,23 +51,23 @@ export function Stage2Challenge({
           </span>
         </div>
 
-        <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#062039]">
+        <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-[#062039]">
           What are you looking to improve?
         </h2>
 
         {/* Signature BTM Bar Separator */}
         <div className="btm-separator btm-separator-center" />
 
-        <p className="text-sm sm:text-base text-slate-600 font-normal">
-          Select one or more challenge areas. Click <span className="font-semibold text-[#009345]">"Explore →"</span> on any card to preview typical business problems and example outcomes without leaving this step.
+        <p className="text-xs sm:text-base text-slate-600 font-normal">
+          Select one or more challenge areas. Click <span className="font-semibold text-[#009345]">"Explore →"</span> on any card to preview typical business problems and example outcomes.
         </p>
 
         {/* Multi-select count pill */}
-        <div className="mt-3 flex items-center justify-center gap-2 text-xs font-medium text-slate-500">
-          <span className="rounded-[2px] bg-slate-100 px-2 py-0.5 text-slate-700 font-bold">
+        <div className="mt-2.5 flex items-center justify-center gap-2 text-xs font-medium text-slate-500">
+          <span className="rounded-[2px] bg-slate-100 px-2 py-0.5 text-slate-700 font-bold text-[11px]">
             {selectedChallenges.length} selected
           </span>
-          <span>(Multiple selections supported)</span>
+          <span className="text-[11px]">(Multiple selections supported)</span>
         </div>
       </motion.div>
 
@@ -76,7 +76,7 @@ export function Stage2Challenge({
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.35, delay: 0.1 }}
-        className="grid grid-cols-1 lg:grid-cols-12 gap-5"
+        className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-5"
       >
         {/* ROW 1: Wide Data & Analytics (7 cols) + AI & Automation (5 cols) */}
         <div className="lg:col-span-7 flex">
@@ -167,15 +167,15 @@ export function Stage2Challenge({
                   : 'border-slate-200 bg-white hover:border-slate-300 hover:shadow-md hover:-translate-y-0.5'
               }`}
             >
-              <div className="flex items-center gap-3.5">
+              <div className="flex items-center gap-3">
                 <div
-                  className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-[4px] border transition-colors ${
+                  className={`flex h-9 w-9 sm:h-10 sm:w-10 shrink-0 items-center justify-center rounded-[4px] border transition-colors ${
                     selectedChallenges.includes(bespokeChallenge.id)
                       ? 'bg-[#009345] text-white border-[#009345]'
                       : 'bg-slate-50 text-[#062039] border-slate-200 group-hover:bg-[#062039] group-hover:text-white'
                   }`}
                 >
-                  <Sparkles className="h-5 w-5 transition-transform duration-200 group-hover:scale-110" />
+                  <Sparkles className="h-4.5 w-4.5 sm:h-5 sm:w-5 transition-transform duration-200 group-hover:scale-110" />
                 </div>
 
                 <div>
@@ -188,7 +188,7 @@ export function Stage2Challenge({
                 </div>
               </div>
 
-              <div className="mt-3 sm:mt-0 flex items-center justify-end w-full sm:w-auto pt-2 sm:pt-0 border-t sm:border-t-0 border-slate-100">
+              <div className="mt-2.5 sm:mt-0 flex items-center justify-end w-full sm:w-auto pt-2 sm:pt-0 border-t sm:border-t-0 border-slate-100">
                 <button
                   type="button"
                   onClick={(e) => {
@@ -206,30 +206,35 @@ export function Stage2Challenge({
         )}
       </motion.div>
 
-      {/* Floating Bottom Sticky Action Bar */}
-      <div className="sticky bottom-6 mt-10 z-30 flex items-center justify-between rounded-[6px] border border-slate-200 bg-white/98 backdrop-blur-sm p-4 shadow-lg max-w-2xl mx-auto">
-        <div className="flex items-center gap-2 text-xs text-slate-600 pl-1">
-          {hasSelection ? (
-            <div className="flex items-center gap-1.5 text-slate-800 font-medium">
-              <CheckCircle2 className="h-4 w-4 text-[#009345]" />
-              <span>
-                Ready with <strong className="text-[#062039]">{selectedChallenges.length}</strong> focus {selectedChallenges.length === 1 ? 'area' : 'areas'}
+      {/* Compact Mobile & Desktop Fixed Bottom CTA Bar (Target: 72-80px, No Content Blocking) */}
+      <div className="fixed bottom-0 left-0 right-0 z-30 bg-white/98 backdrop-blur-md border-t border-slate-200/90 shadow-2xl px-4 py-3 sm:py-3.5 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
+        <div className="max-w-2xl mx-auto flex items-center justify-between gap-3">
+          <div className="flex items-center gap-1.5 text-xs text-slate-700 min-w-0 truncate">
+            {hasSelection ? (
+              <div className="flex items-center gap-1.5 font-semibold text-slate-900 truncate">
+                <CheckCircle2 className="h-4 w-4 text-[#009345] shrink-0" />
+                <span className="truncate">
+                  <strong className="text-[#009345]">{selectedChallenges.length}</strong> focus {selectedChallenges.length === 1 ? 'area' : 'areas'}
+                </span>
+              </div>
+            ) : (
+              <span className="text-slate-500 text-[11px] sm:text-xs truncate">
+                Select a challenge to proceed
               </span>
-            </div>
-          ) : (
-            <span className="text-slate-500">Please select at least one challenge to proceed</span>
-          )}
-        </div>
+            )}
+          </div>
 
-        <Button
-          variant="emerald"
-          size="md"
-          disabled={!hasSelection}
-          onClick={onContinue}
-          rightIcon={<ArrowRight className="h-4 w-4" />}
-        >
-          Continue to Business Context
-        </Button>
+          <Button
+            variant="emerald"
+            size="md"
+            disabled={!hasSelection}
+            onClick={onContinue}
+            rightIcon={<ArrowRight className="h-4 w-4 shrink-0" />}
+            className="shrink-0 whitespace-nowrap text-xs sm:text-sm px-4 sm:px-6"
+          >
+            Continue →
+          </Button>
+        </div>
       </div>
     </div>
   );
