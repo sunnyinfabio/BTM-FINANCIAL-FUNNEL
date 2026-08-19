@@ -123,7 +123,7 @@ export function Stage4Solution({
               <div className="md:col-span-7 p-6 sm:p-7 flex flex-col justify-between space-y-4">
                 <div>
                   <span className="text-[11px] font-mono font-bold uppercase tracking-[2px] text-[#009345] block">
-                    RELEVANT BTM WORK
+                    REPRESENTATIVE SOLUTION EXAMPLE
                   </span>
 
                   <h3 className="mt-1.5 text-lg sm:text-xl font-extrabold text-[#062039] leading-snug group-hover:text-[#009345] transition-colors">
