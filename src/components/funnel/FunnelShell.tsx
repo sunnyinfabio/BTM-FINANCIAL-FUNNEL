@@ -17,6 +17,7 @@ import { ChallengeDetailDrawer } from '@/components/modals/ChallengeDetailDrawer
 import { CaseStudyModal } from '@/components/modals/CaseStudyModal';
 import { CapabilityDetailModal } from '@/components/modals/CapabilityDetailModal';
 import { AllCapabilitiesModal } from '@/components/modals/AllCapabilitiesModal';
+import { AmbientGlowFollower } from '@/components/animations/AmbientGlowFollower';
 import { BTM_CASE_STUDIES } from '@/data/caseStudies';
 import { Layers, ArrowRight, Sparkles, Check } from 'lucide-react';
 
@@ -186,7 +187,10 @@ export function FunnelShell() {
       : null;
 
   return (
-    <div className="min-h-screen bg-[#f8fafc] text-[#171314] flex flex-col justify-between selection:bg-[#009345] selection:text-white">
+    <div className="min-h-screen bg-[#f8fafc] text-[#171314] flex flex-col justify-between selection:bg-[#009345] selection:text-white relative">
+      {/* Ambient Interactive Cursor Follower Spotlight */}
+      <AmbientGlowFollower />
+
       {/* Top Header with Progress & Navigation */}
       <Header
         currentStage={funnelState.currentStage}

@@ -75,6 +75,20 @@ export function Stage2Challenge({
   const handlePrev = () => setActiveIndex((prev) => (prev - 1 + total) % total);
   const handleNext = () => setActiveIndex((prev) => (prev + 1) % total);
 
+  // Keyboard navigation support for left/right arrows
+  React.useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowLeft') {
+        handlePrev();
+      } else if (e.key === 'ArrowRight') {
+        handleNext();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [total]);
+
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-8 sm:pt-14 pb-28 sm:pb-16 scroll-mt-24">
       {/* Header Section */}
