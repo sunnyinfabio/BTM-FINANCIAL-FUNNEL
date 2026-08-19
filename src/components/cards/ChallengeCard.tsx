@@ -1,7 +1,9 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 import { ChallengeOption } from '@/data/types';
+import { getImage } from '@/data/images';
 import { cn } from '@/lib/utils';
 import {
   BarChart3,
@@ -20,6 +22,8 @@ interface ChallengeCardProps {
   isSelected: boolean;
   onToggle: (id: string) => void;
   onExploreDetails: (challenge: ChallengeOption) => void;
+  className?: string;
+  isWide?: boolean;
 }
 
 const ICON_MAP: Record<string, React.ReactNode> = {
@@ -32,13 +36,26 @@ const ICON_MAP: Record<string, React.ReactNode> = {
   Sparkles: <Sparkles className="h-5 w-5" />
 };
 
+const IMAGE_KEY_MAP: Record<string, string> = {
+  'data-analytics': 'dataAnalytics',
+  'tech-applications': 'technologyConsulting',
+  'ai-automation': 'aiAutomation',
+  'financial-analytics': 'quantAnalytics',
+  'cloud-infra': 'cloudInfrastructure',
+  'advisory-valuation': 'valuationAdvisory',
+  'something-else': 'advisory'
+};
+
 export function ChallengeCard({
   challenge,
   isSelected,
   onToggle,
-  onExploreDetails
+  onExploreDetails,
+  className,
+  isWide = false
 }: ChallengeCardProps) {
   const icon = ICON_MAP[challenge.iconName] || <Sparkles className="h-5 w-5" />;
+  const bgImage = getImage(IMAGE_KEY_MAP[challenge.id] || 'dataAnalytics');
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === ' ' || e.key === 'Enter') {
@@ -55,31 +72,44 @@ export function ChallengeCard({
       onKeyDown={handleKeyDown}
       onClick={() => onToggle(challenge.id)}
       className={cn(
-        'group relative flex flex-col justify-between rounded-[8px] border bg-white p-5 sm:p-6 text-left transition-all duration-200 cursor-pointer outline-none select-none focus-visible:ring-2 focus-visible:ring-[#009345] focus-visible:ring-offset-2',
+        'group relative flex flex-col justify-between overflow-hidden rounded-[8px] border p-5 sm:p-6 text-left transition-all duration-250 cursor-pointer outline-none select-none focus-visible:ring-2 focus-visible:ring-[#009345] focus-visible:ring-offset-2',
         isSelected
-          ? 'border-[#009345] ring-2 ring-[#009345] shadow-md shadow-emerald-950/5 bg-gradient-to-b from-white to-emerald-50/25'
-          : 'border-slate-200 hover:border-slate-300 hover:shadow-lg hover:-translate-y-1 hover:shadow-slate-900/5'
+          ? 'border-[#009345] ring-2 ring-[#009345] bg-gradient-to-b from-white via-white to-emerald-50/30 shadow-md shadow-emerald-950/5'
+          : 'border-slate-200/90 bg-white hover:border-slate-300 hover:shadow-xl hover:-translate-y-1',
+        className
       )}
     >
+      {/* Subtle Ambient Editorial Image Watermark in Background */}
+      <div className="absolute inset-0 pointer-events-none opacity-[0.045] group-hover:opacity-[0.08] transition-opacity duration-500 overflow-hidden">
+        <Image
+          src={bgImage.src}
+          alt=""
+          fill
+          className="object-cover filter grayscale contrast-125"
+          sizes="600px"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-white via-white/80 to-transparent" />
+      </div>
+
       {/* Top Subtle Visual Accent Indicator */}
       <div
         className={cn(
-          'absolute top-0 left-4 right-4 h-[2px] rounded-t-full transition-all duration-300',
+          'absolute top-0 left-0 right-0 h-[2.5px] transition-all duration-300',
           isSelected
             ? 'bg-[#009345]'
             : 'bg-transparent group-hover:bg-[#009345]/50'
         )}
       />
 
-      <div>
+      <div className="relative z-10">
         {/* Card Header: Minimal Icon + Visual Checkmark */}
         <div className="flex items-start justify-between gap-3">
           <div
             className={cn(
-              'flex h-10 w-10 shrink-0 items-center justify-center rounded-[4px] border transition-all duration-200',
+              'flex h-10.5 w-10.5 shrink-0 items-center justify-center rounded-[4px] border transition-all duration-200',
               isSelected
                 ? 'bg-[#009345] text-white border-[#009345] shadow-xs'
-                : 'bg-slate-50 text-[#062039] border-slate-200 group-hover:bg-[#062039] group-hover:text-white group-hover:border-[#062039]'
+                : 'bg-slate-50 text-[#062039] border-slate-200/90 group-hover:bg-[#062039] group-hover:text-white group-hover:border-[#062039]'
             )}
           >
             <div className="transition-transform duration-200 group-hover:scale-110 group-hover:-translate-y-0.5">
@@ -87,7 +117,7 @@ export function ChallengeCard({
             </div>
           </div>
 
-          {/* Visual Checkmark Box (Purely Visual Feedback) */}
+          {/* Visual Checkmark Box */}
           <div
             className={cn(
               'flex h-5 w-5 shrink-0 items-center justify-center rounded-[3px] border transition-all duration-200',
@@ -104,20 +134,21 @@ export function ChallengeCard({
         <div className="mt-4">
           <h3
             className={cn(
-              'text-base sm:text-lg font-bold tracking-tight uppercase transition-colors',
+              'font-extrabold tracking-tight uppercase transition-colors',
+              isWide ? 'text-lg sm:text-xl' : 'text-base sm:text-lg',
               isSelected ? 'text-[#062039]' : 'text-[#062039] group-hover:text-[#009345]'
             )}
           >
             {challenge.title}
           </h3>
-          <p className="mt-1.5 text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
+          <p className="mt-1.5 text-xs sm:text-sm text-slate-600 leading-relaxed font-normal max-w-lg">
             {challenge.shortDescription}
           </p>
         </div>
       </div>
 
       {/* Card Action Footer: Clean Explore Link */}
-      <div className="mt-5 pt-3 border-t border-slate-100 flex items-center justify-end">
+      <div className="relative z-10 mt-5 pt-3 border-t border-slate-100/90 flex items-center justify-end">
         <button
           type="button"
           onClick={(e) => {
