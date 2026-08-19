@@ -14,9 +14,29 @@ interface Stage1DiscoverProps {
 export function Stage1Discover({ onStart, onExploreCapabilities }: Stage1DiscoverProps) {
   return (
     <div className="relative min-h-[calc(100vh-80px)] flex flex-col justify-center py-12 lg:py-20 overflow-hidden">
-      {/* Subtle Depth & Grid Ambient System */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[650px] bg-gradient-to-tr from-[#062039]/6 via-[#009345]/8 to-transparent rounded-full blur-3xl pointer-events-none" />
+      {/* Subtle Depth & Grid Ambient System with Modern Aurora Drift */}
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[700px] bg-gradient-to-tr from-[#062039]/8 via-[#009345]/12 to-transparent rounded-full blur-3xl pointer-events-none animate-aurora" />
+      <div className="absolute top-1/4 right-10 w-[400px] h-[400px] bg-[#009345]/6 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute inset-0 bg-financial-grid opacity-50 pointer-events-none" />
+
+      {/* Floating Micro Data Signal Particles */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <motion.div
+          className="absolute top-1/4 left-1/5 h-1 w-1 rounded-full bg-[#009345]/60"
+          animate={{ y: [0, -15, 0], opacity: [0.3, 0.9, 0.3] }}
+          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.div
+          className="absolute top-1/2 right-1/4 h-1.5 w-1.5 rounded-full bg-[#38bdf8]/50"
+          animate={{ y: [0, -20, 0], opacity: [0.2, 0.8, 0.2] }}
+          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+        />
+        <motion.div
+          className="absolute bottom-1/3 left-1/3 h-1 w-1 rounded-full bg-[#009345]/40"
+          animate={{ y: [0, -12, 0], opacity: [0.2, 0.7, 0.2] }}
+          transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+        />
+      </div>
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center">
