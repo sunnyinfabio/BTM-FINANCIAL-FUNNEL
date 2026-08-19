@@ -3,7 +3,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/Button';
-import { Badge } from '@/components/ui/Badge';
 import { FinancialDataStream } from '@/components/animations/FinancialDataStream';
 import { ArrowRight, Compass } from 'lucide-react';
 
@@ -14,18 +13,18 @@ interface Stage1DiscoverProps {
 
 export function Stage1Discover({ onStart, onExploreCapabilities }: Stage1DiscoverProps) {
   return (
-    <div className="relative min-h-[calc(100vh-80px)] flex flex-col justify-center py-10 lg:py-16">
+    <div className="relative min-h-[calc(100vh-80px)] flex flex-col justify-center py-10 lg:py-14">
       {/* Restrained Background Grid */}
       <div className="absolute inset-0 bg-financial-grid opacity-60 pointer-events-none" />
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
-          {/* Left Side: Typography & CTAs */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+          {/* Left Side: Typography & CTAs (Clean, Bold, Focused) */}
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
-            className="lg:col-span-6 space-y-6 text-left"
+            className="lg:col-span-5 space-y-6 text-left"
           >
             {/* Subtle 01 / 05 Progress Indicator */}
             <div className="flex items-center gap-3">
@@ -33,13 +32,13 @@ export function Stage1Discover({ onStart, onExploreCapabilities }: Stage1Discove
                 01 <span className="text-slate-400 font-normal">/</span> 05
               </span>
               <span className="text-[11px] font-bold uppercase tracking-[1.5px] text-[#737373]">
-                Solution Discovery Diagnostic
+                Solution Discovery
               </span>
             </div>
 
             {/* Headline */}
             <div>
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-[#062039] leading-[1.12]">
+              <h1 className="text-3xl sm:text-4xl lg:text-[42px] font-extrabold tracking-tight text-[#062039] leading-[1.12]">
                 Turn Complex Challenges Into <span className="text-[#009345]">Smarter Solutions.</span>
               </h1>
               {/* Signature BTM Bar Separator */}
@@ -47,12 +46,12 @@ export function Stage1Discover({ onStart, onExploreCapabilities }: Stage1Discove
             </div>
 
             {/* Supporting Text */}
-            <p className="text-base sm:text-lg text-[#231f20] leading-relaxed max-w-lg font-normal">
+            <p className="text-base sm:text-lg text-[#231f20] leading-relaxed font-normal">
               Tell us what you're trying to solve. We'll help you discover the BTM Financial capabilities most relevant to your business.
             </p>
 
             {/* CTAs */}
-            <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5">
+            <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
               <Button
                 variant="emerald"
                 size="lg"
@@ -74,19 +73,19 @@ export function Stage1Discover({ onStart, onExploreCapabilities }: Stage1Discove
             </div>
 
             {/* Subtle Trust-Oriented Line */}
-            <div className="pt-4 border-t border-slate-200/80">
+            <div className="pt-3 border-t border-slate-200/80">
               <p className="text-xs font-mono font-semibold uppercase tracking-[2px] text-[#737373]">
                 Advisory • Analytics • Technology • AI
               </p>
             </div>
           </motion.div>
 
-          {/* Right Side: Sophisticated Financial / Data Visualization Frame */}
+          {/* Right Side: 70% Visual High-Resolution Financial Analytics Image */}
           <motion.div
             initial={{ opacity: 0, scale: 0.97 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.45, delay: 0.1 }}
-            className="lg:col-span-6 flex justify-center"
+            className="lg:col-span-7 flex justify-center"
           >
             <FinancialDataStream />
           </motion.div>
