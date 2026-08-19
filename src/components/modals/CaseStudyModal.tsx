@@ -1,12 +1,12 @@
 'use client';
 
 import React, { useEffect } from 'react';
-import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CaseStudy } from '@/data/types';
 import { getImage } from '@/data/images';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
+import { BtmImageFrame } from '@/components/ui/BtmImageFrame';
 import {
   X,
   Building2,
@@ -65,36 +65,28 @@ export function CaseStudyModal({
               transition={{ duration: 0.2 }}
               className="relative w-full max-w-2xl overflow-hidden rounded-[8px] bg-white text-left shadow-2xl border border-slate-200"
             >
-              {/* Modal Banner Header */}
-              <div className="relative h-48 w-full bg-[#062039] overflow-hidden">
-                <Image
+              {/* Modal Banner Header with BtmImageFrame */}
+              <div className="relative">
+                <BtmImageFrame
                   src={imageAsset.src}
                   alt={imageAsset.alt}
-                  fill
-                  className="object-cover opacity-60"
-                  sizes="700px"
+                  aspectRatio="16/9"
+                  isIllustrative={true}
+                  className="rounded-b-none border-0"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#062039] via-[#062039]/60 to-transparent" />
 
                 {/* Close Button */}
                 <button
                   type="button"
                   onClick={onClose}
-                  className="absolute top-4 right-4 rounded-full bg-black/40 backdrop-blur-md p-1.5 text-white hover:bg-black/60 transition-colors"
+                  className="absolute top-4 right-4 z-20 rounded-full bg-black/40 backdrop-blur-md p-1.5 text-white hover:bg-black/60 transition-colors"
                   aria-label="Close modal"
                 >
                   <X className="h-5 w-5" />
                 </button>
 
-                {/* Illustrative Precedent Tag */}
-                <div className="absolute top-4 left-6">
-                  <span className="bg-black/50 backdrop-blur-sm border border-white/20 text-white text-[10px] font-mono uppercase px-2 py-0.5 rounded-[2px]">
-                    Representative Illustrative Precedent
-                  </span>
-                </div>
-
                 {/* Header Tag and Title */}
-                <div className="absolute bottom-4 left-6 right-6">
+                <div className="absolute bottom-4 left-6 right-6 z-20">
                   <div className="flex flex-wrap items-center gap-2">
                     <Badge variant="emerald" size="sm">
                       {caseStudy.category}

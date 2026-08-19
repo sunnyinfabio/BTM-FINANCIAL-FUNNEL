@@ -1,11 +1,11 @@
 'use client';
 
 import React from 'react';
-import Image from 'next/image';
 import { Capability } from '@/data/types';
 import { getImage } from '@/data/images';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
+import { BtmImageFrame } from '@/components/ui/BtmImageFrame';
 import {
   CheckCircle2,
   ArrowRight,
@@ -25,37 +25,34 @@ export function CapabilityCard({
   onExplore,
   onViewRelatedWork
 }: CapabilityCardProps) {
-  // Mapping per user capability visual specification
   const imageKeyMap: Record<string, string> = {
-    'data-analytics': 'dataAnalytics',                     // Analyst + dashboard
-    'application-services': 'applicationServices',         // Enterprise technology
-    'technology-consulting': 'technologyConsulting',       // Enterprise technology
-    'ai-ml': 'aiAutomation',                               // AI/data network
-    'quant-analytics': 'quantAnalytics',                   // Quantitative charts
-    'fixed-income-equity-analytics': 'financialAnalytics', // Quantitative charts
-    'cloud-computing': 'cloudInfrastructure',             // Cloud infrastructure
-    'valuation-advisory-services': 'valuationAdvisory',    // Property + valuation analytics
-    'structured-finance': 'structuredFinance',             // Commercial real estate / capital markets
-    'specialized-support-team': 'advisory'                 // Executive financial analysis
+    'data-analytics': 'dataAnalytics',
+    'application-services': 'applicationServices',
+    'technology-consulting': 'technologyConsulting',
+    'ai-ml': 'aiAutomation',
+    'quant-analytics': 'quantAnalytics',
+    'fixed-income-equity-analytics': 'financialAnalytics',
+    'cloud-computing': 'cloudInfrastructure',
+    'valuation-advisory-services': 'valuationAdvisory',
+    'structured-finance': 'structuredFinance',
+    'specialized-support-team': 'advisory'
   };
 
   const imageAsset = getImage(imageKeyMap[capability.id] || 'dataAnalytics');
 
   return (
     <div className="group relative flex flex-col justify-between overflow-hidden rounded-[8px] border border-slate-200 bg-white shadow-2xs hover:shadow-lg transition-all duration-200">
-      {/* Top Banner / Image Area with subtle corporate overlay */}
-      <div className="relative h-44 w-full overflow-hidden bg-[#062039]">
-        <Image
+      {/* Top Banner / Image Area with Unified BTM Photographic Language */}
+      <div className="relative">
+        <BtmImageFrame
           src={imageAsset.src}
           alt={imageAsset.alt}
-          fill
-          className="object-cover opacity-75 group-hover:scale-103 group-hover:opacity-85 transition-all duration-300"
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          aspectRatio="16/10"
+          className="rounded-b-none border-0"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#062039] via-[#062039]/40 to-transparent" />
 
         {/* Priority Rank & Category Badge */}
-        <div className="absolute top-3 left-3 right-3 flex items-center justify-between">
+        <div className="absolute top-3 left-3 right-3 flex items-center justify-between z-20">
           <Badge variant="emerald" size="sm">
             Match #{index + 1}
           </Badge>
@@ -66,7 +63,7 @@ export function CapabilityCard({
         </div>
 
         {/* Capability Title inside banner */}
-        <div className="absolute bottom-3 left-4 right-4">
+        <div className="absolute bottom-3 left-4 right-4 z-20">
           <h3 className="text-lg font-extrabold tracking-tight text-white leading-tight">
             {capability.name}
           </h3>

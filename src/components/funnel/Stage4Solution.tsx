@@ -7,6 +7,7 @@ import { RecommendationResult, Capability, CaseStudy } from '@/data/types';
 import { getImage } from '@/data/images';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
+import { BtmImageFrame } from '@/components/ui/BtmImageFrame';
 import { SolutionDetailsDrawer } from '@/components/modals/SolutionDetailsDrawer';
 import {
   Sparkles,
@@ -94,13 +95,13 @@ export function Stage4Solution({
               onClick={() => onExploreCapability(capability)}
               className="group relative flex flex-col sm:flex-row items-start sm:items-center justify-between rounded-[8px] border border-slate-200/90 bg-white p-5 sm:p-6 shadow-2xs hover:border-[#009345] hover:shadow-xl transition-all duration-200 cursor-pointer overflow-hidden"
             >
-              {/* Subtle Ambient Editorial Watermark in Background */}
-              <div className="absolute right-0 top-0 bottom-0 w-1/3 pointer-events-none opacity-[0.04] group-hover:opacity-[0.08] transition-opacity duration-300 overflow-hidden">
+              {/* Subtle Ambient Editorial Watermark in Background with consistent photographic tone */}
+              <div className="absolute right-0 top-0 bottom-0 w-1/3 pointer-events-none opacity-[0.045] group-hover:opacity-[0.08] transition-opacity duration-300 overflow-hidden">
                 <Image
                   src={imageAsset.src}
                   alt=""
                   fill
-                  className="object-cover filter grayscale"
+                  className="object-cover filter grayscale contrast-125"
                   sizes="300px"
                 />
               </div>
@@ -162,22 +163,17 @@ export function Stage4Solution({
             className="group relative overflow-hidden rounded-[10px] border border-slate-200/90 bg-white shadow-md hover:border-slate-300 hover:shadow-2xl transition-all duration-300 cursor-pointer"
           >
             <div className="grid grid-cols-1 md:grid-cols-12 gap-0">
-              {/* Left Side: Large Visual Banner (5 Cols) */}
+              {/* Left Side: Large Visual Banner (5 Cols) with BtmImageFrame */}
               <div className="md:col-span-5 relative min-h-[220px] md:min-h-[260px] bg-[#062039] overflow-hidden">
-                <Image
+                <BtmImageFrame
                   src={featuredImage.src}
                   alt={featuredImage.alt}
-                  fill
-                  className="object-cover opacity-80 group-hover:scale-103 transition-transform duration-700"
-                  sizes="(max-width: 768px) 100vw, 350px"
+                  aspectRatio="auto"
+                  tag="Precedent"
+                  withGrain={true}
+                  withVignette={true}
+                  className="h-full w-full rounded-none border-0"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-[#062039]/80 via-transparent to-transparent" />
-
-                <div className="absolute top-4 left-4">
-                  <span className="bg-black/60 backdrop-blur-xs border border-white/20 text-white text-[10px] font-mono uppercase px-2 py-0.5 rounded-[2px]">
-                    Precedent
-                  </span>
-                </div>
               </div>
 
               {/* Right Side: Structured Content (7 Cols) */}

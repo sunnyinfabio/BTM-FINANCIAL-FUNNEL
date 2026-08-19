@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useEffect } from 'react';
-import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChallengeOption } from '@/data/types';
 import { BTM_CAPABILITIES } from '@/data/capabilities';
@@ -9,6 +8,7 @@ import { BTM_CASE_STUDIES } from '@/data/caseStudies';
 import { getImage } from '@/data/images';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
+import { BtmImageFrame } from '@/components/ui/BtmImageFrame';
 import {
   X,
   AlertCircle,
@@ -46,7 +46,6 @@ export function ChallengeDetailDrawer({
 
   if (!challenge) return null;
 
-  // Map challenge id to curated image key
   const challengeImageKeyMap: Record<string, string> = {
     'data-analytics': 'dataAnalytics',
     'tech-applications': 'technologyConsulting',
@@ -89,28 +88,26 @@ export function ChallengeDetailDrawer({
               transition={{ type: 'spring', damping: 28, stiffness: 280 }}
               className="w-screen max-w-xl bg-white shadow-2xl flex flex-col justify-between overflow-hidden"
             >
-              {/* Top Banner Image with 16:10 Aspect Ratio */}
-              <div className="relative h-44 w-full bg-[#062039] overflow-hidden shrink-0">
-                <Image
+              {/* Top Banner Image with Unified Photographic Treatment */}
+              <div className="relative shrink-0">
+                <BtmImageFrame
                   src={imageAsset.src}
                   alt={imageAsset.alt}
-                  fill
-                  className="object-cover opacity-75"
-                  sizes="600px"
+                  aspectRatio="16/10"
+                  className="rounded-b-none border-0"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#062039] via-[#062039]/50 to-transparent" />
 
                 {/* Close Button */}
                 <button
                   type="button"
                   onClick={onClose}
-                  className="absolute top-4 right-4 rounded-full bg-black/40 backdrop-blur-md p-1.5 text-white hover:bg-black/60 transition-colors"
+                  className="absolute top-4 right-4 z-20 rounded-full bg-black/40 backdrop-blur-md p-1.5 text-white hover:bg-black/60 transition-colors"
                   aria-label="Close drawer"
                 >
                   <X className="h-5 w-5" />
                 </button>
 
-                <div className="absolute bottom-4 left-6 right-6">
+                <div className="absolute bottom-4 left-6 right-6 z-20">
                   <Badge variant="emerald" size="sm">
                     {challenge.tag}
                   </Badge>
