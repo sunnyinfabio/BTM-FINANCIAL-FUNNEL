@@ -31,8 +31,8 @@ export const BTM_IMAGES: Record<string, ImageAsset> = {
     category: 'hero'
   },
   btmLogo: {
-    src: '/images/btm-logo.svg',
-    alt: 'BTM Financial Logo',
+    src: '/images/logo.jpg',
+    alt: 'BTM Financial Logo - Innovation At Work',
     category: 'branding'
   },
 

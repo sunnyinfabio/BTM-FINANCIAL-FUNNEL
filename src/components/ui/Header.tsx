@@ -38,35 +38,19 @@ export function Header({
   return (
     <header className="sticky top-0 z-40 w-full border-b border-slate-200 bg-white/98 backdrop-blur-sm transition-all shadow-xs">
       <div className="mx-auto flex h-18 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        {/* BTM Financial Brand Logo */}
+        {/* BTM Financial Official Brand Logo */}
         <div className="flex items-center gap-6">
           <div
             onClick={() => onNavigateToStage && onNavigateToStage(1)}
-            className="flex items-center gap-3 cursor-pointer"
+            className="flex items-center gap-3 cursor-pointer group"
             title="Return to Stage 1 (Discover)"
           >
-            <div className="flex items-center select-none">
-              {/* Distinctive BTM Visual Icon */}
-              <div className="flex h-9 w-9 items-center justify-center rounded-[4px] bg-[#062039] text-white shadow-xs">
-                <div className="flex items-end gap-1">
-                  <div className="w-1.5 h-5 bg-white rounded-[1px]"></div>
-                  <div className="w-1.5 h-3.5 bg-[#009345] rounded-[1px]"></div>
-                  <div className="w-1.5 h-4.5 bg-slate-300 rounded-[1px]"></div>
-                </div>
-              </div>
-              <div className="ml-2.5 flex flex-col">
-                <div className="flex items-baseline gap-1.5">
-                  <span className="font-extrabold tracking-tight text-[#062039] text-xl leading-none">
-                    BTM
-                  </span>
-                  <span className="font-semibold tracking-[2px] text-[#009345] text-xs uppercase leading-none">
-                    FINANCIAL
-                  </span>
-                </div>
-                <span className="text-[9px] font-semibold tracking-[1.5px] text-[#737373] uppercase mt-1">
-                  Advisory • Data • Analytics
-                </span>
-              </div>
+            <div className="relative h-10 w-auto flex items-center select-none">
+              <img
+                src="/images/logo.jpg"
+                alt="BTM Financial - Innovation At Work"
+                className="h-10 w-auto object-contain transition-transform duration-200 group-hover:scale-102"
+              />
             </div>
 
             <div className="hidden lg:flex items-center pl-4 border-l border-slate-200">
