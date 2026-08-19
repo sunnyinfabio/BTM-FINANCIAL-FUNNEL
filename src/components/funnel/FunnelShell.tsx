@@ -247,7 +247,10 @@ export function FunnelShell() {
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.3 }}
               >
-                <AnalyzingTransition onComplete={handleAnalyzingComplete} />
+                <AnalyzingTransition
+                  funnelState={funnelState}
+                  onComplete={handleAnalyzingComplete}
+                />
               </motion.div>
             ) : (
               <Stage4Solution

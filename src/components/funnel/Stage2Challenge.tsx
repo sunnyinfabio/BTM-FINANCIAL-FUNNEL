@@ -74,15 +74,6 @@ export function Stage2Challenge({
   const handlePrev = () => setActiveIndex((prev) => (prev - 1 + total) % total);
   const handleNext = () => setActiveIndex((prev) => (prev + 1) % total);
 
-  const handleSelectAndAdvance = () => {
-    if (!selectedChallenges.includes(current.id)) {
-      onToggleChallenge(current.id);
-    }
-    setTimeout(() => {
-      onContinue();
-    }, 550);
-  };
-
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-8 sm:pt-14 pb-28 sm:pb-16 scroll-mt-24">
       {/* Header Section */}
@@ -97,7 +88,7 @@ export function Stage2Challenge({
             02 / 05 • Focus
           </Badge>
           <span className="text-xs font-mono font-bold text-slate-500 uppercase tracking-wider">
-            Horizontal Capability Explorer
+            Capability Explorer
           </span>
         </div>
 
@@ -141,7 +132,7 @@ export function Stage2Challenge({
       </motion.div>
 
       {/* ============================================================ */}
-      {/* HORIZONTAL CAPABILITY EXPLORER (ONE LARGE PANEL + PEEKING SIDES) */}
+      {/* 50% IMAGE + 50% CONTENT ACTIVE PANEL WITH PEEKING SIDES       */}
       {/* ============================================================ */}
       <div className="relative max-w-6xl mx-auto flex items-center justify-center gap-4 sm:gap-6">
         {/* Left Arrow / Peeking Previous Panel */}
@@ -158,7 +149,7 @@ export function Stage2Challenge({
           </span>
         </div>
 
-        {/* Center Main Active Capability Panel (75-85% Width) */}
+        {/* Center Main Active Capability Panel (50% Content + 50% Image) */}
         <div className="w-full max-w-4xl">
           <AnimatePresence mode="wait">
             <motion.div
@@ -182,9 +173,9 @@ export function Stage2Challenge({
                 )}
               />
 
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-0">
-                {/* Left 55% Content Brief */}
-                <div className="lg:col-span-7 p-6 sm:p-10 flex flex-col justify-between space-y-6 order-2 lg:order-1">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 items-stretch">
+                {/* 50% Content Brief (6 Cols) */}
+                <div className="lg:col-span-6 p-6 sm:p-10 flex flex-col justify-between space-y-6 order-2 lg:order-1">
                   <div className="space-y-4">
                     {/* Index + Tag */}
                     <div className="flex items-center justify-between">
@@ -203,7 +194,7 @@ export function Stage2Challenge({
                     </div>
 
                     {/* Title */}
-                    <h3 className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight text-[#062039] uppercase leading-tight">
+                    <h3 className="text-2xl sm:text-3xl font-black tracking-tight text-[#062039] uppercase leading-tight">
                       {current.title}
                     </h3>
 
@@ -219,7 +210,7 @@ export function Stage2Challenge({
                   </div>
 
                   {/* Panel Action Triggers */}
-                  <div className="pt-6 border-t border-slate-100 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+                  <div className="pt-4 border-t border-slate-100 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
                     <button
                       type="button"
                       onClick={() => onToggleChallenge(current.id)}
@@ -245,18 +236,18 @@ export function Stage2Challenge({
                   </div>
                 </div>
 
-                {/* Right 45% Large Cinematic Visual Banner */}
-                <div className="lg:col-span-5 relative min-h-[240px] lg:min-h-[360px] bg-[#062039] overflow-hidden order-1 lg:order-2">
+                {/* 50% Cinematic Visual Banner (6 Cols) */}
+                <div className="lg:col-span-6 relative min-h-[260px] lg:min-h-[380px] bg-[#062039] overflow-hidden order-1 lg:order-2">
                   <Image
                     src={currentImage.src}
                     alt={currentImage.alt}
                     fill
-                    sizes="(max-width: 1024px) 100vw, 500px"
+                    sizes="(max-width: 1024px) 100vw, 600px"
                     className="object-cover filter contrast-120 brightness-95 scale-100 group-hover:scale-106 transition-transform duration-700 ease-out"
                   />
 
                   {/* Dark Vignette Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#062039]/80 via-transparent to-transparent lg:bg-gradient-to-r lg:from-[#062039]/60 lg:to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#062039]/80 via-transparent to-transparent lg:bg-gradient-to-r lg:from-[#062039]/50 lg:to-transparent" />
 
                   {/* Subtle Grain Texture */}
                   <div

@@ -276,7 +276,7 @@ export function Stage5Connect({
 
               {/* Reassurance Note */}
               <div className="mt-6 pt-4 border-t border-slate-700/80 text-xs text-slate-400 leading-relaxed font-normal">
-                Your diagnostic profile is automatically attached to your inquiry for our technical partners.
+                We'll connect you directly with the relevant BTM Financial team based on your selected focus.
               </div>
             </div>
 
