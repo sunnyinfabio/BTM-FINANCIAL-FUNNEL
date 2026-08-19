@@ -22,8 +22,6 @@ import {
   Phone,
   MessageSquare,
   RefreshCw,
-  Sparkles,
-  Layers,
   ArrowRight,
   ArrowDown
 } from 'lucide-react';
@@ -95,7 +93,7 @@ export function Stage5Connect({
     }
   };
 
-  // Find human-readable names for journey summary
+  // Human-readable journey summary elements
   const selectedChallengeNames = funnelState.selectedChallenges
     .map((id) => BTM_CHALLENGES.find((c) => c.id === id)?.title)
     .filter(Boolean)
@@ -116,48 +114,48 @@ export function Stage5Connect({
           initial={{ opacity: 0, scale: 0.96 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.35 }}
-          className="rounded-xl border border-slate-200 bg-white p-8 sm:p-10 shadow-lg"
+          className="rounded-2xl border border-slate-700/80 bg-[#062039] text-white p-8 sm:p-12 shadow-2xl relative overflow-hidden"
         >
-          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-[6px] bg-[#009345] text-white shadow-xs">
-            <CheckCircle2 className="h-8 w-8" />
+          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-xl bg-[#009345] text-white shadow-md mb-6">
+            <CheckCircle2 className="h-9 w-9" />
           </div>
 
-          <span className="mt-5 inline-block text-[10px] font-mono font-bold uppercase tracking-[2px] text-[#009345]">
-            Inquiry Received
+          <span className="inline-block text-[10px] font-mono font-bold uppercase tracking-[2.5px] text-emerald-400">
+            INQUIRY RECEIVED
           </span>
 
-          <h2 className="mt-1 text-2xl sm:text-3xl font-black tracking-tight text-[#062039] uppercase">
+          <h2 className="mt-2 text-2xl sm:text-4xl font-black tracking-tight text-white uppercase">
             Thank you, {submissionData.fullName}.
           </h2>
 
           <div className="btm-separator btm-separator-center" />
 
-          <p className="mt-2 text-sm text-slate-600 max-w-md mx-auto">
+          <p className="mt-3 text-sm sm:text-base text-slate-300 max-w-md mx-auto leading-relaxed">
             {submissionData.submissionType === 'meeting'
               ? 'The BTM Financial team has received your solution profile. A representative will reach out shortly to schedule an initial discussion.'
               : 'The BTM Financial team has logged your solution profile. We will review your requirements and reach out via email within 1 business day.'}
           </p>
 
           {/* Diagnostic Summary */}
-          <div className="mt-6 rounded-lg bg-slate-50 border border-slate-200 p-5 text-left space-y-3 text-xs font-mono">
-            <div className="text-[10px] font-bold uppercase tracking-[1.5px] text-[#737373]">
-              Diagnostic Summary
+          <div className="mt-8 rounded-xl bg-[#031120] border border-slate-700/80 p-5 text-left space-y-3 text-xs font-mono text-slate-300">
+            <div className="text-[10px] font-bold uppercase tracking-[1.5px] text-emerald-400">
+              DIAGNOSTIC PROFILE SUMMARY
             </div>
             <div>
               <span className="text-slate-500">Contact:</span>{' '}
-              <span className="font-bold text-slate-800">{submissionData.fullName}</span> ({submissionData.workEmail})
+              <span className="font-bold text-white">{submissionData.fullName}</span> ({submissionData.workEmail})
             </div>
             <div>
               <span className="text-slate-500">Company:</span>{' '}
-              <span className="font-bold text-slate-800">{submissionData.company}</span>
+              <span className="font-bold text-white">{submissionData.company}</span>
             </div>
-            <div className="pt-2 border-t border-slate-200">
+            <div className="pt-2 border-t border-slate-700">
               <span className="text-slate-500 block mb-1">Selected Focus:</span>
               <div className="flex flex-wrap gap-1.5 font-sans">
                 {recommendation.recommendedCapabilities.map((cap) => (
                   <span
                     key={cap.id}
-                    className="inline-flex items-center gap-1 bg-white px-2.5 py-1 rounded-[3px] border border-slate-200 text-xs font-semibold text-[#062039]"
+                    className="inline-flex items-center gap-1 bg-[#062039] px-2.5 py-1 rounded-[3px] border border-slate-600 text-xs font-semibold text-white"
                   >
                     <CheckCircle2 className="h-3 w-3 text-[#009345]" />
                     {cap.name}
@@ -173,8 +171,9 @@ export function Stage5Connect({
               size="md"
               onClick={onRestart}
               leftIcon={<RefreshCw className="h-4 w-4" />}
+              className="border-slate-600 text-white hover:bg-white/10"
             >
-              Start New Discovery Session
+              START NEW DISCOVERY SESSION
             </Button>
           </div>
         </motion.div>
@@ -183,274 +182,274 @@ export function Stage5Connect({
   }
 
   // ============================================================
-  // 2-COLUMN CONVERSION SCREEN
+  // DARK BTM NAVY 2-COLUMN CONVERSION SCREEN
   // ============================================================
   return (
-    <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-10 sm:py-16 scroll-mt-24">
-      {/* Header Section */}
-      <motion.div
-        initial={{ opacity: 0, y: 14 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4 }}
-        className="text-center max-w-3xl mx-auto mb-10 sm:mb-14"
-      >
-        <div className="flex items-center justify-center gap-2 mb-2">
-          <Badge variant="emerald" size="sm" className="font-mono">
-            05 / 05 • Connect
-          </Badge>
-          <span className="text-xs font-mono font-bold text-slate-500 uppercase tracking-wider">
-            Final Step
-          </span>
-        </div>
+    <div className="w-full bg-[#062039] text-white py-16 sm:py-24 relative overflow-hidden rounded-3xl border border-slate-800 shadow-2xl my-8">
+      {/* Dynamic Ambient Depth */}
+      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#009345]/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-slate-700/20 rounded-full blur-2xl pointer-events-none" />
 
-        <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-[#062039] uppercase">
-          Let's Turn Your Idea Into Something Real.
-        </h2>
-
-        {/* Signature BTM Bar Separator */}
-        <div className="btm-separator btm-separator-center" />
-
-        <p className="text-sm sm:text-base text-slate-600 font-normal">
-          Tell us where to reach you and the BTM Financial team will discuss the right next step.
-        </p>
-      </motion.div>
-
-      {/* 2-Column Composition (Left: Journey Summary | Right: Progressive Lead Form) */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start max-w-5xl mx-auto">
-        {/* Left Column (5 Cols): Your Journey Flow Summary */}
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 relative z-10">
+        {/* Header Section */}
         <motion.div
-          initial={{ opacity: 0, x: -16 }}
-          animate={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.45 }}
-          className="lg:col-span-5 space-y-5"
+          className="text-center max-w-3xl mx-auto mb-12 sm:mb-16"
         >
-          <div className="rounded-xl border border-slate-200 bg-[#062039] text-white p-6 sm:p-7 shadow-2xl relative overflow-hidden">
-            {/* Ambient Glow */}
-            <div className="absolute top-0 right-0 h-40 w-40 bg-[#009345]/15 rounded-full blur-3xl pointer-events-none" />
-
-            <div className="flex items-center gap-2 text-[10px] font-mono font-bold uppercase tracking-[2.5px] text-[#009345] pb-3.5 border-b border-slate-700/80">
-              <CheckCircle2 className="h-4 w-4 text-[#009345]" />
-              Your Journey Summary
-            </div>
-
-            {/* Vertical Flow Diagram */}
-            <div className="mt-5 space-y-2.5">
-              {/* Step 1: Challenge */}
-              <div className="rounded-lg bg-[#031120]/80 border border-slate-700/80 p-3.5 text-left">
-                <span className="text-[10px] font-mono uppercase text-slate-400 block tracking-wider">
-                  01 • Challenge Identified
-                </span>
-                <span className="text-sm font-bold text-white mt-0.5 block">
-                  {selectedChallengeNames || 'Data & Analytics Solutions'}
-                </span>
-              </div>
-
-              {/* Connecting Down Arrow */}
-              <div className="flex justify-center">
-                <ArrowDown className="h-4 w-4 text-[#009345]" />
-              </div>
-
-              {/* Step 2: Industry */}
-              <div className="rounded-lg bg-[#031120]/80 border border-slate-700/80 p-3.5 text-left">
-                <span className="text-[10px] font-mono uppercase text-slate-400 block tracking-wider">
-                  02 • Organization Context
-                </span>
-                <span className="text-sm font-bold text-white mt-0.5 block">
-                  {selectedIndustryName}
-                </span>
-              </div>
-
-              {/* Connecting Down Arrow */}
-              <div className="flex justify-center">
-                <ArrowDown className="h-4 w-4 text-[#009345]" />
-              </div>
-
-              {/* Step 3: Recommended Solution */}
-              <div className="rounded-lg bg-emerald-950/50 border border-emerald-500/40 p-3.5 text-left">
-                <span className="text-[10px] font-mono uppercase text-emerald-400 block tracking-wider">
-                  03 • Recommended Solution Path
-                </span>
-                <span className="text-sm font-bold text-white mt-0.5 block">
-                  {primaryCapabilityName}
-                </span>
-              </div>
-            </div>
-
-            {/* Reassurance Note */}
-            <div className="mt-5 pt-4 border-t border-slate-700/80 text-xs text-slate-300 leading-relaxed font-normal">
-              Your diagnostic profile is automatically attached to your inquiry for our technical partners.
-            </div>
+          <div className="flex items-center justify-center gap-2 mb-2">
+            <span className="font-mono text-xs font-bold text-emerald-400 uppercase tracking-[3px] bg-emerald-950/60 px-3 py-1 rounded-[3px] border border-emerald-500/30">
+              05 / 05 • CONNECT
+            </span>
           </div>
 
-          <div className="rounded-lg border border-slate-200 bg-white p-4 text-xs text-slate-600 flex items-center gap-2.5 shadow-2xs">
-            <Lock className="h-4 w-4 text-[#009345] shrink-0" />
-            <span>Your information helps us understand your request and connect you with the right team.</span>
-          </div>
+          <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white uppercase mt-3">
+            Let's Turn Your Idea Into Something Real.
+          </h2>
+
+          {/* Signature BTM Bar Separator */}
+          <div className="btm-separator btm-separator-center mt-4" />
+
+          <p className="text-base sm:text-lg text-slate-300 font-normal max-w-xl mx-auto">
+            Tell us where to reach you and the BTM Financial team will discuss the right next step.
+          </p>
         </motion.div>
 
-        {/* Right Column (7 Cols): Progressive Conversion Form */}
-        <motion.div
-          initial={{ opacity: 0, x: 16 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.45 }}
-          className="lg:col-span-7 rounded-xl border border-slate-200 bg-white p-6 sm:p-8 shadow-md"
-        >
-          <div className="mb-5 text-left">
-            <h3 className="text-lg font-black text-[#062039] uppercase">
-              Tell us where to reach you.
-            </h3>
-            <p className="text-xs text-slate-500 mt-0.5">
-              Enter your work email to initiate discussion with the BTM Financial team.
-            </p>
-          </div>
-
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 text-left">
-            {/* 1. Work Email */}
-            <div>
-              <label className="block text-[11px] font-mono font-bold uppercase tracking-[1.5px] text-[#062039] mb-1">
-                Work Email <span className="text-rose-500">*</span>
-              </label>
-              <div className="relative">
-                <Mail className="absolute left-3.5 top-3 h-4 w-4 text-slate-400" />
-                <input
-                  type="email"
-                  placeholder="name@company.com"
-                  {...register('workEmail')}
-                  onFocus={() => setEmailFocusedOrFilled(true)}
-                  className={`w-full rounded-[6px] border bg-white pl-10 pr-3 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition-all focus:ring-2 focus:ring-[#009345] ${
-                    errors.workEmail ? 'border-rose-300 bg-rose-50/20' : 'border-slate-300'
-                  }`}
-                />
+        {/* 2-Column Composition (Left: Journey Summary | Right: Progressive Lead Form) */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start max-w-5xl mx-auto">
+          {/* Left Column (5 Cols): Your Journey Flow Summary */}
+          <motion.div
+            initial={{ opacity: 0, x: -18 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5 }}
+            className="lg:col-span-5 space-y-5"
+          >
+            <div className="rounded-2xl border border-slate-700/80 bg-[#031120] text-white p-6 sm:p-8 shadow-2xl relative overflow-hidden text-left">
+              <div className="flex items-center gap-2 text-[10px] font-mono font-bold uppercase tracking-[2.5px] text-emerald-400 pb-3.5 border-b border-slate-700/80">
+                <CheckCircle2 className="h-4 w-4 text-[#009345]" />
+                YOUR JOURNEY SUMMARY
               </div>
-              {errors.workEmail && (
-                <p className="mt-1 text-xs text-rose-600">{errors.workEmail.message}</p>
-              )}
+
+              {/* Vertical Flow Diagram */}
+              <div className="mt-5 space-y-2.5">
+                {/* Step 1: Challenge */}
+                <div className="rounded-lg bg-[#062039] border border-slate-700/80 p-4">
+                  <span className="text-[10px] font-mono uppercase text-slate-400 block tracking-wider">
+                    01 • CHALLENGE IDENTIFIED
+                  </span>
+                  <span className="text-sm font-bold text-white mt-1 block">
+                    {selectedChallengeNames || 'Data & Analytics Solutions'}
+                  </span>
+                </div>
+
+                {/* Connecting Down Arrow */}
+                <div className="flex justify-center">
+                  <ArrowDown className="h-4 w-4 text-[#009345]" />
+                </div>
+
+                {/* Step 2: Industry */}
+                <div className="rounded-lg bg-[#062039] border border-slate-700/80 p-4">
+                  <span className="text-[10px] font-mono uppercase text-slate-400 block tracking-wider">
+                    02 • ORGANIZATION CONTEXT
+                  </span>
+                  <span className="text-sm font-bold text-white mt-1 block">
+                    {selectedIndustryName}
+                  </span>
+                </div>
+
+                {/* Connecting Down Arrow */}
+                <div className="flex justify-center">
+                  <ArrowDown className="h-4 w-4 text-[#009345]" />
+                </div>
+
+                {/* Step 3: Recommended Solution */}
+                <div className="rounded-lg bg-emerald-950/60 border border-emerald-500/40 p-4">
+                  <span className="text-[10px] font-mono uppercase text-emerald-400 block tracking-wider">
+                    03 • RECOMMENDED SOLUTION PATH
+                  </span>
+                  <span className="text-sm font-bold text-white mt-1 block">
+                    {primaryCapabilityName}
+                  </span>
+                </div>
+              </div>
+
+              {/* Reassurance Note */}
+              <div className="mt-6 pt-4 border-t border-slate-700/80 text-xs text-slate-400 leading-relaxed font-normal">
+                Your diagnostic profile is automatically attached to your inquiry for our technical partners.
+              </div>
             </div>
 
-            {/* Progressive Reveal Fields (Name, Company, Phone, Project) */}
-            <AnimatePresence>
-              {showFullForm && (
-                <motion.div
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: 'auto' }}
-                  exit={{ opacity: 0, height: 0 }}
-                  transition={{ duration: 0.35 }}
-                  className="space-y-4 pt-1 overflow-hidden"
-                >
-                  {/* Full Name */}
-                  <div>
-                    <label className="block text-[11px] font-mono font-bold uppercase tracking-[1.5px] text-[#062039] mb-1">
-                      Full Name <span className="text-rose-500">*</span>
-                    </label>
-                    <div className="relative">
-                      <User className="absolute left-3.5 top-2.5 h-4 w-4 text-slate-400" />
-                      <input
-                        type="text"
-                        placeholder="e.g. Sarah Jenkins"
-                        {...register('fullName')}
-                        className={`w-full rounded-[6px] border bg-white pl-10 pr-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition-all focus:ring-2 focus:ring-[#009345] ${
-                          errors.fullName ? 'border-rose-300 bg-rose-50/20' : 'border-slate-300'
-                        }`}
-                      />
-                    </div>
-                    {errors.fullName && (
-                      <p className="mt-1 text-xs text-rose-600">{errors.fullName.message}</p>
-                    )}
-                  </div>
-
-                  {/* Company */}
-                  <div>
-                    <label className="block text-[11px] font-mono font-bold uppercase tracking-[1.5px] text-[#062039] mb-1">
-                      Company / Organization <span className="text-rose-500">*</span>
-                    </label>
-                    <div className="relative">
-                      <Building className="absolute left-3.5 top-2.5 h-4 w-4 text-slate-400" />
-                      <input
-                        type="text"
-                        placeholder="e.g. Apex Capital Partners"
-                        {...register('company')}
-                        className={`w-full rounded-[6px] border bg-white pl-10 pr-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition-all focus:ring-2 focus:ring-[#009345] ${
-                          errors.company ? 'border-rose-300 bg-rose-50/20' : 'border-slate-300'
-                        }`}
-                      />
-                    </div>
-                    {errors.company && (
-                      <p className="mt-1 text-xs text-rose-600">{errors.company.message}</p>
-                    )}
-                  </div>
-
-                  {/* Phone (Optional) */}
-                  <div>
-                    <label className="block text-[11px] font-mono font-bold uppercase tracking-[1.5px] text-[#062039] mb-1">
-                      Phone <span className="text-slate-400 font-normal lowercase tracking-normal font-sans">(optional)</span>
-                    </label>
-                    <div className="relative">
-                      <Phone className="absolute left-3.5 top-2.5 h-4 w-4 text-slate-400" />
-                      <input
-                        type="tel"
-                        placeholder="+1 (555) 000-0000"
-                        {...register('phone')}
-                        className="w-full rounded-[6px] border border-slate-300 bg-white pl-10 pr-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition-all focus:ring-2 focus:ring-[#009345]"
-                      />
-                    </div>
-                  </div>
-
-                  {/* Project / Challenge (Optional) */}
-                  <div>
-                    <label className="block text-[11px] font-mono font-bold uppercase tracking-[1.5px] text-[#062039] mb-1">
-                      Project Context / Goals <span className="text-slate-400 font-normal lowercase tracking-normal font-sans">(optional)</span>
-                    </label>
-                    <textarea
-                      rows={2}
-                      placeholder="Brief context on timeline, data formats, or goals..."
-                      {...register('projectDetails')}
-                      className="w-full rounded-[6px] border border-slate-300 bg-white p-2.5 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition-all focus:ring-2 focus:ring-[#009345]"
-                    />
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-
-            {/* Action CTAs */}
-            <div className="pt-3 space-y-2.5">
-              <Button
-                type="submit"
-                variant="emerald"
-                size="lg"
-                isLoading={isSubmitting && submissionType === 'conversation'}
-                onClick={() => {
-                  setEmailFocusedOrFilled(true);
-                  setValue('submissionType', 'conversation');
-                }}
-                rightIcon={<Send className="h-4 w-4" />}
-                className="w-full justify-center shadow-md font-bold text-sm sm:text-base py-3.5"
-              >
-                START A CONVERSATION →
-              </Button>
-
-              <Button
-                type="submit"
-                variant="outline"
-                size="md"
-                isLoading={isSubmitting && submissionType === 'meeting'}
-                onClick={() => {
-                  setEmailFocusedOrFilled(true);
-                  setValue('submissionType', 'meeting');
-                }}
-                leftIcon={<Calendar className="h-4 w-4 text-[#009345]" />}
-                className="w-full justify-center text-xs font-mono font-bold uppercase tracking-wider text-slate-700 hover:text-[#062039]"
-              >
-                BOOK A MEETING
-              </Button>
-            </div>
-
-            {/* Privacy Reassurance */}
-            <div className="pt-2 flex items-center justify-center gap-1.5 text-[11px] text-slate-500 text-center">
-              <Lock className="h-3 w-3 text-[#009345] shrink-0" />
+            <div className="rounded-xl border border-slate-700/80 bg-[#031120]/60 p-4 text-xs text-slate-300 flex items-center gap-2.5">
+              <Lock className="h-4 w-4 text-emerald-400 shrink-0" />
               <span>Your information helps us understand your request and connect you with the right team.</span>
             </div>
-          </form>
-        </motion.div>
+          </motion.div>
+
+          {/* Right Column (7 Cols): Progressive Conversion Form */}
+          <motion.div
+            initial={{ opacity: 0, x: 18 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5 }}
+            className="lg:col-span-7 rounded-2xl border border-slate-700/80 bg-[#031120] p-6 sm:p-8 shadow-2xl text-left"
+          >
+            <div className="mb-6 text-left">
+              <h3 className="text-xl font-black text-white uppercase">
+                TELL US WHERE TO REACH YOU.
+              </h3>
+              <p className="text-xs text-slate-400 mt-1">
+                Enter your work email to begin our collaborative discussion.
+              </p>
+            </div>
+
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 text-left">
+              {/* 1. Work Email (Always Visible & Prominent) */}
+              <div>
+                <label className="block text-[11px] font-mono font-bold uppercase tracking-[1.5px] text-slate-300 mb-1">
+                  WORK EMAIL <span className="text-emerald-400">*</span>
+                </label>
+                <div className="relative">
+                  <Mail className="absolute left-3.5 top-3.5 h-4 w-4 text-slate-400" />
+                  <input
+                    type="email"
+                    placeholder="name@company.com"
+                    {...register('workEmail')}
+                    onFocus={() => setEmailFocusedOrFilled(true)}
+                    className={`w-full rounded-lg border bg-[#062039] pl-10 pr-3 py-3 text-sm text-white placeholder:text-slate-500 outline-none transition-all focus:ring-2 focus:ring-[#009345] ${
+                      errors.workEmail ? 'border-rose-400' : 'border-slate-700'
+                    }`}
+                  />
+                </div>
+                {errors.workEmail && (
+                  <p className="mt-1 text-xs text-rose-400">{errors.workEmail.message}</p>
+                )}
+              </div>
+
+              {/* Progressive Reveal Fields (Name, Company, Phone, Project) */}
+              <AnimatePresence>
+                {showFullForm && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: 'auto' }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.35 }}
+                    className="space-y-4 pt-1 overflow-hidden"
+                  >
+                    {/* Full Name */}
+                    <div>
+                      <label className="block text-[11px] font-mono font-bold uppercase tracking-[1.5px] text-slate-300 mb-1">
+                        FULL NAME <span className="text-emerald-400">*</span>
+                      </label>
+                      <div className="relative">
+                        <User className="absolute left-3.5 top-3 h-4 w-4 text-slate-400" />
+                        <input
+                          type="text"
+                          placeholder="e.g. Sarah Jenkins"
+                          {...register('fullName')}
+                          className={`w-full rounded-lg border bg-[#062039] pl-10 pr-3 py-2.5 text-sm text-white placeholder:text-slate-500 outline-none transition-all focus:ring-2 focus:ring-[#009345] ${
+                            errors.fullName ? 'border-rose-400' : 'border-slate-700'
+                          }`}
+                        />
+                      </div>
+                      {errors.fullName && (
+                        <p className="mt-1 text-xs text-rose-400">{errors.fullName.message}</p>
+                      )}
+                    </div>
+
+                    {/* Company */}
+                    <div>
+                      <label className="block text-[11px] font-mono font-bold uppercase tracking-[1.5px] text-slate-300 mb-1">
+                        COMPANY / ORGANIZATION <span className="text-emerald-400">*</span>
+                      </label>
+                      <div className="relative">
+                        <Building className="absolute left-3.5 top-3 h-4 w-4 text-slate-400" />
+                        <input
+                          type="text"
+                          placeholder="e.g. Apex Capital Partners"
+                          {...register('company')}
+                          className={`w-full rounded-lg border bg-[#062039] pl-10 pr-3 py-2.5 text-sm text-white placeholder:text-slate-500 outline-none transition-all focus:ring-2 focus:ring-[#009345] ${
+                            errors.company ? 'border-rose-400' : 'border-slate-700'
+                          }`}
+                        />
+                      </div>
+                      {errors.company && (
+                        <p className="mt-1 text-xs text-rose-400">{errors.company.message}</p>
+                      )}
+                    </div>
+
+                    {/* Phone (Optional) */}
+                    <div>
+                      <label className="block text-[11px] font-mono font-bold uppercase tracking-[1.5px] text-slate-300 mb-1">
+                        PHONE <span className="text-slate-500 font-normal lowercase tracking-normal font-sans">(optional)</span>
+                      </label>
+                      <div className="relative">
+                        <Phone className="absolute left-3.5 top-3 h-4 w-4 text-slate-400" />
+                        <input
+                          type="tel"
+                          placeholder="+1 (555) 000-0000"
+                          {...register('phone')}
+                          className="w-full rounded-lg border border-slate-700 bg-[#062039] pl-10 pr-3 py-2.5 text-sm text-white placeholder:text-slate-500 outline-none transition-all focus:ring-2 focus:ring-[#009345]"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Project / Challenge (Optional) */}
+                    <div>
+                      <label className="block text-[11px] font-mono font-bold uppercase tracking-[1.5px] text-slate-300 mb-1">
+                        PROJECT CONTEXT / GOALS <span className="text-slate-500 font-normal lowercase tracking-normal font-sans">(optional)</span>
+                      </label>
+                      <textarea
+                        rows={2}
+                        placeholder="Brief context on timeline, data formats, or goals..."
+                        {...register('projectDetails')}
+                        className="w-full rounded-lg border border-slate-700 bg-[#062039] p-3 text-sm text-white placeholder:text-slate-500 outline-none transition-all focus:ring-2 focus:ring-[#009345]"
+                      />
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              {/* Action CTAs */}
+              <div className="pt-3 space-y-3">
+                <Button
+                  type="submit"
+                  variant="emerald"
+                  size="lg"
+                  isLoading={isSubmitting && submissionType === 'conversation'}
+                  onClick={() => {
+                    setEmailFocusedOrFilled(true);
+                    setValue('submissionType', 'conversation');
+                  }}
+                  rightIcon={<Send className="h-4 w-4" />}
+                  className="w-full justify-center shadow-md font-bold text-sm sm:text-base py-4"
+                >
+                  START A CONVERSATION →
+                </Button>
+
+                <Button
+                  type="submit"
+                  variant="outline"
+                  size="md"
+                  isLoading={isSubmitting && submissionType === 'meeting'}
+                  onClick={() => {
+                    setEmailFocusedOrFilled(true);
+                    setValue('submissionType', 'meeting');
+                  }}
+                  leftIcon={<Calendar className="h-4 w-4 text-[#009345]" />}
+                  className="w-full justify-center text-xs font-mono font-bold uppercase tracking-wider text-slate-300 border-slate-700 hover:text-white hover:bg-white/10"
+                >
+                  BOOK A MEETING
+                </Button>
+              </div>
+
+              {/* Privacy Reassurance */}
+              <div className="pt-2 flex items-center justify-center gap-1.5 text-[11px] text-slate-400 text-center">
+                <Lock className="h-3 w-3 text-emerald-400 shrink-0" />
+                <span>Your information helps us understand your request and connect you with the right team.</span>
+              </div>
+            </form>
+          </motion.div>
+        </div>
       </div>
     </div>
   );

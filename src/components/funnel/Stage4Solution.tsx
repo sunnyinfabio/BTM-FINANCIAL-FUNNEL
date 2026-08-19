@@ -1,18 +1,19 @@
 'use client';
 
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import Image from 'next/image';
+import { motion, AnimatePresence } from 'framer-motion';
 import { RecommendationResult, Capability, CaseStudy } from '@/data/types';
 import { getImage } from '@/data/images';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
 import { BtmImageFrame } from '@/components/ui/BtmImageFrame';
-import { CapabilityCard } from '@/components/cards/CapabilityCard';
 import { SolutionDetailsDrawer } from '@/components/modals/SolutionDetailsDrawer';
+import { cn } from '@/lib/utils';
 import {
   ArrowRight,
   Info,
-  BookOpen,
+  Layers,
   Sparkles
 } from 'lucide-react';
 
@@ -25,6 +26,19 @@ interface Stage4SolutionProps {
   onAdjustSelections: () => void;
 }
 
+const IMAGE_KEY_MAP: Record<string, string> = {
+  'data-analytics': 'dataAnalytics',
+  'application-services': 'applicationServices',
+  'technology-consulting': 'technologyConsulting',
+  'ai-ml': 'aiAutomation',
+  'quant-analytics': 'quantAnalytics',
+  'fixed-income-equity-analytics': 'financialAnalytics',
+  'cloud-computing': 'cloudInfrastructure',
+  'valuation-advisory-services': 'valuationAdvisory',
+  'structured-finance': 'structuredFinance',
+  'specialized-support-team': 'advisory'
+};
+
 export function Stage4Solution({
   recommendation,
   onExploreCapability,
@@ -33,10 +47,15 @@ export function Stage4Solution({
   onProceedToConnect,
   onAdjustSelections
 }: Stage4SolutionProps) {
+  const [hoveredIndex, setHoveredIndex] = useState(0);
   const [isWhyDrawerOpen, setIsWhyDrawerOpen] = useState(false);
   const { recommendedCapabilities, relevantCaseStudies } = recommendation;
 
-  // The Primary Featured Case Study for the 2-Column Hero Proof Card
+  const topThree = recommendedCapabilities.slice(0, 3);
+  const activeCapability = topThree[hoveredIndex] || topThree[0];
+  const activeImage = getImage(IMAGE_KEY_MAP[activeCapability?.id] || 'dataAnalytics');
+
+  // Featured Case Study (Blockchain & AI Enabled Lending Platform)
   const featuredCaseStudy = relevantCaseStudies[0];
   const featuredImage = featuredCaseStudy ? getImage(featuredCaseStudy.imageKey) : null;
 
@@ -45,7 +64,7 @@ export function Stage4Solution({
       initial={{ opacity: 0, y: 18 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-      className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-10 sm:py-16 text-center space-y-12"
+      className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10 sm:py-16 text-center space-y-14"
     >
       {/* Clean, Focused Header */}
       <div className="max-w-3xl mx-auto space-y-3">
@@ -67,25 +86,121 @@ export function Stage4Solution({
         </p>
       </div>
 
-      {/* Top 3 Sequential Large Horizontal Editorial Recommendation Panels */}
-      <div className="space-y-6 max-w-4xl mx-auto">
-        {recommendedCapabilities.slice(0, 3).map((capability, idx) => (
-          <CapabilityCard
-            key={capability.id}
-            capability={capability}
-            index={idx}
-            onExplore={onExploreCapability}
-            onViewRelatedWork={onViewRelatedWork}
-          />
-        ))}
+      {/* ============================================================ */}
+      {/* VERTICAL EDITORIAL SOLUTION LIST + DYNAMIC CINEMATIC IMAGE   */}
+      {/* ============================================================ */}
+      <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center text-left">
+        {/* Left 55% Vertical Editorial Solution List */}
+        <div className="lg:col-span-7 divide-y divide-slate-200 border-y border-slate-200">
+          {topThree.map((cap, idx) => {
+            const isHovered = idx === hoveredIndex;
+
+            return (
+              <div
+                key={cap.id}
+                onMouseEnter={() => setHoveredIndex(idx)}
+                onClick={() => onExploreCapability(cap)}
+                className={cn(
+                  'group relative py-7 sm:py-9 transition-all duration-300 cursor-pointer select-none',
+                  isHovered ? 'pl-4' : 'hover:pl-2'
+                )}
+              >
+                {/* Active Indicator on Left */}
+                <div
+                  className={cn(
+                    'absolute left-0 top-6 bottom-6 w-[3px] transition-all duration-300',
+                    isHovered ? 'bg-[#009345]' : 'bg-transparent'
+                  )}
+                />
+
+                <div className="flex items-start justify-between gap-4">
+                  <div className="space-y-2 max-w-xl">
+                    <div className="flex items-center gap-3">
+                      <span className="font-mono text-2xl sm:text-3xl font-black text-[#009345]">
+                        0{idx + 1}
+                      </span>
+                      <Badge variant="navy" size="sm" className="font-mono text-[10px] uppercase">
+                        {cap.category}
+                      </Badge>
+                    </div>
+
+                    <h3 className="text-xl sm:text-3xl font-black tracking-tight text-[#062039] uppercase group-hover:text-[#009345] transition-colors leading-tight">
+                      {cap.name}
+                    </h3>
+
+                    <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-normal">
+                      {cap.shortDescription}
+                    </p>
+                  </div>
+
+                  <div className="hidden sm:flex items-center pt-2">
+                    <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#009345] group-hover:translate-x-1.5 transition-transform inline-flex items-center gap-1">
+                      <span>EXPLORE</span>
+                      <ArrowRight className="h-4 w-4" />
+                    </span>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Right 45% Dynamic Image Showcase (Morphs on Hover) */}
+        <div className="lg:col-span-5 relative">
+          <div className="relative aspect-4/3 sm:aspect-16/10 lg:aspect-4/3 w-full rounded-2xl overflow-hidden bg-[#062039] shadow-2xl border border-slate-200">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeCapability?.id || 'default'}
+                initial={{ opacity: 0, scale: 1.05 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.98 }}
+                transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                className="absolute inset-0"
+              >
+                <Image
+                  src={activeImage.src}
+                  alt={activeImage.alt}
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 600px"
+                  className="object-cover filter contrast-115 brightness-95"
+                />
+
+                {/* Gradient Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-[#062039]/90 via-[#062039]/30 to-transparent" />
+
+                {/* Subtle Grain Overlay */}
+                <div
+                  className="absolute inset-0 pointer-events-none opacity-25 mix-blend-overlay"
+                  style={{
+                    backgroundImage: `radial-gradient(rgba(255,255,255,0.2) 1px, transparent 0)`,
+                    backgroundSize: '16px 16px'
+                  }}
+                />
+
+                {/* Caption Card inside Banner */}
+                <div className="absolute bottom-6 left-6 right-6 text-left text-white z-20">
+                  <span className="text-[10px] font-mono font-bold uppercase tracking-[2px] text-emerald-400 block mb-1">
+                    BTM SOLUTION FOCUS 0{hoveredIndex + 1}
+                  </span>
+                  <h4 className="text-xl sm:text-2xl font-black uppercase leading-tight drop-shadow-xs">
+                    {activeCapability?.name}
+                  </h4>
+                  <p className="text-xs text-slate-300 font-normal mt-1 line-clamp-2">
+                    {activeCapability?.tagline}
+                  </p>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+        </div>
       </div>
 
-      {/* "EXPLORE WHY THESE FIT →" Action Link (Opens Deep-Dive Drawer) */}
+      {/* "EXPLORE WHY THESE FIT →" Trigger (Opens Deep-Dive Drawer) */}
       <div className="flex items-center justify-center pt-2">
         <button
           type="button"
           onClick={() => setIsWhyDrawerOpen(true)}
-          className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono font-bold uppercase tracking-wider text-slate-700 hover:text-[#009345] bg-slate-100/90 hover:bg-slate-200/80 px-6 py-3 rounded-lg border border-slate-200/90 transition-all shadow-2xs hover:shadow-sm cursor-pointer"
+          className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono font-bold uppercase tracking-wider text-slate-700 hover:text-[#009345] bg-slate-100/90 hover:bg-slate-200/80 px-6 py-3.5 rounded-lg border border-slate-200/90 transition-all shadow-2xs hover:shadow-sm cursor-pointer"
         >
           <Info className="h-4 w-4 text-[#009345]" />
           <span>EXPLORE WHY THESE FIT →</span>
@@ -93,27 +208,27 @@ export function Stage4Solution({
       </div>
 
       {/* ============================================================ */}
-      {/* 2-COLUMN HERO CASE STUDY PROOF SECTION (RELEVANT BTM WORK)   */}
+      {/* REAL BTM CASE STUDY PROOF SECTION (RELEVANT BTM WORK)        */}
       {/* ============================================================ */}
       {featuredCaseStudy && featuredImage && (
         <motion.div
           initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.25 }}
-          className="max-w-4xl mx-auto text-left pt-4"
+          className="max-w-5xl mx-auto text-left pt-6"
         >
           <div
             onClick={() => onOpenCaseStudy(featuredCaseStudy)}
-            className="group relative overflow-hidden rounded-xl border border-slate-200/90 bg-white shadow-lg hover:border-[#009345] hover:shadow-2xl transition-all duration-350 cursor-pointer"
+            className="group relative overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-xl hover:border-[#009345] hover:shadow-2xl transition-all duration-350 cursor-pointer"
           >
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-0">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-0">
               {/* Left Side: Large Visual Banner (5 Cols) with BtmImageFrame */}
-              <div className="md:col-span-5 relative min-h-[220px] md:min-h-[280px] bg-[#062039] overflow-hidden">
+              <div className="lg:col-span-5 relative min-h-[240px] lg:min-h-[320px] bg-[#062039] overflow-hidden">
                 <BtmImageFrame
                   src={featuredImage.src}
                   alt={featuredImage.alt}
                   aspectRatio="auto"
-                  tag="Case Precedent"
+                  tag="Verified Case Study"
                   withGrain={true}
                   withVignette={true}
                   className="h-full w-full rounded-none border-0"
@@ -121,29 +236,40 @@ export function Stage4Solution({
               </div>
 
               {/* Right Side: Structured Content (7 Cols) */}
-              <div className="md:col-span-7 p-6 sm:p-8 flex flex-col justify-between space-y-4">
+              <div className="lg:col-span-7 p-7 sm:p-10 flex flex-col justify-between space-y-5">
                 <div>
                   <span className="text-[11px] font-mono font-bold uppercase tracking-[2.5px] text-[#009345] block">
                     RELEVANT BTM WORK
                   </span>
 
-                  <h3 className="mt-1.5 text-lg sm:text-2xl font-black text-[#062039] uppercase leading-snug group-hover:text-[#009345] transition-colors">
-                    {featuredCaseStudy.title}
+                  <h3 className="mt-2 text-xl sm:text-3xl font-black text-[#062039] uppercase leading-tight group-hover:text-[#009345] transition-colors">
+                    Blockchain & AI Enabled Lending Platform
                   </h3>
 
-                  <p className="mt-2 text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
-                    {featuredCaseStudy.challengeSummary}
+                  <p className="mt-3 text-xs sm:text-sm text-slate-700 leading-relaxed font-normal">
+                    "Create a trust-less lending platform designed to support the lending process with transparency and fairness across stakeholders."
                   </p>
+
+                  <div className="mt-3.5 flex flex-wrap gap-1.5">
+                    {['Application Services', 'Artificial Intelligence', 'Blockchain', 'Data & Analytics'].map((tag) => (
+                      <span
+                        key={tag}
+                        className="text-[11px] font-mono font-medium text-slate-600 bg-slate-100 px-2.5 py-0.5 rounded-[2px] border border-slate-200"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
                 </div>
 
-                <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
-                  <span className="text-xs font-mono font-semibold text-slate-700 bg-slate-100 px-2.5 py-1 rounded-[3px]">
-                    {featuredCaseStudy.category}
+                <div className="pt-4 border-t border-slate-100 flex items-center justify-between">
+                  <span className="text-xs font-mono font-semibold text-slate-500">
+                    Industry: Financial Technology & Lending
                   </span>
 
-                  <span className="inline-flex items-center gap-1 text-xs font-mono font-bold uppercase tracking-wider text-[#009345] group-hover:underline">
+                  <span className="inline-flex items-center gap-1.5 text-xs font-mono font-bold uppercase tracking-wider text-[#009345] group-hover:underline">
                     <span>EXPLORE CASE STUDY</span>
-                    <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1.5 transition-transform" />
+                    <ArrowRight className="h-4 w-4 group-hover:translate-x-1.5 transition-transform" />
                   </span>
                 </div>
               </div>
@@ -164,7 +290,7 @@ export function Stage4Solution({
           size="md"
           onClick={onProceedToConnect}
           rightIcon={<ArrowRight className="h-4 w-4" />}
-          className="shrink-0 font-bold px-5"
+          className="shrink-0 font-bold px-6"
         >
           Discuss Solution Path
         </Button>
