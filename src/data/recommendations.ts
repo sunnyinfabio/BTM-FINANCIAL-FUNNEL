@@ -196,7 +196,7 @@ export function calculateRecommendations(
     if (indName) {
       matchedInsights.push({
         title: 'Institutional Domain Fit',
-        detail: `Tailored for ${indName} operational models, regulatory guidelines, and reporting standards.`
+        detail: `Tailored for ${indName} operational models, workflow practices, and reporting standards.`
       });
     }
   }
