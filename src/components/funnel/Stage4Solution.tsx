@@ -14,7 +14,8 @@ import {
   ArrowRight,
   Info,
   Layers,
-  Sparkles
+  Sparkles,
+  ChevronDown
 } from 'lucide-react';
 
 interface Stage4SolutionProps {
@@ -48,6 +49,7 @@ export function Stage4Solution({
   onAdjustSelections
 }: Stage4SolutionProps) {
   const [hoveredIndex, setHoveredIndex] = useState(0);
+  const [mobileExpandedIndex, setMobileExpandedIndex] = useState<number | null>(0);
   const [isWhyDrawerOpen, setIsWhyDrawerOpen] = useState(false);
   const { recommendedCapabilities, relevantCaseStudies } = recommendation;
 
@@ -94,12 +96,17 @@ export function Stage4Solution({
         <div className="lg:col-span-7 divide-y divide-slate-200 border-y border-slate-200">
           {topThree.map((cap, idx) => {
             const isHovered = idx === hoveredIndex;
+            const isMobileExpanded = mobileExpandedIndex === idx;
+            const capImage = getImage(IMAGE_KEY_MAP[cap.id] || 'dataAnalytics');
 
             return (
               <div
                 key={cap.id}
                 onMouseEnter={() => setHoveredIndex(idx)}
-                onClick={() => onExploreCapability(cap)}
+                onClick={() => {
+                  setHoveredIndex(idx);
+                  setMobileExpandedIndex(isMobileExpanded ? null : idx);
+                }}
                 className={cn(
                   'group relative py-7 sm:py-9 transition-all duration-300 cursor-pointer select-none',
                   isHovered ? 'pl-4' : 'hover:pl-2'
@@ -133,21 +140,54 @@ export function Stage4Solution({
                     </p>
                   </div>
 
-                  <div className="hidden sm:flex items-center pt-2">
-                    <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#009345] group-hover:translate-x-1.5 transition-transform inline-flex items-center gap-1">
-                      <span>EXPLORE</span>
+                  <div className="flex items-center gap-2 pt-2">
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onExploreCapability(cap);
+                      }}
+                      className="text-xs font-mono font-bold uppercase tracking-wider text-[#009345] group-hover:translate-x-1 transition-transform inline-flex items-center gap-1 p-1"
+                    >
+                      <span className="hidden sm:inline">EXPLORE</span>
                       <ArrowRight className="h-4 w-4" />
-                    </span>
+                    </button>
                   </div>
+                </div>
+
+                {/* Mobile Inline Image Accordion (Visible on < lg screens when tapped) */}
+                <div className="lg:hidden mt-4">
+                  {isMobileExpanded && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      exit={{ opacity: 0, height: 0 }}
+                      className="relative aspect-16/9 w-full rounded-xl overflow-hidden bg-[#062039] shadow-md border border-slate-200 mt-3"
+                    >
+                      <Image
+                        src={capImage.src}
+                        alt={capImage.alt}
+                        fill
+                        sizes="100vw"
+                        className="object-cover filter contrast-115 brightness-95"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#062039]/80 via-transparent to-transparent" />
+                      <div className="absolute bottom-3 left-3 right-3 text-white">
+                        <span className="text-[10px] font-mono font-bold text-emerald-400 uppercase">
+                          {cap.tagline}
+                        </span>
+                      </div>
+                    </motion.div>
+                  )}
                 </div>
               </div>
             );
           })}
         </div>
 
-        {/* Right 45% Dynamic Image Showcase (Morphs on Hover) */}
-        <div className="lg:col-span-5 relative">
-          <div className="relative aspect-4/3 sm:aspect-16/10 lg:aspect-4/3 w-full rounded-2xl overflow-hidden bg-[#062039] shadow-2xl border border-slate-200">
+        {/* Right 45% Dynamic Image Showcase (Morphs on Hover on Desktop) */}
+        <div className="hidden lg:block lg:col-span-5 relative">
+          <div className="relative aspect-4/3 w-full rounded-2xl overflow-hidden bg-[#062039] shadow-2xl border border-slate-200">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeCapability?.id || 'default'}
