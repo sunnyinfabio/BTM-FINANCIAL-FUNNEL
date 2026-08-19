@@ -20,7 +20,8 @@ import {
   Phone,
   MessageSquare,
   RefreshCw,
-  Sparkles
+  Sparkles,
+  ShieldCheck
 } from 'lucide-react';
 
 const leadFormSchema = z.object({
@@ -69,7 +70,6 @@ export function Stage5Connect({
   const submissionType = watch('submissionType');
 
   const onSubmit = async (data: LeadFormData) => {
-    // Brief network latency simulation
     await new Promise((resolve) => setTimeout(resolve, 600));
     setSubmissionData(data);
     setIsSubmitted(true);
@@ -163,28 +163,28 @@ export function Stage5Connect({
   }
 
   // ============================================================
-  // MINIMAL CONVERSION FORM
+  // 2-COLUMN CONVERSION SCREEN
   // ============================================================
   return (
-    <div className="mx-auto max-w-xl px-4 sm:px-6 py-8 sm:py-12">
+    <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-10 sm:py-16">
       {/* Header Section */}
       <motion.div
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.35 }}
-        className="text-center mb-7"
+        className="text-center max-w-2xl mx-auto mb-10"
       >
         <div className="flex items-center justify-center gap-2 mb-2">
           <Badge variant="emerald" size="sm">
-            Stage 05
+            Stage 05 • Connect
           </Badge>
           <span className="text-xs font-mono font-medium text-slate-500 uppercase tracking-wider">
-            Connect
+            Initiate Conversation
           </span>
         </div>
 
-        <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#062039]">
-          Ready to explore what's possible?
+        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-[#062039]">
+          Let's turn your idea into something real.
         </h2>
 
         {/* Signature BTM Bar Separator */}
@@ -195,164 +195,191 @@ export function Stage5Connect({
         </p>
       </motion.div>
 
-      {/* Selected Focus Summary Box (Reassures User) */}
-      <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.35, delay: 0.05 }}
-        className="mb-6 rounded-[6px] border border-slate-200 bg-white p-4 shadow-2xs"
-      >
-        <div className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[1.5px] text-[#009345] mb-2">
-          <CheckCircle2 className="h-3.5 w-3.5 text-[#009345]" />
-          Your selected focus:
-        </div>
-        <div className="flex flex-wrap gap-1.5">
-          {recommendation.recommendedCapabilities.map((cap) => (
-            <span
-              key={cap.id}
-              className="inline-flex items-center gap-1 bg-slate-50 px-2.5 py-1 rounded-[3px] border border-slate-200 text-xs font-semibold text-[#062039]"
-            >
-              <CheckCircle2 className="h-3 w-3 text-[#009345]" />
-              {cap.name}
-            </span>
-          ))}
-        </div>
-      </motion.div>
+      {/* 2-Column Composition (Left: Selected Focus | Right: Minimal Form) */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start max-w-5xl mx-auto">
+        {/* Left Column (5 Cols): Selected Focus Recap */}
+        <motion.div
+          initial={{ opacity: 0, x: -15 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.4 }}
+          className="lg:col-span-5 space-y-5"
+        >
+          <div className="rounded-[8px] border border-slate-200 bg-[#062039] text-white p-6 shadow-xl relative overflow-hidden">
+            {/* Ambient Glow */}
+            <div className="absolute top-0 right-0 h-32 w-32 bg-[#009345]/15 rounded-full blur-2xl pointer-events-none" />
 
-      {/* Minimal Lead Form Card */}
-      <motion.div
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.35, delay: 0.1 }}
-        className="rounded-[8px] border border-slate-200 bg-white p-6 sm:p-7 shadow-2xs"
-      >
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          {/* Name */}
-          <div>
-            <label className="block text-[11px] font-bold uppercase tracking-[1.5px] text-[#062039] mb-1">
-              Name <span className="text-rose-500">*</span>
-            </label>
-            <div className="relative">
-              <User className="absolute left-3.5 top-2.5 h-4 w-4 text-slate-400" />
-              <input
-                type="text"
-                placeholder="e.g. Sarah Jenkins"
-                {...register('fullName')}
-                className={`w-full rounded-[4px] border bg-white pl-10 pr-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition-all focus:ring-2 focus:ring-[#009345] ${
-                  errors.fullName ? 'border-rose-300 bg-rose-50/20' : 'border-slate-300'
-                }`}
-              />
+            <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[1.5px] text-[#009345] pb-3 border-b border-slate-700/80">
+              <CheckCircle2 className="h-3.5 w-3.5 text-[#009345]" />
+              Your Selected Focus
             </div>
-            {errors.fullName && (
-              <p className="mt-1 text-xs text-rose-600">{errors.fullName.message}</p>
-            )}
-          </div>
 
-          {/* Work Email */}
-          <div>
-            <label className="block text-[11px] font-bold uppercase tracking-[1.5px] text-[#062039] mb-1">
-              Work Email <span className="text-rose-500">*</span>
-            </label>
-            <div className="relative">
-              <Mail className="absolute left-3.5 top-2.5 h-4 w-4 text-slate-400" />
-              <input
-                type="email"
-                placeholder="sarah@firm.com"
-                {...register('workEmail')}
-                className={`w-full rounded-[4px] border bg-white pl-10 pr-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition-all focus:ring-2 focus:ring-[#009345] ${
-                  errors.workEmail ? 'border-rose-300 bg-rose-50/20' : 'border-slate-300'
-                }`}
-              />
+            {/* List of Recommended Capabilities */}
+            <div className="mt-4 space-y-3">
+              {recommendation.recommendedCapabilities.slice(0, 3).map((cap, idx) => (
+                <div
+                  key={cap.id}
+                  className="rounded-[4px] bg-[#031120]/80 border border-slate-700/80 p-3.5 flex items-start gap-3"
+                >
+                  <span className="font-mono text-xs font-bold text-emerald-400 mt-0.5">
+                    0{idx + 1}
+                  </span>
+                  <div>
+                    <div className="text-sm font-bold text-white">{cap.name}</div>
+                    <p className="text-xs text-slate-300 font-normal mt-0.5 leading-relaxed">
+                      {cap.shortDescription}
+                    </p>
+                  </div>
+                </div>
+              ))}
             </div>
-            {errors.workEmail && (
-              <p className="mt-1 text-xs text-rose-600">{errors.workEmail.message}</p>
-            )}
-          </div>
 
-          {/* Company */}
-          <div>
-            <label className="block text-[11px] font-bold uppercase tracking-[1.5px] text-[#062039] mb-1">
-              Company <span className="text-rose-500">*</span>
-            </label>
-            <div className="relative">
-              <Building className="absolute left-3.5 top-2.5 h-4 w-4 text-slate-400" />
-              <input
-                type="text"
-                placeholder="e.g. Apex Capital Partners"
-                {...register('company')}
-                className={`w-full rounded-[4px] border bg-white pl-10 pr-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition-all focus:ring-2 focus:ring-[#009345] ${
-                  errors.company ? 'border-rose-300 bg-rose-50/20' : 'border-slate-300'
-                }`}
-              />
-            </div>
-            {errors.company && (
-              <p className="mt-1 text-xs text-rose-600">{errors.company.message}</p>
-            )}
-          </div>
-
-          {/* Phone */}
-          <div>
-            <label className="block text-[11px] font-bold uppercase tracking-[1.5px] text-[#062039] mb-1">
-              Phone <span className="text-slate-400 font-normal lowercase tracking-normal">(optional)</span>
-            </label>
-            <div className="relative">
-              <Phone className="absolute left-3.5 top-2.5 h-4 w-4 text-slate-400" />
-              <input
-                type="tel"
-                placeholder="+1 (555) 000-0000"
-                {...register('phone')}
-                className="w-full rounded-[4px] border border-slate-300 bg-white pl-10 pr-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition-all focus:ring-2 focus:ring-[#009345]"
-              />
+            {/* Reassurance Note */}
+            <div className="mt-5 pt-4 border-t border-slate-700/80 text-xs text-slate-300 leading-relaxed font-normal">
+              Your selections and diagnostic profile are automatically attached to your inquiry for our technical partners.
             </div>
           </div>
 
-          {/* Project / Challenge */}
-          <div>
-            <label className="block text-[11px] font-bold uppercase tracking-[1.5px] text-[#062039] mb-1">
-              Project / Challenge <span className="text-slate-400 font-normal lowercase tracking-normal">(optional)</span>
-            </label>
-            <textarea
-              rows={2}
-              placeholder="Brief context on timeline, data formats, or goals..."
-              {...register('projectDetails')}
-              className="w-full rounded-[4px] border border-slate-300 bg-white p-2.5 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition-all focus:ring-2 focus:ring-[#009345]"
-            />
+          <div className="rounded-[6px] border border-slate-200 bg-white p-4 text-xs text-slate-600 flex items-center gap-2.5 shadow-2xs">
+            <ShieldCheck className="h-4 w-4 text-[#009345] shrink-0" />
+            <span>Institutional-grade confidentiality. NDA available prior to technical discovery.</span>
           </div>
+        </motion.div>
 
-          {/* Primary CTA & Secondary CTA */}
-          <div className="pt-3 space-y-2.5">
-            <Button
-              type="submit"
-              variant="emerald"
-              size="lg"
-              isLoading={isSubmitting && submissionType === 'conversation'}
-              onClick={() => setValue('submissionType', 'conversation')}
-              rightIcon={<Send className="h-4 w-4" />}
-              className="w-full justify-center shadow-xs"
-            >
-              Start a Conversation
-            </Button>
+        {/* Right Column (7 Cols): Minimal Conversion Form */}
+        <motion.div
+          initial={{ opacity: 0, x: 15 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.4 }}
+          className="lg:col-span-7 rounded-[8px] border border-slate-200 bg-white p-6 sm:p-7 shadow-sm"
+        >
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 text-left">
+            {/* Name */}
+            <div>
+              <label className="block text-[11px] font-bold uppercase tracking-[1.5px] text-[#062039] mb-1">
+                Name <span className="text-rose-500">*</span>
+              </label>
+              <div className="relative">
+                <User className="absolute left-3.5 top-2.5 h-4 w-4 text-slate-400" />
+                <input
+                  type="text"
+                  placeholder="e.g. Sarah Jenkins"
+                  {...register('fullName')}
+                  className={`w-full rounded-[4px] border bg-white pl-10 pr-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition-all focus:ring-2 focus:ring-[#009345] ${
+                    errors.fullName ? 'border-rose-300 bg-rose-50/20' : 'border-slate-300'
+                  }`}
+                />
+              </div>
+              {errors.fullName && (
+                <p className="mt-1 text-xs text-rose-600">{errors.fullName.message}</p>
+              )}
+            </div>
 
-            <Button
-              type="submit"
-              variant="outline"
-              size="md"
-              isLoading={isSubmitting && submissionType === 'meeting'}
-              onClick={() => setValue('submissionType', 'meeting')}
-              leftIcon={<Calendar className="h-4 w-4 text-[#009345]" />}
-              className="w-full justify-center text-xs font-bold uppercase tracking-wider text-slate-700 hover:text-[#062039]"
-            >
-              Book a Meeting
-            </Button>
-          </div>
+            {/* Work Email */}
+            <div>
+              <label className="block text-[11px] font-bold uppercase tracking-[1.5px] text-[#062039] mb-1">
+                Work Email <span className="text-rose-500">*</span>
+              </label>
+              <div className="relative">
+                <Mail className="absolute left-3.5 top-2.5 h-4 w-4 text-slate-400" />
+                <input
+                  type="email"
+                  placeholder="sarah@firm.com"
+                  {...register('workEmail')}
+                  className={`w-full rounded-[4px] border bg-white pl-10 pr-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition-all focus:ring-2 focus:ring-[#009345] ${
+                    errors.workEmail ? 'border-rose-300 bg-rose-50/20' : 'border-slate-300'
+                  }`}
+                />
+              </div>
+              {errors.workEmail && (
+                <p className="mt-1 text-xs text-rose-600">{errors.workEmail.message}</p>
+              )}
+            </div>
 
-          {/* Subtle Privacy Reassurance */}
-          <div className="pt-2 flex items-center justify-center gap-1.5 text-[11px] text-slate-500 text-center">
-            <Lock className="h-3 w-3 text-[#009345] shrink-0" />
-            <span>Enterprise confidentiality assured. BTM Financial does not share your information.</span>
-          </div>
-        </form>
-      </motion.div>
+            {/* Company */}
+            <div>
+              <label className="block text-[11px] font-bold uppercase tracking-[1.5px] text-[#062039] mb-1">
+                Company <span className="text-rose-500">*</span>
+              </label>
+              <div className="relative">
+                <Building className="absolute left-3.5 top-2.5 h-4 w-4 text-slate-400" />
+                <input
+                  type="text"
+                  placeholder="e.g. Apex Capital Partners"
+                  {...register('company')}
+                  className={`w-full rounded-[4px] border bg-white pl-10 pr-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition-all focus:ring-2 focus:ring-[#009345] ${
+                    errors.company ? 'border-rose-300 bg-rose-50/20' : 'border-slate-300'
+                  }`}
+                />
+              </div>
+              {errors.company && (
+                <p className="mt-1 text-xs text-rose-600">{errors.company.message}</p>
+              )}
+            </div>
+
+            {/* Phone */}
+            <div>
+              <label className="block text-[11px] font-bold uppercase tracking-[1.5px] text-[#062039] mb-1">
+                Phone <span className="text-slate-400 font-normal lowercase tracking-normal">(optional)</span>
+              </label>
+              <div className="relative">
+                <Phone className="absolute left-3.5 top-2.5 h-4 w-4 text-slate-400" />
+                <input
+                  type="tel"
+                  placeholder="+1 (555) 000-0000"
+                  {...register('phone')}
+                  className="w-full rounded-[4px] border border-slate-300 bg-white pl-10 pr-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition-all focus:ring-2 focus:ring-[#009345]"
+                />
+              </div>
+            </div>
+
+            {/* Project / Challenge */}
+            <div>
+              <label className="block text-[11px] font-bold uppercase tracking-[1.5px] text-[#062039] mb-1">
+                Project / Challenge <span className="text-slate-400 font-normal lowercase tracking-normal">(optional)</span>
+              </label>
+              <textarea
+                rows={2}
+                placeholder="Brief context on timeline, data formats, or goals..."
+                {...register('projectDetails')}
+                className="w-full rounded-[4px] border border-slate-300 bg-white p-2.5 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition-all focus:ring-2 focus:ring-[#009345]"
+              />
+            </div>
+
+            {/* Primary CTA & Secondary CTA */}
+            <div className="pt-3 space-y-2.5">
+              <Button
+                type="submit"
+                variant="emerald"
+                size="lg"
+                isLoading={isSubmitting && submissionType === 'conversation'}
+                onClick={() => setValue('submissionType', 'conversation')}
+                rightIcon={<Send className="h-4 w-4" />}
+                className="w-full justify-center shadow-xs"
+              >
+                Start a Conversation
+              </Button>
+
+              <Button
+                type="submit"
+                variant="outline"
+                size="md"
+                isLoading={isSubmitting && submissionType === 'meeting'}
+                onClick={() => setValue('submissionType', 'meeting')}
+                leftIcon={<Calendar className="h-4 w-4 text-[#009345]" />}
+                className="w-full justify-center text-xs font-bold uppercase tracking-wider text-slate-700 hover:text-[#062039]"
+              >
+                Book a Meeting
+              </Button>
+            </div>
+
+            {/* Privacy Reassurance */}
+            <div className="pt-2 flex items-center justify-center gap-1.5 text-[11px] text-slate-500 text-center">
+              <Lock className="h-3 w-3 text-[#009345] shrink-0" />
+              <span>Enterprise confidentiality assured. BTM Financial does not share your data.</span>
+            </div>
+          </form>
+        </motion.div>
+      </div>
     </div>
   );
 }
