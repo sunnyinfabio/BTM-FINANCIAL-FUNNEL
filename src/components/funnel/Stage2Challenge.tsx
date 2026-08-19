@@ -326,35 +326,18 @@ export function Stage2Challenge({
         </button>
       </div>
 
-      {/* Compact Mobile & Desktop Fixed Bottom CTA Bar */}
-      <div className="fixed bottom-0 left-0 right-0 z-40 bg-white/98 backdrop-blur-md border-t border-slate-200/90 shadow-2xl px-4 py-3 sm:py-3.5 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
-        <div className="max-w-2xl mx-auto flex items-center justify-between gap-3">
-          <div className="flex items-center gap-1.5 text-xs text-slate-700 min-w-0 truncate">
-            {hasSelection ? (
-              <div className="flex items-center gap-1.5 font-semibold text-slate-900 truncate">
-                <CheckCircle2 className="h-4 w-4 text-[#009345] shrink-0" />
-                <span className="truncate">
-                  <strong className="text-[#009345] font-mono">{selectedChallenges.length}</strong> focus {selectedChallenges.length === 1 ? 'area' : 'areas'} selected
-                </span>
-              </div>
-            ) : (
-              <span className="text-slate-500 text-[11px] sm:text-xs truncate font-mono">
-                Select a focus area to proceed
-              </span>
-            )}
-          </div>
-
-          <Button
-            variant="emerald"
-            size="md"
-            disabled={!hasSelection}
-            onClick={onContinue}
-            rightIcon={<ArrowRight className="h-4 w-4 shrink-0" />}
-            className="shrink-0 whitespace-nowrap text-xs sm:text-sm px-6 font-bold shadow-xs"
-          >
-            Continue to Context →
-          </Button>
-        </div>
+      {/* Inline Stage 2 Continue Action */}
+      <div className="mt-10 flex flex-col items-center justify-center gap-3">
+        <Button
+          variant="emerald"
+          size="lg"
+          disabled={!hasSelection}
+          onClick={onContinue}
+          rightIcon={<ArrowRight className="h-4 w-4" />}
+          className="text-xs sm:text-sm px-8 py-3 font-bold shadow-md uppercase tracking-wider"
+        >
+          Continue to Context →
+        </Button>
       </div>
     </div>
   );

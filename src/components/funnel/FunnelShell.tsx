@@ -19,6 +19,7 @@ import { CapabilityDetailModal } from '@/components/modals/CapabilityDetailModal
 import { AllCapabilitiesModal } from '@/components/modals/AllCapabilitiesModal';
 import { AmbientGlowFollower } from '@/components/animations/AmbientGlowFollower';
 import { BTM_CASE_STUDIES } from '@/data/caseStudies';
+import { Footer } from '@/components/ui/Footer';
 import { Layers, ArrowRight, Sparkles, Check } from 'lucide-react';
 
 export function FunnelShell() {
@@ -351,19 +352,11 @@ export function FunnelShell() {
         </section>
       </main>
 
-      {/* Persistent Subtle Footer */}
-      <footer className="w-full border-t border-slate-200 bg-white py-6 text-center text-xs text-slate-500">
-        <div className="mx-auto max-w-7xl px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <div className="flex items-center gap-2">
-            <span className="font-bold text-[#062039]">BTM Financial</span>
-            <span>•</span>
-            <span>Boutique Advisory, Application Development & Data Analytics</span>
-          </div>
-          <div className="text-slate-400">
-            © {new Date().getFullYear()} BTM Financial. All rights reserved.
-          </div>
-        </div>
-      </footer>
+      {/* BTM Financial Official Brand Footer */}
+      <Footer
+        onNavigateToStage={scrollToStage}
+        onOpenCapabilities={() => setIsAllCapabilitiesOpen(true)}
+      />
 
       {/* Modals and Drawers (Progressive Disclosure) */}
       <ChallengeDetailDrawer
