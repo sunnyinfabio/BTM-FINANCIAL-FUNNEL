@@ -7,7 +7,7 @@ import { ChallengeOption } from '@/data/types';
 import { ChallengeCard } from '@/components/cards/ChallengeCard';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
-import { ArrowRight, CheckCircle2, Sparkles, HelpCircle } from 'lucide-react';
+import { ArrowRight, CheckCircle2, Sparkles } from 'lucide-react';
 
 interface Stage2ChallengeProps {
   selectedChallenges: string[];
@@ -24,7 +24,7 @@ export function Stage2Challenge({
 }: Stage2ChallengeProps) {
   const hasSelection = selectedChallenges.length > 0;
 
-  // The 6 Primary Core Challenges
+  // The 6 Primary Core Challenges (3x2 Grid)
   const primaryChallenges = BTM_CHALLENGES.slice(0, 6);
   // 7th Challenge: Something Else / Bespoke Challenge
   const somethingElseChallenge = BTM_CHALLENGES[6];
@@ -55,7 +55,7 @@ export function Stage2Challenge({
         <div className="btm-separator btm-separator-center" />
 
         <p className="text-sm sm:text-base text-slate-600 font-normal">
-          Select one or more challenge areas. Click <span className="font-semibold text-[#009345]">"Explore details"</span> on any card to preview typical business problems and example outcomes without leaving this step.
+          Select one or more challenge areas. Click <span className="font-semibold text-[#009345]">"Explore →"</span> on any card to preview typical business problems and example outcomes without leaving this step.
         </p>
 
         {/* Multi-select count pill */}
@@ -110,7 +110,7 @@ export function Stage2Challenge({
             }}
             className={`group relative flex flex-col sm:flex-row items-start sm:items-center justify-between rounded-[8px] border p-4 sm:p-5 cursor-pointer transition-all duration-200 outline-none select-none focus-visible:ring-2 focus-visible:ring-[#009345] focus-visible:ring-offset-2 ${
               selectedChallenges.includes(somethingElseChallenge.id)
-                ? 'border-[#009345] ring-2 ring-[#009345] bg-gradient-to-r from-white to-emerald-50/30 shadow-sm'
+                ? 'border-[#009345] ring-2 ring-[#009345] bg-gradient-to-r from-white to-emerald-50/25 shadow-sm'
                 : 'border-slate-200 bg-white hover:border-slate-300 hover:shadow-md hover:-translate-y-0.5'
             }`}
           >
@@ -126,44 +126,27 @@ export function Stage2Challenge({
               </div>
 
               <div>
-                <div className="flex items-center gap-2">
-                  <h3 className="text-sm sm:text-base font-bold text-[#062039] group-hover:text-[#009345] transition-colors">
-                    {somethingElseChallenge.title}
-                  </h3>
-                  <Badge
-                    variant={selectedChallenges.includes(somethingElseChallenge.id) ? 'emerald' : 'gray'}
-                    size="sm"
-                  >
-                    Bespoke
-                  </Badge>
-                </div>
+                <h3 className="text-sm sm:text-base font-bold text-[#062039] uppercase group-hover:text-[#009345] transition-colors">
+                  {somethingElseChallenge.title}
+                </h3>
                 <p className="text-xs text-slate-600 font-normal mt-0.5">
                   {somethingElseChallenge.shortDescription}
                 </p>
               </div>
             </div>
 
-            <div className="mt-3 sm:mt-0 flex items-center gap-4 w-full sm:w-auto justify-between sm:justify-end pt-2 sm:pt-0 border-t sm:border-t-0 border-slate-100">
+            <div className="mt-3 sm:mt-0 flex items-center justify-end w-full sm:w-auto pt-2 sm:pt-0 border-t sm:border-t-0 border-slate-100">
               <button
                 type="button"
                 onClick={(e) => {
                   e.stopPropagation();
                   onExploreDetails(somethingElseChallenge);
                 }}
-                className="text-xs font-bold text-[#009345] hover:text-[#007a38] hover:underline"
+                className="inline-flex items-center gap-1 text-xs font-bold text-[#009345] hover:text-[#007a38] group-hover:translate-x-0.5 transition-all p-1"
               >
-                Explore details
+                <span>Explore</span>
+                <ArrowRight className="h-3.5 w-3.5" />
               </button>
-
-              <span
-                className={`text-[11px] font-bold uppercase tracking-wider ${
-                  selectedChallenges.includes(somethingElseChallenge.id)
-                    ? 'text-[#009345]'
-                    : 'text-slate-500 group-hover:text-slate-800'
-                }`}
-              >
-                {selectedChallenges.includes(somethingElseChallenge.id) ? 'Selected' : 'Select'}
-              </span>
             </div>
           </div>
         </motion.div>
