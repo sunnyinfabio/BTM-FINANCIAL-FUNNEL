@@ -73,7 +73,7 @@ export function Stage5Connect({
   const emailValue = watch('workEmail');
   const submissionType = watch('submissionType');
 
-  // Trigger progressive form reveal once email is focused or has content
+  // Trigger progressive reveal
   const showFullForm = emailFocusedOrFilled || (emailValue && emailValue.length > 3);
 
   const onSubmit = async (data: LeadFormData) => {
@@ -216,8 +216,8 @@ export function Stage5Connect({
           </p>
         </motion.div>
 
-        {/* 2-Column Composition (Left: Journey Summary | Right: Progressive Lead Form) */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start max-w-5xl mx-auto">
+        {/* 2-Column Composition (Left: Journey Summary | Right: Minimal Editorial Form) */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-start max-w-5xl mx-auto">
           {/* Left Column (5 Cols): Your Journey Flow Summary */}
           <motion.div
             initial={{ opacity: 0, x: -18 }}
@@ -228,7 +228,7 @@ export function Stage5Connect({
             <div className="rounded-2xl border border-slate-700/80 bg-[#031120] text-white p-6 sm:p-8 shadow-2xl relative overflow-hidden text-left">
               <div className="flex items-center gap-2 text-[10px] font-mono font-bold uppercase tracking-[2.5px] text-emerald-400 pb-3.5 border-b border-slate-700/80">
                 <CheckCircle2 className="h-4 w-4 text-[#009345]" />
-                YOUR JOURNEY SUMMARY
+                YOUR JOURNEY
               </div>
 
               {/* Vertical Flow Diagram */}
@@ -236,7 +236,7 @@ export function Stage5Connect({
                 {/* Step 1: Challenge */}
                 <div className="rounded-lg bg-[#062039] border border-slate-700/80 p-4">
                   <span className="text-[10px] font-mono uppercase text-slate-400 block tracking-wider">
-                    01 • CHALLENGE IDENTIFIED
+                    01 • YOUR CHALLENGE
                   </span>
                   <span className="text-sm font-bold text-white mt-1 block">
                     {selectedChallengeNames || 'Data & Analytics Solutions'}
@@ -251,7 +251,7 @@ export function Stage5Connect({
                 {/* Step 2: Industry */}
                 <div className="rounded-lg bg-[#062039] border border-slate-700/80 p-4">
                   <span className="text-[10px] font-mono uppercase text-slate-400 block tracking-wider">
-                    02 • ORGANIZATION CONTEXT
+                    02 • YOUR BUSINESS
                   </span>
                   <span className="text-sm font-bold text-white mt-1 block">
                     {selectedIndustryName}
@@ -266,7 +266,7 @@ export function Stage5Connect({
                 {/* Step 3: Recommended Solution */}
                 <div className="rounded-lg bg-emerald-950/60 border border-emerald-500/40 p-4">
                   <span className="text-[10px] font-mono uppercase text-emerald-400 block tracking-wider">
-                    03 • RECOMMENDED SOLUTION PATH
+                    03 • YOUR RECOMMENDED CAPABILITIES
                   </span>
                   <span className="text-sm font-bold text-white mt-1 block">
                     {primaryCapabilityName}
@@ -286,15 +286,15 @@ export function Stage5Connect({
             </div>
           </motion.div>
 
-          {/* Right Column (7 Cols): Progressive Conversion Form */}
+          {/* Right Column (7 Cols): Minimal Editorial Form with Clean Underline Inputs */}
           <motion.div
             initial={{ opacity: 0, x: 18 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
-            className="lg:col-span-7 rounded-2xl border border-slate-700/80 bg-[#031120] p-6 sm:p-8 shadow-2xl text-left"
+            className="lg:col-span-7 rounded-2xl border border-slate-700/80 bg-[#031120] p-6 sm:p-10 shadow-2xl text-left"
           >
-            <div className="mb-6 text-left">
-              <h3 className="text-xl font-black text-white uppercase">
+            <div className="mb-8 text-left">
+              <h3 className="text-xl sm:text-2xl font-black text-white uppercase tracking-tight">
                 TELL US WHERE TO REACH YOU.
               </h3>
               <p className="text-xs text-slate-400 mt-1">
@@ -302,30 +302,27 @@ export function Stage5Connect({
               </p>
             </div>
 
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 text-left">
-              {/* 1. Work Email (Always Visible & Prominent) */}
-              <div>
-                <label className="block text-[11px] font-mono font-bold uppercase tracking-[1.5px] text-slate-300 mb-1">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 text-left">
+              {/* 1. WORK EMAIL */}
+              <div className="relative group">
+                <label className="block text-[11px] font-mono font-bold uppercase tracking-[2px] text-slate-400 mb-1">
                   WORK EMAIL <span className="text-emerald-400">*</span>
                 </label>
-                <div className="relative">
-                  <Mail className="absolute left-3.5 top-3.5 h-4 w-4 text-slate-400" />
-                  <input
-                    type="email"
-                    placeholder="name@company.com"
-                    {...register('workEmail')}
-                    onFocus={() => setEmailFocusedOrFilled(true)}
-                    className={`w-full rounded-lg border bg-[#062039] pl-10 pr-3 py-3 text-sm text-white placeholder:text-slate-500 outline-none transition-all focus:ring-2 focus:ring-[#009345] ${
-                      errors.workEmail ? 'border-rose-400' : 'border-slate-700'
-                    }`}
-                  />
-                </div>
+                <input
+                  type="email"
+                  placeholder="name@organization.com"
+                  {...register('workEmail')}
+                  onFocus={() => setEmailFocusedOrFilled(true)}
+                  className={`w-full bg-transparent border-b py-2 text-base text-white placeholder:text-slate-600 outline-none transition-colors ${
+                    errors.workEmail ? 'border-rose-400' : 'border-slate-700 focus:border-[#009345]'
+                  }`}
+                />
                 {errors.workEmail && (
                   <p className="mt-1 text-xs text-rose-400">{errors.workEmail.message}</p>
                 )}
               </div>
 
-              {/* Progressive Reveal Fields (Name, Company, Phone, Project) */}
+              {/* Progressive Reveal Fields */}
               <AnimatePresence>
                 {showFullForm && (
                   <motion.div
@@ -333,76 +330,67 @@ export function Stage5Connect({
                     animate={{ opacity: 1, height: 'auto' }}
                     exit={{ opacity: 0, height: 0 }}
                     transition={{ duration: 0.35 }}
-                    className="space-y-4 pt-1 overflow-hidden"
+                    className="space-y-6 pt-1 overflow-hidden"
                   >
-                    {/* Full Name */}
-                    <div>
-                      <label className="block text-[11px] font-mono font-bold uppercase tracking-[1.5px] text-slate-300 mb-1">
+                    {/* FULL NAME */}
+                    <div className="relative group">
+                      <label className="block text-[11px] font-mono font-bold uppercase tracking-[2px] text-slate-400 mb-1">
                         FULL NAME <span className="text-emerald-400">*</span>
                       </label>
-                      <div className="relative">
-                        <User className="absolute left-3.5 top-3 h-4 w-4 text-slate-400" />
-                        <input
-                          type="text"
-                          placeholder="e.g. Sarah Jenkins"
-                          {...register('fullName')}
-                          className={`w-full rounded-lg border bg-[#062039] pl-10 pr-3 py-2.5 text-sm text-white placeholder:text-slate-500 outline-none transition-all focus:ring-2 focus:ring-[#009345] ${
-                            errors.fullName ? 'border-rose-400' : 'border-slate-700'
-                          }`}
-                        />
-                      </div>
+                      <input
+                        type="text"
+                        placeholder="e.g. Sarah Jenkins"
+                        {...register('fullName')}
+                        className={`w-full bg-transparent border-b py-2 text-base text-white placeholder:text-slate-600 outline-none transition-colors ${
+                          errors.fullName ? 'border-rose-400' : 'border-slate-700 focus:border-[#009345]'
+                        }`}
+                      />
                       {errors.fullName && (
                         <p className="mt-1 text-xs text-rose-400">{errors.fullName.message}</p>
                       )}
                     </div>
 
-                    {/* Company */}
-                    <div>
-                      <label className="block text-[11px] font-mono font-bold uppercase tracking-[1.5px] text-slate-300 mb-1">
-                        COMPANY / ORGANIZATION <span className="text-emerald-400">*</span>
+                    {/* COMPANY */}
+                    <div className="relative group">
+                      <label className="block text-[11px] font-mono font-bold uppercase tracking-[2px] text-slate-400 mb-1">
+                        COMPANY <span className="text-emerald-400">*</span>
                       </label>
-                      <div className="relative">
-                        <Building className="absolute left-3.5 top-3 h-4 w-4 text-slate-400" />
-                        <input
-                          type="text"
-                          placeholder="e.g. Apex Capital Partners"
-                          {...register('company')}
-                          className={`w-full rounded-lg border bg-[#062039] pl-10 pr-3 py-2.5 text-sm text-white placeholder:text-slate-500 outline-none transition-all focus:ring-2 focus:ring-[#009345] ${
-                            errors.company ? 'border-rose-400' : 'border-slate-700'
-                          }`}
-                        />
-                      </div>
+                      <input
+                        type="text"
+                        placeholder="e.g. Apex Capital Partners"
+                        {...register('company')}
+                        className={`w-full bg-transparent border-b py-2 text-base text-white placeholder:text-slate-600 outline-none transition-colors ${
+                          errors.company ? 'border-rose-400' : 'border-slate-700 focus:border-[#009345]'
+                        }`}
+                      />
                       {errors.company && (
                         <p className="mt-1 text-xs text-rose-400">{errors.company.message}</p>
                       )}
                     </div>
 
-                    {/* Phone (Optional) */}
-                    <div>
-                      <label className="block text-[11px] font-mono font-bold uppercase tracking-[1.5px] text-slate-300 mb-1">
-                        PHONE <span className="text-slate-500 font-normal lowercase tracking-normal font-sans">(optional)</span>
+                    {/* PHONE */}
+                    <div className="relative group">
+                      <label className="block text-[11px] font-mono font-bold uppercase tracking-[2px] text-slate-400 mb-1">
+                        PHONE <span className="text-slate-600 font-normal lowercase font-sans">(optional)</span>
                       </label>
-                      <div className="relative">
-                        <Phone className="absolute left-3.5 top-3 h-4 w-4 text-slate-400" />
-                        <input
-                          type="tel"
-                          placeholder="+1 (555) 000-0000"
-                          {...register('phone')}
-                          className="w-full rounded-lg border border-slate-700 bg-[#062039] pl-10 pr-3 py-2.5 text-sm text-white placeholder:text-slate-500 outline-none transition-all focus:ring-2 focus:ring-[#009345]"
-                        />
-                      </div>
+                      <input
+                        type="tel"
+                        placeholder="+1 (555) 000-0000"
+                        {...register('phone')}
+                        className="w-full bg-transparent border-b border-slate-700 py-2 text-base text-white placeholder:text-slate-600 outline-none focus:border-[#009345] transition-colors"
+                      />
                     </div>
 
-                    {/* Project / Challenge (Optional) */}
-                    <div>
-                      <label className="block text-[11px] font-mono font-bold uppercase tracking-[1.5px] text-slate-300 mb-1">
-                        PROJECT CONTEXT / GOALS <span className="text-slate-500 font-normal lowercase tracking-normal font-sans">(optional)</span>
+                    {/* PROJECT / CHALLENGE */}
+                    <div className="relative group">
+                      <label className="block text-[11px] font-mono font-bold uppercase tracking-[2px] text-slate-400 mb-1">
+                        PROJECT / CHALLENGE <span className="text-slate-600 font-normal lowercase font-sans">(optional)</span>
                       </label>
-                      <textarea
-                        rows={2}
+                      <input
+                        type="text"
                         placeholder="Brief context on timeline, data formats, or goals..."
                         {...register('projectDetails')}
-                        className="w-full rounded-lg border border-slate-700 bg-[#062039] p-3 text-sm text-white placeholder:text-slate-500 outline-none transition-all focus:ring-2 focus:ring-[#009345]"
+                        className="w-full bg-transparent border-b border-slate-700 py-2 text-base text-white placeholder:text-slate-600 outline-none focus:border-[#009345] transition-colors"
                       />
                     </div>
                   </motion.div>
@@ -410,7 +398,7 @@ export function Stage5Connect({
               </AnimatePresence>
 
               {/* Action CTAs */}
-              <div className="pt-3 space-y-3">
+              <div className="pt-4 space-y-3">
                 <Button
                   type="submit"
                   variant="emerald"

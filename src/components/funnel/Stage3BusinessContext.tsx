@@ -11,7 +11,15 @@ import {
   ArrowRight,
   ArrowLeft,
   Sparkles,
-  Layers
+  Layers,
+  Building2,
+  TrendingUp,
+  Landmark,
+  LineChart,
+  ShieldCheck,
+  Briefcase,
+  Coins,
+  Globe
 } from 'lucide-react';
 
 interface Stage3BusinessContextProps {
@@ -42,7 +50,7 @@ export function Stage3BusinessContext({
     setTimeout(() => {
       setAnimatingId(null);
       setInternalStep(2);
-    }, 500);
+    }, 520);
   };
 
   const handleJourneyStageSelect = (id: string) => {
@@ -55,9 +63,43 @@ export function Stage3BusinessContext({
   };
 
   return (
-    <div className="min-h-[80vh] flex flex-col justify-center mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-10 sm:py-16 scroll-mt-24">
+    <div className="relative min-h-[85vh] flex flex-col justify-center mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-10 sm:py-16 scroll-mt-24 overflow-hidden">
+      {/* Contextual Abstract Background Geometry (Reacts to Selected Industry) */}
+      <div className="absolute inset-0 pointer-events-none opacity-40 transition-opacity duration-700">
+        <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="gridGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#009345" stopOpacity="0.08" />
+              <stop offset="100%" stopColor="#062039" stopOpacity="0.02" />
+            </linearGradient>
+          </defs>
+          {selectedIndustry === 'real-estate' && (
+            <g stroke="#009345" strokeWidth="0.7" strokeDasharray="3 3" opacity="0.4">
+              <rect x="15%" y="20%" width="30%" height="50%" fill="none" />
+              <rect x="48%" y="30%" width="35%" height="40%" fill="none" />
+              <line x1="15%" y1="70%" x2="83%" y2="70%" />
+            </g>
+          )}
+          {selectedIndustry === 'investment-banking' && (
+            <g stroke="#009345" strokeWidth="0.8" opacity="0.35">
+              <path d="M 100,500 Q 300,200 600,350 T 1100,150" fill="none" />
+              <circle cx="600" cy="350" r="4" fill="#009345" />
+              <circle cx="1100" cy="150" r="4" fill="#009345" />
+            </g>
+          )}
+          {selectedIndustry === 'hedge-funds' && (
+            <g stroke="#009345" strokeWidth="0.7" opacity="0.3">
+              <line x1="20%" y1="80%" x2="35%" y2="40%" />
+              <line x1="35%" y1="40%" x2="50%" y2="65%" />
+              <line x1="50%" y1="65%" x2="70%" y2="25%" />
+              <line x1="70%" y1="25%" x2="85%" y2="35%" />
+            </g>
+          )}
+        </svg>
+      </div>
+
       {/* Top Stepper Indicator */}
-      <div className="flex items-center justify-between max-w-2xl mx-auto mb-8 sm:mb-12 w-full">
+      <div className="relative z-10 flex items-center justify-between max-w-2xl mx-auto mb-8 sm:mb-12 w-full">
         {internalStep > 1 ? (
           <button
             type="button"
@@ -103,7 +145,7 @@ export function Stage3BusinessContext({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-            className="space-y-10 text-center max-w-3xl mx-auto w-full"
+            className="relative z-10 space-y-10 text-center max-w-3xl mx-auto w-full"
           >
             <div>
               <span className="text-[11px] font-mono font-bold uppercase tracking-[2.5px] text-[#009345]">
@@ -145,9 +187,9 @@ export function Stage3BusinessContext({
                     {/* Right Action / Selected Indicator */}
                     <div className="flex items-center gap-3">
                       {isSelected || isJustClicked ? (
-                        <div className="flex items-center gap-1.5 text-xs font-mono font-bold text-[#009345] bg-emerald-50 px-3 py-1 rounded-[3px] border border-emerald-300">
+                        <div className="flex items-center gap-1.5 text-xs font-mono font-bold text-[#009345] bg-emerald-50 px-3 py-1 rounded-[3px] border border-emerald-300 animate-in fade-in">
                           <Check className="h-4 w-4 stroke-[3]" />
-                          <span>SELECTED</span>
+                          <span>SELECTED ✓</span>
                         </div>
                       ) : (
                         <span className="text-xs font-mono font-bold uppercase tracking-wider text-slate-300 group-hover:text-[#009345] transition-colors">
@@ -182,7 +224,7 @@ export function Stage3BusinessContext({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-            className="space-y-10 text-center max-w-3xl mx-auto w-full"
+            className="relative z-10 space-y-10 text-center max-w-3xl mx-auto w-full"
           >
             <div>
               <span className="text-[11px] font-mono font-bold uppercase tracking-[2.5px] text-[#009345]">
@@ -260,7 +302,7 @@ export function Stage3BusinessContext({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-            className="space-y-10 text-center max-w-3xl mx-auto w-full"
+            className="relative z-10 space-y-10 text-center max-w-3xl mx-auto w-full"
           >
             <div>
               <span className="text-[11px] font-mono font-bold uppercase tracking-[2.5px] text-[#009345]">
@@ -308,7 +350,7 @@ export function Stage3BusinessContext({
                       {isSelected || isJustClicked ? (
                         <div className="flex items-center gap-1.5 text-xs font-mono font-bold text-[#009345] bg-emerald-50 px-3 py-1 rounded-[3px] border border-emerald-300">
                           <Check className="h-4 w-4 stroke-[3]" />
-                          <span>SELECTED</span>
+                          <span>SELECTED ✓</span>
                         </div>
                       ) : (
                         <span className="text-xs font-mono font-bold uppercase tracking-wider text-slate-300 group-hover:text-[#009345]">
