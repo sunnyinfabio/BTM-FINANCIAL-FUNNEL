@@ -16,11 +16,11 @@ interface HeaderProps {
 }
 
 const STAGE_NAMES: Record<number, string> = {
-  1: 'Discover',
-  2: 'Challenge',
-  3: 'Business Context',
-  4: 'Personalized Solution',
-  5: 'Connect'
+  1: 'DISCOVER',
+  2: 'EXPLORE',
+  3: 'UNDERSTAND',
+  4: 'SOLUTION',
+  5: 'CONNECT'
 };
 
 export function Header({

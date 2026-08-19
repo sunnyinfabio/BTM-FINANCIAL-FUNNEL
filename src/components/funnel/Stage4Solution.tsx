@@ -12,7 +12,8 @@ import { SolutionDetailsDrawer } from '@/components/modals/SolutionDetailsDrawer
 import {
   ArrowRight,
   Info,
-  BookOpen
+  BookOpen,
+  Sparkles
 } from 'lucide-react';
 
 interface Stage4SolutionProps {
@@ -41,32 +42,32 @@ export function Stage4Solution({
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 15 }}
+      initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.45, ease: 'easeOut' }}
-      className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-10 sm:py-16 text-center space-y-10"
+      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+      className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-10 sm:py-16 text-center space-y-12"
     >
       {/* Clean, Focused Header */}
-      <div className="max-w-2xl mx-auto">
-        <div className="flex items-center justify-center gap-2 mb-2">
-          <Badge variant="emerald" size="sm">
-            Stage 04 • Personalized Solution
+      <div className="max-w-3xl mx-auto space-y-3">
+        <div className="flex items-center justify-center gap-2">
+          <Badge variant="emerald" size="sm" className="font-mono uppercase tracking-wider">
+            Stage 04 • Solution
           </Badge>
         </div>
 
         <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-[#062039]">
-          Your BTM solution path
+          Your BTM Solution Path
         </h2>
 
         {/* Signature BTM Bar Separator */}
         <div className="btm-separator btm-separator-center" />
 
-        <p className="text-base sm:text-lg text-slate-600 font-normal">
+        <p className="text-base sm:text-lg text-slate-600 font-normal max-w-2xl mx-auto">
           Based on your selections, these capabilities may be most relevant to your requirements.
         </p>
       </div>
 
-      {/* Top 3 Premium Recommendation Cards (Large Image, Concise Text) */}
+      {/* Top 3 Sequential Editorial Recommendation Panels (60% Visual, Staggered Entry) */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left max-w-5xl mx-auto">
         {recommendedCapabilities.slice(0, 3).map((capability, idx) => (
           <CapabilityCard
@@ -79,15 +80,15 @@ export function Stage4Solution({
         ))}
       </div>
 
-      {/* "Explore why these fit →" Action Link (Opens Deep-Dive Drawer) */}
-      <div className="flex items-center justify-center pt-2">
+      {/* "EXPLORE WHY THESE FIT →" Action Link (Opens Deep-Dive Drawer) */}
+      <div className="flex items-center justify-center pt-1">
         <button
           type="button"
           onClick={() => setIsWhyDrawerOpen(true)}
-          className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-slate-700 hover:text-[#009345] bg-slate-100/90 hover:bg-slate-200/80 px-4 py-2.5 rounded-[4px] border border-slate-200/90 transition-colors shadow-2xs cursor-pointer"
+          className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-slate-700 hover:text-[#009345] bg-slate-100/90 hover:bg-slate-200/80 px-5 py-2.5 rounded-md border border-slate-200/90 transition-all shadow-2xs hover:shadow-sm cursor-pointer"
         >
-          <Info className="h-3.5 w-3.5 text-[#009345]" />
-          <span>Explore why these fit →</span>
+          <Info className="h-4 w-4 text-[#009345]" />
+          <span>EXPLORE WHY THESE FIT →</span>
         </button>
       </div>
 
@@ -96,23 +97,23 @@ export function Stage4Solution({
       {/* ============================================================ */}
       {featuredCaseStudy && featuredImage && (
         <motion.div
-          initial={{ opacity: 0, y: 15 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, delay: 0.2 }}
-          className="max-w-4xl mx-auto text-left pt-4"
+          transition={{ duration: 0.5, delay: 0.25 }}
+          className="max-w-4xl mx-auto text-left pt-2"
         >
           <div
             onClick={() => onOpenCaseStudy(featuredCaseStudy)}
-            className="group relative overflow-hidden rounded-[10px] border border-slate-200/90 bg-white shadow-md hover:border-slate-300 hover:shadow-2xl transition-all duration-300 cursor-pointer"
+            className="group relative overflow-hidden rounded-xl border border-slate-200/90 bg-white shadow-md hover:border-[#009345] hover:shadow-2xl transition-all duration-300 cursor-pointer"
           >
             <div className="grid grid-cols-1 md:grid-cols-12 gap-0">
               {/* Left Side: Large Visual Banner (5 Cols) with BtmImageFrame */}
-              <div className="md:col-span-5 relative min-h-[220px] md:min-h-[260px] bg-[#062039] overflow-hidden">
+              <div className="md:col-span-5 relative min-h-[220px] md:min-h-[280px] bg-[#062039] overflow-hidden">
                 <BtmImageFrame
                   src={featuredImage.src}
                   alt={featuredImage.alt}
                   aspectRatio="auto"
-                  tag="Precedent"
+                  tag="Case Precedent"
                   withGrain={true}
                   withVignette={true}
                   className="h-full w-full rounded-none border-0"
@@ -120,13 +121,13 @@ export function Stage4Solution({
               </div>
 
               {/* Right Side: Structured Content (7 Cols) */}
-              <div className="md:col-span-7 p-6 sm:p-7 flex flex-col justify-between space-y-4">
+              <div className="md:col-span-7 p-6 sm:p-8 flex flex-col justify-between space-y-4">
                 <div>
-                  <span className="text-[11px] font-mono font-bold uppercase tracking-[2px] text-[#009345] block">
-                    REPRESENTATIVE SOLUTION EXAMPLE
+                  <span className="text-[11px] font-mono font-bold uppercase tracking-[2.5px] text-[#009345] block">
+                    RELEVANT BTM WORK
                   </span>
 
-                  <h3 className="mt-1.5 text-lg sm:text-xl font-extrabold text-[#062039] leading-snug group-hover:text-[#009345] transition-colors">
+                  <h3 className="mt-1.5 text-lg sm:text-2xl font-extrabold text-[#062039] leading-snug group-hover:text-[#009345] transition-colors">
                     {featuredCaseStudy.title}
                   </h3>
 
@@ -136,13 +137,13 @@ export function Stage4Solution({
                 </div>
 
                 <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
-                  <span className="text-xs font-semibold text-slate-700 bg-slate-100 px-2.5 py-1 rounded-[3px]">
+                  <span className="text-xs font-mono font-semibold text-slate-700 bg-slate-100 px-2.5 py-1 rounded-[3px]">
                     {featuredCaseStudy.category}
                   </span>
 
-                  <span className="inline-flex items-center gap-1 text-xs font-bold text-[#009345] group-hover:underline">
-                    <span>Explore case study</span>
-                    <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
+                  <span className="inline-flex items-center gap-1 text-xs font-mono font-bold uppercase tracking-wider text-[#009345] group-hover:underline">
+                    <span>EXPLORE CASE STUDY</span>
+                    <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1.5 transition-transform" />
                   </span>
                 </div>
               </div>
@@ -152,7 +153,7 @@ export function Stage4Solution({
       )}
 
       {/* Floating Bottom Sticky Action Bar */}
-      <div className="sticky bottom-6 mt-12 z-30 flex items-center justify-between rounded-[6px] border border-slate-200 bg-white/98 backdrop-blur-sm p-4 shadow-lg max-w-2xl mx-auto">
+      <div className="sticky bottom-6 mt-12 z-30 flex items-center justify-between rounded-xl border border-slate-200 bg-white/98 backdrop-blur-md p-4 shadow-xl max-w-2xl mx-auto">
         <div className="flex flex-col text-left pl-1">
           <span className="text-xs font-bold text-[#062039]">Ready to discuss this solution path?</span>
           <span className="text-[11px] text-slate-500">Connect with the BTM Financial team</span>
@@ -163,7 +164,7 @@ export function Stage4Solution({
           size="md"
           onClick={onProceedToConnect}
           rightIcon={<ArrowRight className="h-4 w-4" />}
-          className="shrink-0"
+          className="shrink-0 font-bold"
         >
           Discuss Solution Path
         </Button>
