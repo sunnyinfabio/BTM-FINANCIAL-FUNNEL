@@ -1,19 +1,17 @@
 'use client';
 
 import React, { useState } from 'react';
-import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { RecommendationResult, Capability, CaseStudy } from '@/data/types';
 import { getImage } from '@/data/images';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
 import { BtmImageFrame } from '@/components/ui/BtmImageFrame';
+import { CapabilityCard } from '@/components/cards/CapabilityCard';
 import { SolutionDetailsDrawer } from '@/components/modals/SolutionDetailsDrawer';
 import {
-  Sparkles,
   ArrowRight,
   Info,
-  Layers,
   BookOpen
 } from 'lucide-react';
 
@@ -25,19 +23,6 @@ interface Stage4SolutionProps {
   onProceedToConnect: () => void;
   onAdjustSelections: () => void;
 }
-
-const IMAGE_KEY_MAP: Record<string, string> = {
-  'data-analytics': 'dataAnalytics',
-  'application-services': 'applicationServices',
-  'technology-consulting': 'technologyConsulting',
-  'ai-ml': 'aiAutomation',
-  'quant-analytics': 'quantAnalytics',
-  'fixed-income-equity-analytics': 'financialAnalytics',
-  'cloud-computing': 'cloudInfrastructure',
-  'valuation-advisory-services': 'valuationAdvisory',
-  'structured-finance': 'structuredFinance',
-  'specialized-support-team': 'advisory'
-};
 
 export function Stage4Solution({
   recommendation,
@@ -59,7 +44,7 @@ export function Stage4Solution({
       initial={{ opacity: 0, y: 15 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.45, ease: 'easeOut' }}
-      className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-10 sm:py-16 text-center space-y-10"
+      className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-10 sm:py-16 text-center space-y-10"
     >
       {/* Clean, Focused Header */}
       <div className="max-w-2xl mx-auto">
@@ -84,64 +69,25 @@ export function Stage4Solution({
         </p>
       </div>
 
-      {/* The 3 Clean Solution Pillars (Zero Clutter) */}
-      <div className="space-y-3.5 max-w-3xl mx-auto text-left">
-        {recommendedCapabilities.slice(0, 3).map((capability, idx) => {
-          const imageAsset = getImage(IMAGE_KEY_MAP[capability.id] || 'dataAnalytics');
-
-          return (
-            <div
-              key={capability.id}
-              onClick={() => onExploreCapability(capability)}
-              className="group relative flex flex-col sm:flex-row items-start sm:items-center justify-between rounded-[8px] border border-slate-200/90 bg-white p-5 sm:p-6 shadow-2xs hover:border-[#009345] hover:shadow-xl transition-all duration-200 cursor-pointer overflow-hidden"
-            >
-              {/* Subtle Ambient Editorial Watermark in Background with consistent photographic tone */}
-              <div className="absolute right-0 top-0 bottom-0 w-1/3 pointer-events-none opacity-[0.045] group-hover:opacity-[0.08] transition-opacity duration-300 overflow-hidden">
-                <Image
-                  src={imageAsset.src}
-                  alt=""
-                  fill
-                  className="object-cover filter grayscale contrast-125"
-                  sizes="300px"
-                />
-              </div>
-
-              {/* Left Side: Number + Title + Short 1-Sentence Explanation */}
-              <div className="relative z-10 flex items-start sm:items-center gap-4">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[4px] bg-[#062039] text-white font-mono font-bold text-sm shadow-xs group-hover:bg-[#009345] transition-colors">
-                  0{idx + 1}
-                </div>
-
-                <div>
-                  <div className="flex items-center gap-2">
-                    <h3 className="text-base sm:text-lg font-extrabold text-[#062039] group-hover:text-[#009345] transition-colors tracking-tight">
-                      {capability.name}
-                    </h3>
-                  </div>
-                  <p className="mt-1 text-xs sm:text-sm text-slate-600 leading-relaxed font-normal max-w-xl">
-                    {capability.shortDescription}
-                  </p>
-                </div>
-              </div>
-
-              {/* Right Side: Clean Explore Trigger */}
-              <div className="relative z-10 mt-3 sm:mt-0 flex items-center justify-end w-full sm:w-auto pt-2 sm:pt-0 border-t sm:border-t-0 border-slate-100 shrink-0 sm:ml-4">
-                <span className="inline-flex items-center gap-1 text-xs font-bold text-[#009345] group-hover:translate-x-0.5 transition-transform">
-                  <span>Explore</span>
-                  <ArrowRight className="h-3.5 w-3.5" />
-                </span>
-              </div>
-            </div>
-          );
-        })}
+      {/* Top 3 Premium Recommendation Cards (Large Image, Concise Text) */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left max-w-5xl mx-auto">
+        {recommendedCapabilities.slice(0, 3).map((capability, idx) => (
+          <CapabilityCard
+            key={capability.id}
+            capability={capability}
+            index={idx}
+            onExplore={onExploreCapability}
+            onViewRelatedWork={onViewRelatedWork}
+          />
+        ))}
       </div>
 
       {/* "Explore why these fit →" Action Link (Opens Deep-Dive Drawer) */}
-      <div className="flex items-center justify-center pt-1">
+      <div className="flex items-center justify-center pt-2">
         <button
           type="button"
           onClick={() => setIsWhyDrawerOpen(true)}
-          className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-slate-700 hover:text-[#009345] bg-slate-100/90 hover:bg-slate-200/80 px-4 py-2 rounded-[4px] border border-slate-200/90 transition-colors shadow-2xs cursor-pointer"
+          className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-slate-700 hover:text-[#009345] bg-slate-100/90 hover:bg-slate-200/80 px-4 py-2.5 rounded-[4px] border border-slate-200/90 transition-colors shadow-2xs cursor-pointer"
         >
           <Info className="h-3.5 w-3.5 text-[#009345]" />
           <span>Explore why these fit →</span>
@@ -156,7 +102,7 @@ export function Stage4Solution({
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 0.2 }}
-          className="max-w-3xl mx-auto text-left pt-2"
+          className="max-w-4xl mx-auto text-left pt-4"
         >
           <div
             onClick={() => onOpenCaseStudy(featuredCaseStudy)}
@@ -177,7 +123,7 @@ export function Stage4Solution({
               </div>
 
               {/* Right Side: Structured Content (7 Cols) */}
-              <div className="md:col-span-7 p-6 flex flex-col justify-between space-y-4">
+              <div className="md:col-span-7 p-6 sm:p-7 flex flex-col justify-between space-y-4">
                 <div>
                   <span className="text-[11px] font-mono font-bold uppercase tracking-[2px] text-[#009345] block">
                     RELEVANT BTM WORK
