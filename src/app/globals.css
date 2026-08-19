@@ -1,0 +1,117 @@
+@import "tailwindcss";
+
+:root {
+  --btm-navy: #062039;
+  --btm-navy-deep: #031120;
+  --btm-navy-surface: #0a2542;
+  --btm-green: #009345;
+  --btm-green-dark: #007a38;
+  --btm-green-light: #e6f6ed;
+  --btm-green-accent: #30ad6b;
+  --btm-charcoal: #171314;
+  --btm-body-text: #231f20;
+  --btm-slate: #64748b;
+  --btm-border: #e2e8f0;
+  --btm-bg: #f8fafc;
+  --btm-card-bg: #ffffff;
+}
+
+@layer base {
+  * {
+    border-color: var(--btm-border);
+  }
+  body {
+    background-color: var(--btm-bg);
+    color: var(--btm-body-text);
+    font-family: -apple-system, BlinkMacSystemFont, "Twentieth Century MT", "Century Gothic", "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    color: var(--btm-navy);
+    letter-spacing: -0.02em;
+    font-weight: 700;
+  }
+}
+
+/* Custom subtle scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Text selections matching BTM green */
+::selection {
+  background: #009345;
+  color: #ffffff;
+}
+
+/* Authentic BTM Green Bar Separator with notches */
+.btm-separator {
+  position: relative;
+  z-index: 1;
+  background: #009345;
+  width: 68px;
+  height: 3px;
+  margin: 12px 0 20px 0;
+  border-radius: 1px;
+}
+.btm-separator::before {
+  content: "";
+  position: absolute;
+  height: 100%;
+  width: 3px;
+  top: 0;
+  right: 16px;
+  background: #fff;
+}
+.btm-separator::after {
+  content: "";
+  position: absolute;
+  height: 100%;
+  width: 3px;
+  top: 0;
+  right: 8px;
+  background: #fff;
+}
+
+.btm-separator-center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Enterprise geometric financial background pattern */
+.bg-financial-grid {
+  background-size: 28px 28px;
+  background-image: 
+    linear-gradient(to right, rgba(6, 32, 57, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(6, 32, 57, 0.035) 1px, transparent 1px);
+}
+
+/* Card hover with institutional elevation */
+.btm-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.btm-card:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 8px 20px -6px rgba(6, 32, 57, 0.08);
+}
+.btm-card-selected {
+  border-color: #009345;
+  box-shadow: 0 0 0 1px #009345, 0 8px 20px -6px rgba(0, 147, 69, 0.15);
+}

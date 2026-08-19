@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 70" fill="none">
+  <!-- BTM Mark / Geometric Brand Icon -->
+  <g transform="translate(10, 10)">
+    <rect x="0" y="0" width="14" height="48" rx="3" fill="#062039" />
+    <rect x="18" y="14" width="14" height="34" rx="3" fill="#009345" />
+    <rect x="36" y="4" width="14" height="44" rx="3" fill="#16a34a" />
+    <circle cx="25" cy="6" r="4" fill="#009345" />
+  </g>
+  <!-- BTM Typography -->
+  <g transform="translate(75, 42)">
+    <text x="0" y="0" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="28" font-weight="900" letter-spacing="-0.5px" fill="#062039">BTM</text>
+    <text x="72" y="0" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="28" font-weight="400" letter-spacing="1px" fill="#009345">FINANCIAL</text>
+  </g>
+  <!-- Subtitle Tagline -->
+  <g transform="translate(76, 56)">
+    <text x="0" y="0" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9" font-weight="600" letter-spacing="1.5px" fill="#64748b">ADVISORY • DATA • TECHNOLOGY</text>
+  </g>
+</svg>
