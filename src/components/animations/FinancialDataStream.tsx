@@ -139,6 +139,25 @@ export function FinancialDataStream() {
               <circle cx="540" cy="130" r="5.5" fill="#009345" />
             </g>
 
+            {/* Traveling Pulse Along Main Vector Path */}
+            <motion.circle
+              r="4.5"
+              fill="#009345"
+              filter="url(#nodeGlow)"
+              initial={{ cx: 60, cy: 280, opacity: 0 }}
+              animate={{
+                cx: [60, 180, 300, 540],
+                cy: [280, 180, 240, 130],
+                opacity: [0, 1, 1, 0]
+              }}
+              transition={{
+                duration: 3.5,
+                repeat: Infinity,
+                ease: "easeInOut",
+                repeatDelay: 1
+              }}
+            />
+
             {/* Orbiting Ring on Key Node */}
             <motion.circle
               cx="540"
