@@ -12,9 +12,7 @@ import {
   Sparkles,
   ArrowRight,
   Info,
-  CheckCircle2,
   Layers,
-  Building2,
   BookOpen
 } from 'lucide-react';
 
@@ -51,7 +49,7 @@ export function Stage4Solution({
   const [isWhyDrawerOpen, setIsWhyDrawerOpen] = useState(false);
   const { recommendedCapabilities, relevantCaseStudies } = recommendation;
 
-  // The Primary Featured Case Study for the Hero Card
+  // The Primary Featured Case Study for the 2-Column Hero Proof Card
   const featuredCaseStudy = relevantCaseStudies[0];
   const featuredImage = featuredCaseStudy ? getImage(featuredCaseStudy.imageKey) : null;
 
@@ -62,7 +60,7 @@ export function Stage4Solution({
       transition={{ duration: 0.45, ease: 'easeOut' }}
       className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-10 sm:py-16 text-center space-y-10"
     >
-      {/* Clean Header */}
+      {/* Clean, Focused Header */}
       <div className="max-w-2xl mx-auto">
         <div className="flex items-center justify-center gap-2 mb-2">
           <Badge variant="emerald" size="sm">
@@ -85,7 +83,7 @@ export function Stage4Solution({
         </p>
       </div>
 
-      {/* The 3 Clean Solution Pillars */}
+      {/* The 3 Clean Solution Pillars (Zero Clutter) */}
       <div className="space-y-3.5 max-w-3xl mx-auto text-left">
         {recommendedCapabilities.slice(0, 3).map((capability, idx) => {
           const imageAsset = getImage(IMAGE_KEY_MAP[capability.id] || 'dataAnalytics');
@@ -107,7 +105,7 @@ export function Stage4Solution({
                 />
               </div>
 
-              {/* Left Side: Number + Title + Short Explanation */}
+              {/* Left Side: Number + Title + Short 1-Sentence Explanation */}
               <div className="relative z-10 flex items-start sm:items-center gap-4">
                 <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[4px] bg-[#062039] text-white font-mono font-bold text-sm shadow-xs group-hover:bg-[#009345] transition-colors">
                   0{idx + 1}
@@ -118,9 +116,6 @@ export function Stage4Solution({
                     <h3 className="text-base sm:text-lg font-extrabold text-[#062039] group-hover:text-[#009345] transition-colors tracking-tight">
                       {capability.name}
                     </h3>
-                    <Badge variant="gray" size="sm">
-                      {capability.category}
-                    </Badge>
                   </div>
                   <p className="mt-1 text-xs sm:text-sm text-slate-600 leading-relaxed font-normal max-w-xl">
                     {capability.shortDescription}
@@ -140,88 +135,77 @@ export function Stage4Solution({
         })}
       </div>
 
-      {/* Explore Why Button / Link (Opens Deep-Dive Drawer) */}
-      <div className="flex items-center justify-center">
+      {/* "Explore why these fit →" Action Link (Opens Deep-Dive Drawer) */}
+      <div className="flex items-center justify-center pt-1">
         <button
           type="button"
           onClick={() => setIsWhyDrawerOpen(true)}
           className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-slate-700 hover:text-[#009345] bg-slate-100/90 hover:bg-slate-200/80 px-4 py-2 rounded-[4px] border border-slate-200/90 transition-colors shadow-2xs cursor-pointer"
         >
           <Info className="h-3.5 w-3.5 text-[#009345]" />
-          <span>Explore why this path was recommended →</span>
+          <span>Explore why these fit →</span>
         </button>
       </div>
 
       {/* ============================================================ */}
-      {/* HERO CASE STUDY CARD (RELEVANT BTM WORK)                     */}
+      {/* 2-COLUMN HERO CASE STUDY PROOF CARD (RELEVANT BTM WORK)      */}
       {/* ============================================================ */}
       {featuredCaseStudy && featuredImage && (
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 0.2 }}
-          className="max-w-3xl mx-auto text-left"
+          className="max-w-3xl mx-auto text-left pt-2"
         >
           <div
             onClick={() => onOpenCaseStudy(featuredCaseStudy)}
             className="group relative overflow-hidden rounded-[10px] border border-slate-200/90 bg-white shadow-md hover:border-slate-300 hover:shadow-2xl transition-all duration-300 cursor-pointer"
           >
-            {/* Header Tag Bar */}
-            <div className="px-6 pt-5 pb-3 flex items-center justify-between border-b border-slate-100">
-              <span className="text-[11px] font-mono font-bold uppercase tracking-[2px] text-[#009345] flex items-center gap-1.5">
-                <BookOpen className="h-3.5 w-3.5 text-[#009345]" />
-                RELEVANT BTM WORK
-              </span>
-              <span className="text-[10px] font-mono text-slate-400">
-                Representative Precedent
-              </span>
-            </div>
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-0">
+              {/* Left Side: Large Visual Banner (5 Cols) */}
+              <div className="md:col-span-5 relative min-h-[220px] md:min-h-[260px] bg-[#062039] overflow-hidden">
+                <Image
+                  src={featuredImage.src}
+                  alt={featuredImage.alt}
+                  fill
+                  className="object-cover opacity-80 group-hover:scale-103 transition-transform duration-700"
+                  sizes="(max-width: 768px) 100vw, 350px"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-[#062039]/80 via-transparent to-transparent" />
 
-            {/* Large Case Study Image */}
-            <div className="relative h-60 sm:h-72 w-full bg-[#062039] overflow-hidden">
-              <Image
-                src={featuredImage.src}
-                alt={featuredImage.alt}
-                fill
-                className="object-cover opacity-80 group-hover:scale-103 transition-transform duration-700"
-                sizes="(max-width: 768px) 100vw, 750px"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#062039] via-[#062039]/30 to-transparent" />
-
-              {/* Title & Category Overlay inside banner */}
-              <div className="absolute bottom-5 left-6 right-6">
-                <span className="text-xs font-semibold text-emerald-300 uppercase tracking-wider block">
-                  {featuredCaseStudy.category} • {featuredCaseStudy.industry}
-                </span>
-                <h3 className="mt-1 text-xl sm:text-2xl font-extrabold text-white leading-tight">
-                  {featuredCaseStudy.title}
-                </h3>
-              </div>
-            </div>
-
-            {/* Case Study Summary & Explore Link */}
-            <div className="p-6 bg-white flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-              <div>
-                <p className="text-xs sm:text-sm text-slate-600 font-normal leading-relaxed max-w-lg">
-                  {featuredCaseStudy.challengeSummary}
-                </p>
-                <div className="mt-2 flex items-center gap-1.5 flex-wrap">
-                  {featuredCaseStudy.deliveredCapabilities.slice(0, 2).map((cap, cIdx) => (
-                    <span
-                      key={cIdx}
-                      className="text-[10px] font-mono bg-slate-100 text-slate-700 px-2 py-0.5 rounded-[2px]"
-                    >
-                      {cap}
-                    </span>
-                  ))}
+                <div className="absolute top-4 left-4">
+                  <span className="bg-black/60 backdrop-blur-xs border border-white/20 text-white text-[10px] font-mono uppercase px-2 py-0.5 rounded-[2px]">
+                    Precedent
+                  </span>
                 </div>
               </div>
 
-              <div className="shrink-0">
-                <span className="inline-flex items-center gap-1 text-xs sm:text-sm font-bold text-[#009345] group-hover:underline">
-                  <span>Explore case study</span>
-                  <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                </span>
+              {/* Right Side: Structured Content (7 Cols) */}
+              <div className="md:col-span-7 p-6 flex flex-col justify-between space-y-4">
+                <div>
+                  <span className="text-[11px] font-mono font-bold uppercase tracking-[2px] text-[#009345] block">
+                    RELEVANT BTM WORK
+                  </span>
+
+                  <h3 className="mt-1.5 text-lg sm:text-xl font-extrabold text-[#062039] leading-snug group-hover:text-[#009345] transition-colors">
+                    {featuredCaseStudy.title}
+                  </h3>
+
+                  <p className="mt-2 text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
+                    {featuredCaseStudy.challengeSummary}
+                  </p>
+                </div>
+
+                <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
+                  <span className="text-xs font-semibold text-slate-700 bg-slate-100 px-2.5 py-1 rounded-[3px]">
+                    {featuredCaseStudy.category}
+                  </span>
+
+                  <span className="inline-flex items-center gap-1 text-xs font-bold text-[#009345] group-hover:underline">
+                    <span>Explore case study</span>
+                    <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
+                  </span>
+                </div>
               </div>
             </div>
           </div>

@@ -52,35 +52,33 @@ export function Stage3BusinessContext({
   onSelectJourneyStage,
   onSubmit
 }: Stage3BusinessContextProps) {
-  // Step 1 = Industry, Step 2 = Priorities, Step 3 = Journey Stage
   const [internalStep, setInternalStep] = useState<number>(1);
 
-  // Auto-advance helper with gentle delay for visual confirmation
   const handleIndustrySelect = (id: string) => {
     onSelectIndustry(id);
     setTimeout(() => {
       setInternalStep(2);
-    }, 240);
+    }, 280);
   };
 
   const handleJourneyStageSelect = (id: string) => {
     onSelectJourneyStage(id);
     setTimeout(() => {
       onSubmit();
-    }, 280);
+    }, 320);
   };
 
   const canAdvanceStep2 = selectedPriorities.length > 0;
 
   return (
-    <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-10 sm:py-16 min-h-[560px] flex flex-col justify-center">
-      {/* Top Conversational Step Pill */}
-      <div className="flex items-center justify-between max-w-xl mx-auto w-full mb-6">
+    <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-12 sm:py-20 min-h-[580px] flex flex-col justify-center">
+      {/* Top Spacious Step Header */}
+      <div className="flex items-center justify-between max-w-2xl mx-auto w-full mb-8">
         {internalStep > 1 ? (
           <button
             type="button"
             onClick={() => setInternalStep((prev) => Math.max(1, prev - 1))}
-            className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-slate-500 hover:text-[#062039] transition-colors"
+            className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-slate-500 hover:text-[#062039] transition-colors cursor-pointer"
           >
             <ArrowLeft className="h-3.5 w-3.5" />
             <span>Previous Step</span>
@@ -89,14 +87,14 @@ export function Stage3BusinessContext({
           <span className="text-xs font-mono text-slate-400">Step 01 of 03</span>
         )}
 
-        <div className="flex items-center gap-1.5">
+        <div className="flex items-center gap-2">
           {[1, 2, 3].map((s) => (
             <div
               key={s}
               className={cn(
                 'h-1.5 rounded-full transition-all duration-300',
                 s === internalStep
-                  ? 'w-6 bg-[#009345]'
+                  ? 'w-8 bg-[#009345]'
                   : s < internalStep
                   ? 'w-3 bg-[#062039]'
                   : 'w-2 bg-slate-200'
@@ -112,32 +110,31 @@ export function Stage3BusinessContext({
 
       <AnimatePresence mode="wait">
         {/* ============================================================ */}
-        {/* STEP 01: "Who are you building for?" (Huge Cards)           */}
+        {/* STEP 01: "Who are you building for?" (Cinematic Cards)       */}
         {/* ============================================================ */}
         {internalStep === 1 && (
           <motion.div
             key="step-1"
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
-            transition={{ duration: 0.3 }}
-            className="space-y-8 text-center"
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -15 }}
+            transition={{ duration: 0.35 }}
+            className="space-y-8 text-center max-w-4xl mx-auto"
           >
             <div>
               <span className="text-[11px] font-mono font-bold uppercase tracking-[2px] text-[#009345]">
-                Target Organization
+                Target Domain
               </span>
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-[#062039] mt-1.5">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-[#062039] mt-2">
                 Who are you building for?
               </h2>
               <div className="btm-separator btm-separator-center" />
-              <p className="text-sm sm:text-base text-slate-600 max-w-lg mx-auto font-normal">
-                Select your institution type to calibrate domain precedents and regulatory guidelines.
+              <p className="text-base sm:text-lg text-slate-600 max-w-xl mx-auto font-normal">
+                Select your institution type to calibrate domain models and regulatory guidelines.
               </p>
             </div>
 
-            {/* Big Selectable Organization Cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-2">
               {BTM_INDUSTRIES.map((industry) => {
                 const isSelected = selectedIndustry === industry.id;
                 const icon = INDUSTRY_ICONS[industry.iconName] || <Building2 className="h-6 w-6" />;
@@ -199,32 +196,31 @@ export function Stage3BusinessContext({
         )}
 
         {/* ============================================================ */}
-        {/* STEP 02: "What's slowing you down?" (Priority Cards)         */}
+        {/* STEP 02: "What matters most right now?" (Priority Chips)    */}
         {/* ============================================================ */}
         {internalStep === 2 && (
           <motion.div
             key="step-2"
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
-            transition={{ duration: 0.3 }}
-            className="space-y-8 text-center"
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -15 }}
+            transition={{ duration: 0.35 }}
+            className="space-y-8 text-center max-w-4xl mx-auto"
           >
             <div>
               <span className="text-[11px] font-mono font-bold uppercase tracking-[2px] text-[#009345]">
-                Operational Challenges
+                Immediate Focus
               </span>
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-[#062039] mt-1.5">
-                What's slowing you down?
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-[#062039] mt-2">
+                What matters most right now?
               </h2>
               <div className="btm-separator btm-separator-center" />
-              <p className="text-sm sm:text-base text-slate-600 max-w-lg mx-auto font-normal">
-                Select your immediate pain points or priorities. Multi-select is supported.
+              <p className="text-base sm:text-lg text-slate-600 max-w-xl mx-auto font-normal">
+                Select your key operational objectives and priorities.
               </p>
             </div>
 
-            {/* Priority Selection Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 max-w-3xl mx-auto text-left">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 max-w-3xl mx-auto text-left pt-2">
               {BTM_PRIORITIES.map((priority) => {
                 const isSelected = selectedPriorities.includes(priority.id);
 
@@ -234,7 +230,7 @@ export function Stage3BusinessContext({
                     type="button"
                     onClick={() => onTogglePriority(priority.id)}
                     className={cn(
-                      'group relative flex items-center justify-between rounded-[6px] border p-4 text-left transition-all duration-150 cursor-pointer select-none outline-none focus-visible:ring-2 focus-visible:ring-[#009345]',
+                      'group relative flex items-center justify-between rounded-[6px] border p-4.5 text-left transition-all duration-150 cursor-pointer select-none outline-none focus-visible:ring-2 focus-visible:ring-[#009345]',
                       isSelected
                         ? 'border-[#009345] ring-2 ring-[#009345] bg-emerald-50/40 shadow-xs'
                         : 'border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50/80 hover:-translate-y-0.5'
@@ -242,7 +238,7 @@ export function Stage3BusinessContext({
                   >
                     <span
                       className={cn(
-                        'text-xs sm:text-sm font-bold tracking-tight',
+                        'text-sm font-bold tracking-tight',
                         isSelected ? 'text-[#062039]' : 'text-slate-800'
                       )}
                     >
@@ -264,7 +260,6 @@ export function Stage3BusinessContext({
               })}
             </div>
 
-            {/* Step 2 Continue Button */}
             <div className="pt-4 flex justify-center">
               <Button
                 variant="emerald"
@@ -286,27 +281,26 @@ export function Stage3BusinessContext({
         {internalStep === 3 && (
           <motion.div
             key="step-3"
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
-            transition={{ duration: 0.3 }}
-            className="space-y-8 text-center"
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -15 }}
+            transition={{ duration: 0.35 }}
+            className="space-y-8 text-center max-w-4xl mx-auto"
           >
             <div>
               <span className="text-[11px] font-mono font-bold uppercase tracking-[2px] text-[#009345]">
-                Project Timeline & Horizon
+                Project Horizon
               </span>
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-[#062039] mt-1.5">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-[#062039] mt-2">
                 Where are you today?
               </h2>
               <div className="btm-separator btm-separator-center" />
-              <p className="text-sm sm:text-base text-slate-600 max-w-lg mx-auto font-normal">
-                Select your current project phase to automatically generate your tailored solution path.
+              <p className="text-base sm:text-lg text-slate-600 max-w-xl mx-auto font-normal">
+                Select your current execution phase to synthesize your tailored solution path.
               </p>
             </div>
 
-            {/* Large Horizon Cards (Clicking one triggers auto-continue) */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-3xl mx-auto">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-3xl mx-auto pt-2">
               {BTM_JOURNEY_STAGES.map((stage) => {
                 const isSelected = journeyStage === stage.id;
 
