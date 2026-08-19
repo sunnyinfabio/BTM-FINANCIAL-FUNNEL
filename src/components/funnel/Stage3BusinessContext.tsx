@@ -53,38 +53,41 @@ export function Stage3BusinessContext({
   onSubmit
 }: Stage3BusinessContextProps) {
   const [internalStep, setInternalStep] = useState<number>(1);
+  const [animatingId, setAnimatingId] = useState<string | null>(null);
 
   const handleIndustrySelect = (id: string) => {
+    setAnimatingId(id);
     onSelectIndustry(id);
     setTimeout(() => {
+      setAnimatingId(null);
       setInternalStep(2);
-    }, 280);
+    }, 400);
   };
 
   const handleJourneyStageSelect = (id: string) => {
+    setAnimatingId(id);
     onSelectJourneyStage(id);
     setTimeout(() => {
+      setAnimatingId(null);
       onSubmit();
-    }, 320);
+    }, 450);
   };
 
-  const canAdvanceStep2 = selectedPriorities.length > 0;
-
   return (
-    <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-12 sm:py-20 min-h-[580px] flex flex-col justify-center">
-      {/* Top Spacious Step Header */}
-      <div className="flex items-center justify-between max-w-2xl mx-auto w-full mb-8">
+    <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-8 sm:py-14 scroll-mt-24">
+      {/* Top Stepper Indicator */}
+      <div className="flex items-center justify-between max-w-2xl mx-auto mb-8 sm:mb-12">
         {internalStep > 1 ? (
           <button
             type="button"
             onClick={() => setInternalStep((prev) => Math.max(1, prev - 1))}
-            className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-slate-500 hover:text-[#062039] transition-colors cursor-pointer"
+            className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-600 hover:text-[#009345] transition-colors cursor-pointer"
           >
             <ArrowLeft className="h-3.5 w-3.5" />
             <span>Previous Step</span>
           </button>
         ) : (
-          <span className="text-xs font-mono text-slate-400">Step 01 of 03</span>
+          <div />
         )}
 
         <div className="flex items-center gap-2">
@@ -110,23 +113,23 @@ export function Stage3BusinessContext({
 
       <AnimatePresence mode="wait">
         {/* ============================================================ */}
-        {/* STEP 01: "Who are you building for?" (Cinematic Cards)       */}
+        {/* STEP 01: "WHO ARE WE BUILDING FOR?" (Cinematic Cards)        */}
         {/* ============================================================ */}
         {internalStep === 1 && (
           <motion.div
             key="step-1"
-            initial={{ opacity: 0, y: 15 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -15 }}
-            transition={{ duration: 0.35 }}
+            exit={{ opacity: 0, y: -16 }}
+            transition={{ duration: 0.4 }}
             className="space-y-8 text-center max-w-4xl mx-auto"
           >
             <div>
-              <span className="text-[11px] font-mono font-bold uppercase tracking-[2px] text-[#009345]">
+              <span className="text-[11px] font-mono font-bold uppercase tracking-[2.5px] text-[#009345]">
                 Target Domain
               </span>
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-[#062039] mt-2">
-                Who are you building for?
+                Who are we building for?
               </h2>
               <div className="btm-separator btm-separator-center" />
               <p className="text-base sm:text-lg text-slate-600 max-w-xl mx-auto font-normal">
@@ -137,58 +140,49 @@ export function Stage3BusinessContext({
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-2">
               {BTM_INDUSTRIES.map((industry) => {
                 const isSelected = selectedIndustry === industry.id;
+                const isJustClicked = animatingId === industry.id;
                 const icon = INDUSTRY_ICONS[industry.iconName] || <Building2 className="h-6 w-6" />;
 
                 return (
-                  <button
+                  <div
                     key={industry.id}
-                    type="button"
                     onClick={() => handleIndustrySelect(industry.id)}
                     className={cn(
-                      'group relative flex flex-col items-start justify-between rounded-[8px] border p-6 text-left transition-all duration-200 cursor-pointer select-none outline-none focus-visible:ring-2 focus-visible:ring-[#009345]',
-                      isSelected
-                        ? 'border-[#009345] ring-2 ring-[#009345] bg-gradient-to-b from-white to-emerald-50/40 shadow-md scale-[1.02]'
-                        : 'border-slate-200 bg-white hover:border-slate-300 hover:shadow-xl hover:-translate-y-1'
+                      'group relative flex flex-col items-center justify-center p-6 rounded-xl border text-center transition-all duration-300 cursor-pointer select-none',
+                      isSelected || isJustClicked
+                        ? 'border-[#009345] ring-2 ring-[#009345] bg-gradient-to-b from-white via-white to-emerald-50/40 shadow-xl shadow-emerald-950/8 scale-[1.03]'
+                        : 'border-slate-200 bg-white hover:border-[#009345] hover:shadow-xl hover:-translate-y-1'
                     )}
                   >
-                    <div className="flex items-center justify-between w-full">
-                      <div
-                        className={cn(
-                          'flex h-12 w-12 items-center justify-center rounded-[4px] border transition-colors',
-                          isSelected
-                            ? 'bg-[#009345] text-white border-[#009345]'
-                            : 'bg-slate-50 text-[#062039] border-slate-200 group-hover:bg-[#062039] group-hover:text-white'
-                        )}
-                      >
-                        {icon}
-                      </div>
-
-                      <div
-                        className={cn(
-                          'flex h-5 w-5 items-center justify-center rounded-[3px] border transition-all',
-                          isSelected
-                            ? 'border-[#009345] bg-[#009345] text-white'
-                            : 'border-slate-300 bg-white text-transparent'
-                        )}
-                      >
-                        <Check className="h-3.5 w-3.5 stroke-[3]" />
-                      </div>
+                    <div
+                      className={cn(
+                        'flex h-12 w-12 items-center justify-center rounded-lg border transition-colors mb-3',
+                        isSelected || isJustClicked
+                          ? 'bg-[#009345] text-white border-[#009345]'
+                          : 'bg-slate-50 text-[#062039] border-slate-200 group-hover:bg-[#062039] group-hover:text-white'
+                      )}
+                    >
+                      {icon}
                     </div>
 
-                    <div className="mt-6">
-                      <h4
-                        className={cn(
-                          'text-base font-extrabold tracking-tight transition-colors leading-tight',
-                          isSelected ? 'text-[#062039]' : 'text-[#062039] group-hover:text-[#009345]'
-                        )}
-                      >
-                        {industry.name}
-                      </h4>
-                      <p className="mt-1.5 text-xs text-slate-500 line-clamp-2 leading-relaxed font-normal">
-                        {industry.description}
-                      </p>
+                    <h3 className="text-sm sm:text-base font-bold text-[#062039] group-hover:text-[#009345] transition-colors leading-snug">
+                      {industry.name}
+                    </h3>
+
+                    {/* Active Selected Feedback */}
+                    <div className="mt-3 flex items-center gap-1">
+                      {isSelected || isJustClicked ? (
+                        <span className="inline-flex items-center gap-1 text-[11px] font-bold text-[#009345] animate-in fade-in">
+                          <Check className="h-3.5 w-3.5 stroke-[3]" />
+                          <span>Selected</span>
+                        </span>
+                      ) : (
+                        <span className="text-[11px] font-medium text-slate-400 group-hover:text-slate-600 transition-colors">
+                          Select →
+                        </span>
+                      )}
                     </div>
-                  </button>
+                  </div>
                 );
               })}
             </div>
@@ -196,50 +190,54 @@ export function Stage3BusinessContext({
         )}
 
         {/* ============================================================ */}
-        {/* STEP 02: "What matters most right now?" (Priority Chips)    */}
+        {/* STEP 02: "WHAT'S HOLDING YOU BACK?" (Priorities)             */}
         {/* ============================================================ */}
         {internalStep === 2 && (
           <motion.div
             key="step-2"
-            initial={{ opacity: 0, y: 15 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -15 }}
-            transition={{ duration: 0.35 }}
+            exit={{ opacity: 0, y: -16 }}
+            transition={{ duration: 0.4 }}
             className="space-y-8 text-center max-w-4xl mx-auto"
           >
             <div>
-              <span className="text-[11px] font-mono font-bold uppercase tracking-[2px] text-[#009345]">
-                Immediate Focus
+              <span className="text-[11px] font-mono font-bold uppercase tracking-[2.5px] text-[#009345]">
+                Operational Priorities
               </span>
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-[#062039] mt-2">
-                What matters most right now?
+                What's holding you back?
               </h2>
               <div className="btm-separator btm-separator-center" />
               <p className="text-base sm:text-lg text-slate-600 max-w-xl mx-auto font-normal">
-                Select your key operational objectives and priorities.
+                Choose the primary operational, reporting, or technical challenges you are looking to address.
               </p>
+
+              <div className="mt-2 text-xs font-medium text-slate-500">
+                <span className="font-bold text-[#009345]">{selectedPriorities.length}</span> priorities selected
+              </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 max-w-3xl mx-auto text-left pt-2">
+            {/* Interactive Priority Chips Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 pt-2">
               {BTM_PRIORITIES.map((priority) => {
                 const isSelected = selectedPriorities.includes(priority.id);
 
                 return (
-                  <button
+                  <div
                     key={priority.id}
-                    type="button"
                     onClick={() => onTogglePriority(priority.id)}
                     className={cn(
-                      'group relative flex items-center justify-between rounded-[6px] border p-4.5 text-left transition-all duration-150 cursor-pointer select-none outline-none focus-visible:ring-2 focus-visible:ring-[#009345]',
+                      'group relative flex items-center justify-between p-4 rounded-xl border text-left transition-all duration-200 cursor-pointer select-none',
                       isSelected
-                        ? 'border-[#009345] ring-2 ring-[#009345] bg-emerald-50/40 shadow-xs'
-                        : 'border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50/80 hover:-translate-y-0.5'
+                        ? 'border-[#009345] ring-2 ring-[#009345] bg-gradient-to-r from-white to-emerald-50/40 shadow-md font-bold'
+                        : 'border-slate-200 bg-white hover:border-slate-300 hover:shadow-md'
                     )}
                   >
                     <span
                       className={cn(
-                        'text-sm font-bold tracking-tight',
-                        isSelected ? 'text-[#062039]' : 'text-slate-800'
+                        'text-xs sm:text-sm font-medium transition-colors',
+                        isSelected ? 'text-[#062039] font-bold' : 'text-slate-700 group-hover:text-[#062039]'
                       )}
                     >
                       {priority.label}
@@ -247,105 +245,105 @@ export function Stage3BusinessContext({
 
                     <div
                       className={cn(
-                        'flex h-4.5 w-4.5 shrink-0 items-center justify-center rounded-[2px] border transition-all ml-2',
+                        'flex h-5 w-5 shrink-0 items-center justify-center rounded-[3px] border transition-all duration-200 ml-2',
                         isSelected
-                          ? 'border-[#009345] bg-[#009345] text-white'
-                          : 'border-slate-300 bg-white text-transparent'
+                          ? 'border-[#009345] bg-[#009345] text-white shadow-2xs'
+                          : 'border-slate-300 bg-white text-transparent group-hover:border-slate-400'
                       )}
                     >
-                      <Check className="h-3 w-3 stroke-[3]" />
+                      <Check className="h-3.5 w-3.5 stroke-[3]" />
                     </div>
-                  </button>
+                  </div>
                 );
               })}
             </div>
 
-            <div className="pt-4 flex justify-center">
+            <div className="pt-6 flex justify-center">
               <Button
                 variant="emerald"
                 size="lg"
-                disabled={!canAdvanceStep2}
                 onClick={() => setInternalStep(3)}
                 rightIcon={<ArrowRight className="h-4 w-4" />}
-                className="px-8 shadow-xs"
+                className="shadow-sm font-bold px-8"
               >
-                Continue to Readiness ({selectedPriorities.length} Selected)
+                Next: Implementation Stage →
               </Button>
             </div>
           </motion.div>
         )}
 
         {/* ============================================================ */}
-        {/* STEP 03: "Where are you today?" (Readiness Horizon)          */}
+        {/* STEP 03: "WHERE ARE YOU TODAY?" (Readiness Horizon)          */}
         {/* ============================================================ */}
         {internalStep === 3 && (
           <motion.div
             key="step-3"
-            initial={{ opacity: 0, y: 15 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -15 }}
-            transition={{ duration: 0.35 }}
+            exit={{ opacity: 0, y: -16 }}
+            transition={{ duration: 0.4 }}
             className="space-y-8 text-center max-w-4xl mx-auto"
           >
             <div>
-              <span className="text-[11px] font-mono font-bold uppercase tracking-[2px] text-[#009345]">
-                Project Horizon
+              <span className="text-[11px] font-mono font-bold uppercase tracking-[2.5px] text-[#009345]">
+                Readiness Horizon
               </span>
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-[#062039] mt-2">
                 Where are you today?
               </h2>
               <div className="btm-separator btm-separator-center" />
               <p className="text-base sm:text-lg text-slate-600 max-w-xl mx-auto font-normal">
-                Select your current execution phase to synthesize your tailored solution path.
+                Select your current project stage to tailor capability fit and deployment models.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-3xl mx-auto pt-2">
-              {BTM_JOURNEY_STAGES.map((stage) => {
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-2">
+              {BTM_JOURNEY_STAGES.map((stage, idx) => {
                 const isSelected = journeyStage === stage.id;
+                const isJustClicked = animatingId === stage.id;
 
                 return (
-                  <button
+                  <div
                     key={stage.id}
-                    type="button"
                     onClick={() => handleJourneyStageSelect(stage.id)}
                     className={cn(
-                      'group relative flex flex-col justify-between rounded-[8px] border p-6 text-left transition-all duration-200 cursor-pointer select-none outline-none focus-visible:ring-2 focus-visible:ring-[#009345]',
-                      isSelected
-                        ? 'border-[#009345] ring-2 ring-[#009345] bg-gradient-to-b from-white to-emerald-50/40 shadow-md scale-[1.02]'
-                        : 'border-slate-200 bg-white hover:border-slate-300 hover:shadow-xl hover:-translate-y-1'
+                      'group relative flex flex-col justify-between p-6 rounded-xl border text-left transition-all duration-300 cursor-pointer select-none',
+                      isSelected || isJustClicked
+                        ? 'border-[#009345] ring-2 ring-[#009345] bg-gradient-to-b from-white via-white to-emerald-50/40 shadow-xl shadow-emerald-950/8 scale-[1.02]'
+                        : 'border-slate-200 bg-white hover:border-[#009345] hover:shadow-xl hover:-translate-y-1'
                     )}
                   >
                     <div>
-                      <div className="flex items-center justify-between">
-                        <span className="text-[10px] font-mono font-bold uppercase tracking-[1.5px] text-[#009345]">
-                          Stage Horizon
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-[11px] font-mono font-bold text-[#009345] uppercase">
+                          Stage 0{idx + 1}
                         </span>
                         <div
                           className={cn(
-                            'flex h-4 w-4 shrink-0 items-center justify-center rounded-full border transition-all',
-                            isSelected
+                            'h-4 w-4 rounded-full border flex items-center justify-center transition-colors',
+                            isSelected || isJustClicked
                               ? 'border-[#009345] bg-[#009345] text-white'
-                              : 'border-slate-300 bg-white text-transparent'
+                              : 'border-slate-300'
                           )}
                         >
-                          <div className="h-1.5 w-1.5 rounded-full bg-white" />
+                          {(isSelected || isJustClicked) && <Check className="h-2.5 w-2.5 stroke-[3]" />}
                         </div>
                       </div>
 
-                      <h4 className="mt-4 text-base font-extrabold tracking-tight text-[#062039] group-hover:text-[#009345] transition-colors">
+                      <h3 className="text-base font-extrabold text-[#062039] group-hover:text-[#009345] transition-colors">
                         {stage.title}
-                      </h4>
-                      <p className="mt-1.5 text-xs text-slate-500 leading-relaxed font-normal">
+                      </h3>
+
+                      <p className="mt-1.5 text-xs text-slate-600 leading-relaxed font-normal">
                         {stage.description}
                       </p>
                     </div>
 
-                    <div className="mt-5 pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] font-bold text-[#009345]">
-                      <span>Select & Synthesize</span>
-                      <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
+                    <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-slate-500">
+                      <span>Select horizon</span>
+                      <ArrowRight className="h-3.5 w-3.5 text-[#009345] group-hover:translate-x-1 transition-transform" />
                     </div>
-                  </button>
+                  </div>
                 );
               })}
             </div>

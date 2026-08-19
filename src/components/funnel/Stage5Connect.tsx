@@ -5,8 +5,10 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import confetti from 'canvas-confetti';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { FunnelState, RecommendationResult } from '@/data/types';
+import { BTM_CHALLENGES } from '@/data/challenges';
+import { BTM_INDUSTRIES } from '@/data/industries';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
 import {
@@ -21,7 +23,8 @@ import {
   MessageSquare,
   RefreshCw,
   Sparkles,
-  ShieldCheck
+  Layers,
+  ArrowRight
 } from 'lucide-react';
 
 const leadFormSchema = z.object({
@@ -48,6 +51,7 @@ export function Stage5Connect({
 }: Stage5ConnectProps) {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [submissionData, setSubmissionData] = useState<LeadFormData | null>(null);
+  const [emailFocusedOrFilled, setEmailFocusedOrFilled] = useState(false);
 
   const {
     register,
@@ -67,7 +71,11 @@ export function Stage5Connect({
     }
   });
 
+  const emailValue = watch('workEmail');
   const submissionType = watch('submissionType');
+
+  // Trigger progressive form reveal once email is focused or has content
+  const showFullForm = emailFocusedOrFilled || (emailValue && emailValue.length > 3);
 
   const onSubmit = async (data: LeadFormData) => {
     await new Promise((resolve) => setTimeout(resolve, 600));
@@ -86,6 +94,17 @@ export function Stage5Connect({
     }
   };
 
+  // Find human-readable names for journey summary
+  const selectedChallengeNames = funnelState.selectedChallenges
+    .map((id) => BTM_CHALLENGES.find((c) => c.id === id)?.title)
+    .filter(Boolean)
+    .join(' • ');
+
+  const selectedIndustryName =
+    BTM_INDUSTRIES.find((i) => i.id === funnelState.selectedIndustry)?.name || 'Institutional Enterprise';
+
+  const primaryCapabilityName = recommendation.recommendedCapabilities[0]?.name || 'Application & Analytics Services';
+
   // ============================================================
   // CONFIRMATION SCREEN
   // ============================================================
@@ -96,13 +115,13 @@ export function Stage5Connect({
           initial={{ opacity: 0, scale: 0.96 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.35 }}
-          className="rounded-[8px] border border-slate-200 bg-white p-8 sm:p-10 shadow-md"
+          className="rounded-xl border border-slate-200 bg-white p-8 sm:p-10 shadow-lg"
         >
-          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-[4px] bg-[#009345] text-white shadow-xs">
+          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-[6px] bg-[#009345] text-white shadow-xs">
             <CheckCircle2 className="h-8 w-8" />
           </div>
 
-          <span className="mt-5 inline-block text-[10px] font-bold uppercase tracking-[2px] text-[#009345]">
+          <span className="mt-5 inline-block text-[10px] font-mono font-bold uppercase tracking-[2px] text-[#009345]">
             Inquiry Received
           </span>
 
@@ -119,8 +138,8 @@ export function Stage5Connect({
           </p>
 
           {/* Diagnostic Summary */}
-          <div className="mt-6 rounded-[6px] bg-slate-50 border border-slate-200 p-4.5 text-left space-y-3 text-xs">
-            <div className="text-[10px] font-bold uppercase tracking-[1.5px] text-[#737373]">
+          <div className="mt-6 rounded-lg bg-slate-50 border border-slate-200 p-5 text-left space-y-3 text-xs">
+            <div className="text-[10px] font-mono font-bold uppercase tracking-[1.5px] text-[#737373]">
               Diagnostic Summary
             </div>
             <div>
@@ -137,7 +156,7 @@ export function Stage5Connect({
                 {recommendation.recommendedCapabilities.map((cap) => (
                   <span
                     key={cap.id}
-                    className="inline-flex items-center gap-1 bg-white px-2 py-0.5 rounded-[2px] border border-slate-200 text-xs font-semibold text-[#062039]"
+                    className="inline-flex items-center gap-1 bg-white px-2.5 py-1 rounded-[3px] border border-slate-200 text-xs font-semibold text-[#062039]"
                   >
                     <CheckCircle2 className="h-3 w-3 text-[#009345]" />
                     {cap.name}
@@ -169,68 +188,81 @@ export function Stage5Connect({
     <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-10 sm:py-16 scroll-mt-24">
       {/* Header Section */}
       <motion.div
-        initial={{ opacity: 0, y: 12 }}
+        initial={{ opacity: 0, y: 14 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.35 }}
-        className="text-center max-w-2xl mx-auto mb-10"
+        transition={{ duration: 0.4 }}
+        className="text-center max-w-2xl mx-auto mb-10 sm:mb-12"
       >
         <div className="flex items-center justify-center gap-2 mb-2">
           <Badge variant="emerald" size="sm">
             Stage 05 • Connect
           </Badge>
           <span className="text-xs font-mono font-medium text-slate-500 uppercase tracking-wider">
-            Initiate Conversation
+            Final Step
           </span>
         </div>
 
         <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-[#062039]">
-          Let's turn your idea into something real.
+          Let's Build What's Next.
         </h2>
 
         {/* Signature BTM Bar Separator */}
         <div className="btm-separator btm-separator-center" />
 
         <p className="text-sm sm:text-base text-slate-600 font-normal">
-          Tell us a little about your project and the BTM Financial team can discuss the right next step.
+          Tell us where to reach you and the BTM Financial team will discuss the right next step.
         </p>
       </motion.div>
 
-      {/* 2-Column Composition (Left: Selected Focus | Right: Minimal Form) */}
+      {/* 2-Column Composition (Left: Journey Summary | Right: Progressive Lead Form) */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start max-w-5xl mx-auto">
-        {/* Left Column (5 Cols): Selected Focus Recap */}
+        {/* Left Column (5 Cols): Your Focus Journey Summary */}
         <motion.div
-          initial={{ opacity: 0, x: -15 }}
+          initial={{ opacity: 0, x: -16 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.4 }}
+          transition={{ duration: 0.45 }}
           className="lg:col-span-5 space-y-5"
         >
-          <div className="rounded-[8px] border border-slate-200 bg-[#062039] text-white p-6 shadow-xl relative overflow-hidden">
+          <div className="rounded-xl border border-slate-200 bg-[#062039] text-white p-6 sm:p-7 shadow-2xl relative overflow-hidden">
             {/* Ambient Glow */}
-            <div className="absolute top-0 right-0 h-32 w-32 bg-[#009345]/15 rounded-full blur-2xl pointer-events-none" />
+            <div className="absolute top-0 right-0 h-40 w-40 bg-[#009345]/15 rounded-full blur-3xl pointer-events-none" />
 
-            <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[1.5px] text-[#009345] pb-3 border-b border-slate-700/80">
+            <div className="flex items-center gap-2 text-[10px] font-mono font-bold uppercase tracking-[2px] text-[#009345] pb-3 border-b border-slate-700/80">
               <CheckCircle2 className="h-3.5 w-3.5 text-[#009345]" />
-              Your Selected Focus
+              Your Focus Journey
             </div>
 
-            {/* List of Recommended Capabilities */}
-            <div className="mt-4 space-y-3">
-              {recommendation.recommendedCapabilities.slice(0, 3).map((cap, idx) => (
-                <div
-                  key={cap.id}
-                  className="rounded-[4px] bg-[#031120]/80 border border-slate-700/80 p-3.5 flex items-start gap-3"
-                >
-                  <span className="font-mono text-xs font-bold text-emerald-400 mt-0.5">
-                    0{idx + 1}
-                  </span>
-                  <div>
-                    <div className="text-sm font-bold text-white">{cap.name}</div>
-                    <p className="text-xs text-slate-300 font-normal mt-0.5 leading-relaxed">
-                      {cap.shortDescription}
-                    </p>
-                  </div>
-                </div>
-              ))}
+            {/* Structured Journey Summary Pill Stack */}
+            <div className="mt-5 space-y-3.5">
+              {/* Selected Challenge */}
+              <div className="rounded-lg bg-[#031120]/80 border border-slate-700/80 p-3.5">
+                <span className="text-[10px] font-mono uppercase text-slate-400 block tracking-wider">
+                  Challenge Area
+                </span>
+                <span className="text-sm font-bold text-white mt-0.5 block">
+                  {selectedChallengeNames || 'Data & Technology'}
+                </span>
+              </div>
+
+              {/* Organization Type */}
+              <div className="rounded-lg bg-[#031120]/80 border border-slate-700/80 p-3.5">
+                <span className="text-[10px] font-mono uppercase text-slate-400 block tracking-wider">
+                  Organization Fit
+                </span>
+                <span className="text-sm font-bold text-white mt-0.5 block">
+                  {selectedIndustryName}
+                </span>
+              </div>
+
+              {/* Recommended Core Capability */}
+              <div className="rounded-lg bg-emerald-950/40 border border-emerald-500/30 p-3.5">
+                <span className="text-[10px] font-mono uppercase text-emerald-400 block tracking-wider">
+                  Solution Recommendation
+                </span>
+                <span className="text-sm font-bold text-white mt-0.5 block">
+                  {primaryCapabilityName}
+                </span>
+              </div>
             </div>
 
             {/* Reassurance Note */}
@@ -239,53 +271,42 @@ export function Stage5Connect({
             </div>
           </div>
 
-          <div className="rounded-[6px] border border-slate-200 bg-white p-4 text-xs text-slate-600 flex items-center gap-2.5 shadow-2xs">
+          <div className="rounded-lg border border-slate-200 bg-white p-4 text-xs text-slate-600 flex items-center gap-2.5 shadow-2xs">
             <Lock className="h-4 w-4 text-[#009345] shrink-0" />
             <span>Your information helps us understand your request and connect you with the right team.</span>
           </div>
         </motion.div>
 
-        {/* Right Column (7 Cols): Minimal Conversion Form */}
+        {/* Right Column (7 Cols): Progressive Conversion Form */}
         <motion.div
-          initial={{ opacity: 0, x: 15 }}
+          initial={{ opacity: 0, x: 16 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.4 }}
-          className="lg:col-span-7 rounded-[8px] border border-slate-200 bg-white p-6 sm:p-7 shadow-sm"
+          transition={{ duration: 0.45 }}
+          className="lg:col-span-7 rounded-xl border border-slate-200 bg-white p-6 sm:p-8 shadow-sm"
         >
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 text-left">
-            {/* Name */}
-            <div>
-              <label className="block text-[11px] font-bold uppercase tracking-[1.5px] text-[#062039] mb-1">
-                Name <span className="text-rose-500">*</span>
-              </label>
-              <div className="relative">
-                <User className="absolute left-3.5 top-2.5 h-4 w-4 text-slate-400" />
-                <input
-                  type="text"
-                  placeholder="e.g. Sarah Jenkins"
-                  {...register('fullName')}
-                  className={`w-full rounded-[4px] border bg-white pl-10 pr-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition-all focus:ring-2 focus:ring-[#009345] ${
-                    errors.fullName ? 'border-rose-300 bg-rose-50/20' : 'border-slate-300'
-                  }`}
-                />
-              </div>
-              {errors.fullName && (
-                <p className="mt-1 text-xs text-rose-600">{errors.fullName.message}</p>
-              )}
-            </div>
+          <div className="mb-4 text-left">
+            <h3 className="text-base font-extrabold text-[#062039]">
+              Tell us where to reach you.
+            </h3>
+            <p className="text-xs text-slate-500 mt-0.5">
+              Enter your work email to begin our collaborative discussion.
+            </p>
+          </div>
 
-            {/* Work Email */}
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 text-left">
+            {/* 1. Work Email (Always Visible & Prominent) */}
             <div>
-              <label className="block text-[11px] font-bold uppercase tracking-[1.5px] text-[#062039] mb-1">
+              <label className="block text-[11px] font-mono font-bold uppercase tracking-[1.5px] text-[#062039] mb-1">
                 Work Email <span className="text-rose-500">*</span>
               </label>
               <div className="relative">
-                <Mail className="absolute left-3.5 top-2.5 h-4 w-4 text-slate-400" />
+                <Mail className="absolute left-3.5 top-3 h-4 w-4 text-slate-400" />
                 <input
                   type="email"
-                  placeholder="sarah@firm.com"
+                  placeholder="name@company.com"
                   {...register('workEmail')}
-                  className={`w-full rounded-[4px] border bg-white pl-10 pr-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition-all focus:ring-2 focus:ring-[#009345] ${
+                  onFocus={() => setEmailFocusedOrFilled(true)}
+                  className={`w-full rounded-[6px] border bg-white pl-10 pr-3 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition-all focus:ring-2 focus:ring-[#009345] ${
                     errors.workEmail ? 'border-rose-300 bg-rose-50/20' : 'border-slate-300'
                   }`}
                 />
@@ -295,68 +316,105 @@ export function Stage5Connect({
               )}
             </div>
 
-            {/* Company */}
-            <div>
-              <label className="block text-[11px] font-bold uppercase tracking-[1.5px] text-[#062039] mb-1">
-                Company <span className="text-rose-500">*</span>
-              </label>
-              <div className="relative">
-                <Building className="absolute left-3.5 top-2.5 h-4 w-4 text-slate-400" />
-                <input
-                  type="text"
-                  placeholder="e.g. Apex Capital Partners"
-                  {...register('company')}
-                  className={`w-full rounded-[4px] border bg-white pl-10 pr-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition-all focus:ring-2 focus:ring-[#009345] ${
-                    errors.company ? 'border-rose-300 bg-rose-50/20' : 'border-slate-300'
-                  }`}
-                />
-              </div>
-              {errors.company && (
-                <p className="mt-1 text-xs text-rose-600">{errors.company.message}</p>
+            {/* Progressive Reveal Fields (Name, Company, Phone, Project) */}
+            <AnimatePresence>
+              {showFullForm && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                  transition={{ duration: 0.35 }}
+                  className="space-y-4 pt-1 overflow-hidden"
+                >
+                  {/* Full Name */}
+                  <div>
+                    <label className="block text-[11px] font-mono font-bold uppercase tracking-[1.5px] text-[#062039] mb-1">
+                      Full Name <span className="text-rose-500">*</span>
+                    </label>
+                    <div className="relative">
+                      <User className="absolute left-3.5 top-2.5 h-4 w-4 text-slate-400" />
+                      <input
+                        type="text"
+                        placeholder="e.g. Sarah Jenkins"
+                        {...register('fullName')}
+                        className={`w-full rounded-[6px] border bg-white pl-10 pr-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition-all focus:ring-2 focus:ring-[#009345] ${
+                          errors.fullName ? 'border-rose-300 bg-rose-50/20' : 'border-slate-300'
+                        }`}
+                      />
+                    </div>
+                    {errors.fullName && (
+                      <p className="mt-1 text-xs text-rose-600">{errors.fullName.message}</p>
+                    )}
+                  </div>
+
+                  {/* Company */}
+                  <div>
+                    <label className="block text-[11px] font-mono font-bold uppercase tracking-[1.5px] text-[#062039] mb-1">
+                      Company / Organization <span className="text-rose-500">*</span>
+                    </label>
+                    <div className="relative">
+                      <Building className="absolute left-3.5 top-2.5 h-4 w-4 text-slate-400" />
+                      <input
+                        type="text"
+                        placeholder="e.g. Apex Capital Partners"
+                        {...register('company')}
+                        className={`w-full rounded-[6px] border bg-white pl-10 pr-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition-all focus:ring-2 focus:ring-[#009345] ${
+                          errors.company ? 'border-rose-300 bg-rose-50/20' : 'border-slate-300'
+                        }`}
+                      />
+                    </div>
+                    {errors.company && (
+                      <p className="mt-1 text-xs text-rose-600">{errors.company.message}</p>
+                    )}
+                  </div>
+
+                  {/* Phone (Optional) */}
+                  <div>
+                    <label className="block text-[11px] font-mono font-bold uppercase tracking-[1.5px] text-[#062039] mb-1">
+                      Phone <span className="text-slate-400 font-normal lowercase tracking-normal font-sans">(optional)</span>
+                    </label>
+                    <div className="relative">
+                      <Phone className="absolute left-3.5 top-2.5 h-4 w-4 text-slate-400" />
+                      <input
+                        type="tel"
+                        placeholder="+1 (555) 000-0000"
+                        {...register('phone')}
+                        className="w-full rounded-[6px] border border-slate-300 bg-white pl-10 pr-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition-all focus:ring-2 focus:ring-[#009345]"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Project / Challenge (Optional) */}
+                  <div>
+                    <label className="block text-[11px] font-mono font-bold uppercase tracking-[1.5px] text-[#062039] mb-1">
+                      Project / Challenge Context <span className="text-slate-400 font-normal lowercase tracking-normal font-sans">(optional)</span>
+                    </label>
+                    <textarea
+                      rows={2}
+                      placeholder="Brief context on timeline, systems, or immediate objectives..."
+                      {...register('projectDetails')}
+                      className="w-full rounded-[6px] border border-slate-300 bg-white p-2.5 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition-all focus:ring-2 focus:ring-[#009345]"
+                    />
+                  </div>
+                </motion.div>
               )}
-            </div>
+            </AnimatePresence>
 
-            {/* Phone */}
-            <div>
-              <label className="block text-[11px] font-bold uppercase tracking-[1.5px] text-[#062039] mb-1">
-                Phone <span className="text-slate-400 font-normal lowercase tracking-normal">(optional)</span>
-              </label>
-              <div className="relative">
-                <Phone className="absolute left-3.5 top-2.5 h-4 w-4 text-slate-400" />
-                <input
-                  type="tel"
-                  placeholder="+1 (555) 000-0000"
-                  {...register('phone')}
-                  className="w-full rounded-[4px] border border-slate-300 bg-white pl-10 pr-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition-all focus:ring-2 focus:ring-[#009345]"
-                />
-              </div>
-            </div>
-
-            {/* Project / Challenge */}
-            <div>
-              <label className="block text-[11px] font-bold uppercase tracking-[1.5px] text-[#062039] mb-1">
-                Project / Challenge <span className="text-slate-400 font-normal lowercase tracking-normal">(optional)</span>
-              </label>
-              <textarea
-                rows={2}
-                placeholder="Brief context on timeline, data formats, or goals..."
-                {...register('projectDetails')}
-                className="w-full rounded-[4px] border border-slate-300 bg-white p-2.5 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition-all focus:ring-2 focus:ring-[#009345]"
-              />
-            </div>
-
-            {/* Primary CTA & Secondary CTA */}
+            {/* Action CTAs */}
             <div className="pt-3 space-y-2.5">
               <Button
                 type="submit"
                 variant="emerald"
                 size="lg"
                 isLoading={isSubmitting && submissionType === 'conversation'}
-                onClick={() => setValue('submissionType', 'conversation')}
+                onClick={() => {
+                  setEmailFocusedOrFilled(true);
+                  setValue('submissionType', 'conversation');
+                }}
                 rightIcon={<Send className="h-4 w-4" />}
-                className="w-full justify-center shadow-xs"
+                className="w-full justify-center shadow-sm font-bold text-sm sm:text-base py-3"
               >
-                Start a Conversation
+                Start a Conversation →
               </Button>
 
               <Button
@@ -364,7 +422,10 @@ export function Stage5Connect({
                 variant="outline"
                 size="md"
                 isLoading={isSubmitting && submissionType === 'meeting'}
-                onClick={() => setValue('submissionType', 'meeting')}
+                onClick={() => {
+                  setEmailFocusedOrFilled(true);
+                  setValue('submissionType', 'meeting');
+                }}
                 leftIcon={<Calendar className="h-4 w-4 text-[#009345]" />}
                 className="w-full justify-center text-xs font-bold uppercase tracking-wider text-slate-700 hover:text-[#062039]"
               >
